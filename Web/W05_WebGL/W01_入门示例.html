@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>WebGL入门示例</title>
+</head>
+
+<body>
+    <!-- 1、添加一个画布元素 -->
+    <canvas id="cvs" style="border: 2px dashed red;" width="300" height="300">当前浏览器不支持Canvas</canvas>
+    <script>
+        /** @type {HTMLCanvasElement} */
+
+        // 2、获取到画布元素：getElementById();
+        const cvs = document.getElementById("cvs");
+
+        // 3、获取画布元素基于WebGL的上下文环境对象：canvas.getContext("webgl");
+        const gl = cvs.getContext("webgl");
+        console.log("WebGL", gl);
+
+        // 4、使用Webgl中的API实现图形绘制：绘制一个矩形
+        // 4.1 设置绘制图形填充的颜色。设置完成后，颜色会保存到缓存中。
+        // gl.clearColor(r, g, b, a); 参数：红、绿、蓝、透明度
+        gl.clearColor(1, 1, 0, 1); // 设置用于清除模块区域的颜色 ==> 设置绘制区域的颜色
+
+        // 4.2 调用缓存中的颜色值填充图形
+        gl.clear(gl.COLOR_BUFFER_BIT); // 清除区域 ==> 绘制内容
+
+    </script>
+
+</body>
+
+</html>

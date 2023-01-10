@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>圆角边框</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        div {
+            margin: 20px;
+        }
+        /* 画圆与胶囊圆角高度均为盒子高度的 一半 */
+        
+        .capsule {
+            /* 画胶囊 */
+            width: 300px;
+            height: 100px;
+            background-color: rebeccapurple;
+            text-align: center;
+            line-height: 100px;
+            border-radius: 50px;
+            color: white;
+            font-size: 20px;
+        }
+        
+        .capsule-orange {
+            /* 画胶囊 */
+            width: 300px;
+            height: 100px;
+            border: orange solid 2px;
+            text-align: center;
+            line-height: 100px;
+            border-radius: 50px;
+            color: orange;
+            font-size: 20px;
+        }
+        
+        .circle {
+            /* 画圆 */
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: orange;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="capsule">最靓的妞</div>
+    <div class="capsule-orange">妞真好看</div>
+    <div class="circle"></div>
+</body>
+
+</html>

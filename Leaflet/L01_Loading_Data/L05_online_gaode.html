@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>加载高德地图</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css"> -->
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script> -->
+
+    <!-- Leaflet卷帘扩展插件 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet.sidebyside/leaflet-side-by-side.js"></script>
+
+    <link rel="stylesheet" href="../lib/leaflet/@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.min.js">
+    <script type="text/javascript" src="../lib/leaflet/@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.min.js"></script>
+
+    <!-- Leaflet鹰眼图插件 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet.miniMap/3.6.1/dist/Control.MiniMap.min.css">
+    <script type="text/javascript" src="../lib/leaflet/leaflet.miniMap/3.6.1/dist/Control.MiniMap.js"></script>
+
+    <!-- jQuery -->
+    <script src="../../lib/jQuery/jquery-3.2.1.min.js"></script>
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <div id="latlngInfo" style="position: absolute;z-index: 9999;left: 10px;bottom: 0px;"></div>
+    <script type="text/javascript">
+        // 创建地图
+        let map = L.map("map").setView([30.56781, 114.30222], 3);
+
+        // 加载高德地图
+        var url = "http://webrd0{s}.is.autonavi.com/appmaptile?x={x}&y={y}&z={z}&lang=zh_cn&size=1&scale=1&style=8";
+        layer = new L.TileLayer(url, {
+            subdomains: "1234"
+        }).addTo(map);
+
+        L.marker([34.261, 108.94235]).addTo(map); // 西安
+        L.marker([39.90609, 116.38543]).addTo(map); //北京
+        L.marker([29.55546, 106.5448]).addTo(map); // 重庆
+        L.marker([30.56781, 114.30222]).addTo(map); //湖北
+        L.marker([18.23522, 109.51085]).addTo(map); //海南
+        L.marker([50.24529, 127.50091]).addTo(map); //黑海
+        L.marker([47.84907, 88.13144]).addTo(map); //阿勒泰
+        L.marker([39.46739, 75.99394]).addTo(map); //喀什
+        L.marker([29.65541, 91.12732]).addTo(map); //拉萨
+        L.marker([36.63685, 101.74367]).addTo(map); //西宁
+        L.marker([43.89736, 125.30672]).addTo(map); //长春
+        L.marker([25.05091, 102.71344]).addTo(map); //昆明
+        L.marker([23.13177, 113.26015]).addTo(map); //广州
+        L.marker([36.66124, 116.9878]).addTo(map); //济南
+        L.marker([31.31974, 121.62005]).addTo(map); //上海
+    </script>
+
+</body>
+
+</html>

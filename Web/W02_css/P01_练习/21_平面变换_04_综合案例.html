@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>平面变换</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        .box {
+            width: 1110px;
+            height: 247px;
+            margin: 20px auto;
+        }
+        
+        .box>ul>li {
+            position: relative;
+            width: 350px;
+            height: 247px;
+            float: left;
+            list-style: none;
+            margin-right: 30px;
+            overflow: hidden;
+        }
+        
+        .box>ul>li:last-child {
+            margin-right: 0;
+        }
+        
+        .box>ul>li .pic img {
+            transition: all 0.5s;
+        }
+        
+        .box>ul>li .txt {
+            position: absolute;
+            bottom: -50px;
+            margin: 20px 30px;
+            transition: all 0.5s;
+            color: #fff;
+            z-index: 1;
+        }
+        
+        .txt>h4 {
+            font-size: 14px;
+            font-weight: normal;
+        }
+        
+        .txt>h5 {
+            font-size: 18px;
+            margin-bottom: 40px;
+        }
+        
+        .txt>p {
+            font-size: 14px;
+        }
+        
+        .box .mark {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            background-image: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            /* border: 1px solid red; */
+            transition: all 0.5s;
+        }
+        
+        .box>ul>li:hover .pic>img {
+            transform: scale(1.2);
+        }
+        
+        .box>ul>li:hover .txt {
+            /* top: 80px; */
+            transform: translateY(-50px);
+        }
+        
+        .box>ul>li:hover .mark {
+            opacity: 1;
+        }
+        
+        img {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <ul>
+            <li>
+                <a href="#">
+                    <div class="pic">
+                        <img src="./images/huawei/product.jpeg" alt="">
+                    </div>
+                    <div class="txt">
+                        <h4>产品</h4>
+                        <h5>OceanStor Pacific 海量存储斩获2021 Interop金奖</h5>
+                        <p>
+                            <span>了解更多</span>
+                        </p>
+                    </div>
+                    <!-- 渐变背景 -->
+                    <div class="mark"></div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div class="pic">
+                        <img src="./images/huawei/huawei1.jpeg" alt="">
+                    </div>
+                    <div class="txt">
+                        <h4>产品</h4>
+                        <h5>OceanStor Pacific 海量存储斩获2021 Interop金奖</h5>
+                        <p>
+                            <span>了解更多</span>
+                        </p>
+                    </div>
+                    <div class="mark"></div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div class="pic">
+                        <img src="./images/huawei/huawei2.jpeg" alt="">
+                    </div>
+                    <div class="txt">
+                        <h4>产品</h4>
+                        <h5>OceanStor Pacific 海量存储斩获2021 Interop金奖</h5>
+                        <p>
+                            <span>了解更多</span>
+                        </p>
+                    </div>
+                    <div class="mark"></div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

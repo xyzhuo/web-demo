@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>光标类型</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        div {
+            width: 310px;
+            height: 200px;
+            border: 1px solid red;
+        }
+        
+        input {
+            /* 工字型，提供用户可以选择文字，input标签默认 */
+            /* cursor: text; */
+        }
+        
+        p {
+            /* 工字型，提供用户可以选择文字，p标签默认 */
+            /* cursor: text; */
+        }
+        
+        a {
+            /* 小手效果，提示用户可以点击 */
+            /* cursor: pointer; */
+        }
+        
+        .red {
+            /* 箭头，默认值 */
+            cursor: default;
+        }
+        
+        .blue {
+            /* 十字箭头光标，提供用户可以移动 */
+            cursor: move;
+            border: 2px solid blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <input type="text" name="" id=""><br/>
+        <a href="https://baike.baidu.com/item/JavaScript" target="_blank" rel="noopener noreferrer">JavaScript-百度百科</a>
+        <p>JavaScript（简称“JS”） 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发Web页面的脚本语言而出名，但是它也被用到了很多非浏览器环境中，JavaScript 基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式、声明式、函数式编程范式。</p>
+    </div>
+    <div class="red"></div>
+    <div class="blue"></div>
+</body>
+
+</html>

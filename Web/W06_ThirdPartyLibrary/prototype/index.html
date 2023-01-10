@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="../lib/jQuery/jquery-3.2.1.min.js"></script> -->
+    <script src="./AjaxRequetArcgisServer.js"></script>
+</head>
+
+<body>
+    <script>
+        console.log(ArcgisServerRequest);
+        const request = ArcgisServerRequest();
+        console.log("request", request);
+
+        queryBySQL();
+        /**
+         * 属性查询
+         */
+        function queryBySQL() {
+            const arcgisServerUrl = "http://yzltmap.hniplan.com/arcgis/rest/services/hainan/2016年海南省生态保护红线/MapServer/1/query";
+            // let ids = "";
+            // for (let i = 100, length = 1000; i < length; i++) {
+            //     ids += `${i},`
+            // }
+            const queryArgs = {
+                // where: "objectIds<20", // 此处为属性查询条件
+                text: "",
+                // objectIds: ids, // 查询的id列表
+                objectIds: "1,2", // 查询的id列表
+                time: "",
+                geometry: "", // 空间范围
+                geometryType: "esriGeometryEnvelope", // 输入空间范围类型，可以是点、线、面
+                inSR: "",
+                spatialRel: "esriSpatialRelIntersects", // 查询方法，此处为相交
+                relationParam: "",
+                outFields: "", // 返回所有字段属性
+                returnGeometry: true, // 返回空间图形
+                returnTrueCurves: false,
+                maxAllowableOffset: "",
+                geometryPrecision: "",
+                outSR: "",
+                returnIdsOnly: false,
+                returnCountOnly: false,
+                orderByFields: "",
+                groupByFieldsForStatistics: "",
+                outStatistics: "",
+                returnZ: false,
+                returnM: false,
+                gdbVersion: "",
+                returnDistinctValues: false,
+                resultOffset: "",
+                resultRecordCount: "",
+                f: "geojson"
+                    // f: "pjson"
+            };
+            /***jQuery发送请求****************************************************************************************************/
+            request.queryByQuery(arcgisServerUrl, queryArgs, {
+                onQueryComplete: result => {
+                    console.log("result", result);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

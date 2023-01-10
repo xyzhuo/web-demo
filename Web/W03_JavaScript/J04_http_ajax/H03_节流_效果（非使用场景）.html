@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>节流效果（非使用场景）</title>
+</head>
+
+<body>
+    <div>
+        <input type="text" oninput="searchSomethingHandle(this)">
+    </div>
+    <script src="../../../lib/jQuery/jquery-3.2.1.min.js"></script>
+    <script>
+
+        let time;
+        /**
+         * 防抖延迟设计
+         *      
+         * */
+        function debounceSearch(keywords) {
+            time = setTimeout(function () {
+                const url = `https://suggest.taobao.com/sug?k=1&area=c2c&q=${encodeURI(keywords)}&code=utf-8&ts=1665234704077`;
+                $.ajax({
+                    url: url,
+                    dataType: "jsonp",
+                    // 请求成功回调
+                    success: function (result) {
+                        console.log("请求响应结果：", result);
+                        time = null;
+                    }
+                });
+            }, 500);
+
+        }
+
+        /**
+         * 在触发 keyup 事件时，先判断 timer 是否为空。
+         * */
+        function searchSomethingHandle(element) {
+            if (time) {
+                return;
+            }
+
+            debounceSearch(element.value); // 创建搜索任务
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex布局-元素排列方向</title>
+    <style>
+        .box {
+            display: flex;
+            /* （1）主轴为 行（横向），水平排列(默认值) */
+            /* flex-direction: row; */
+            /* （2）主轴为 列（竖向），垂直排列 */
+            flex-direction: column;
+            /* （3）主轴为 行（横向），从右往左水平排列，即第一个元素显示在盒子的最右边。 */
+            /* flex-direction: row-reverse; */
+            /* （4）主轴为 列（竖向），从下往上垂直排列，即第一个元素显示在盒子的最下边。 */
+            /* flex-direction: column-reverse; */
+            /* =========================居中问题=============================================== */
+            /* 主轴为 列（竖向）。justify-content为垂直居中：上下留空，元素在中间。 */
+            justify-content: center;
+            /* 侧轴为 行（横向）。align-items为水平居中：左右留空，元素在中间。 */
+            align-items: center;
+            height: 300px;
+            border: 1px solid red;
+        }
+        
+        .box div {
+            height: 50px;
+            width: 100px;
+            margin: 10px;
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+    </div>
+</body>
+
+</html>

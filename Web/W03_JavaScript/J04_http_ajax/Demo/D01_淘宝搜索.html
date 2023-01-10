@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>淘宝搜索</title>
+</head>
+
+<body>
+    <div>
+        <input type="text" oninput="searchSomethingHandle(this)">
+    </div>
+    <script src="../../../lib/jQuery/jquery-3.2.1.min.js"></script>
+    <script>
+
+        let time;
+        /**
+         * 防抖延迟设计
+         *      
+         * */
+        function debounceSearch(keywords) {
+            time = setTimeout(function () {
+                const url = `https://suggest.taobao.com/sug?k=1&area=c2c&q=${encodeURI(keywords)}&code=utf-8&ts=1665234704077`;
+                $.ajax({
+                    url: url,
+                    dataType: "jsonp",
+                    // 请求成功回调
+                    success: function (result) {
+                        console.log("请求响应结果：", result);
+                        console.log("请求响应结果：", result.result);
+                    }
+                });
+            }, 500);
+
+        }
+
+        /**
+         * 在触发 keyup 事件时，立即清空 timer。
+         * */
+        function searchSomethingHandle(element) {
+            clearTimeout(time); // 清除定时器，重新开始
+
+            debounceSearch(element.value); // 创建搜索任务
+        }
+
+        /**
+         * 非防抖
+         * */
+        function searchSomethingHandle2(element) {
+            console.log("element", element, element.value);
+
+            const url = `https://suggest.taobao.com/sug?k=1&area=c2c&q=${encodeURI(element.value)}&code=utf-8&ts=1665234704077`;
+            $.ajax({
+                url: url,
+                dataType: "jsonp",
+                // 请求成功回调
+                success: function (result) {
+                    console.log("请求响应结果：", result);
+                    console.log("请求响应结果：", result.result);
+                }
+            });
+        }
+
+    </script>
+</body>
+
+</html>

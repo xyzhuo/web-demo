@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>开门效果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .box {
+            width: 1366px;
+            height: 600px;
+            margin: 10px auto;
+            background-image: url(./images/bg.jpg);
+            background-repeat: no-repeat;
+            border: 1px solid orange;
+            overflow: hidden;
+        }
+        /* .box::before {
+            float: left;
+            content: "";
+            background-image: url(./images/fm.jpg);
+            width: 683px;
+            height: 600px;
+        }
+        .box::after {
+            float: right;
+            content: "";
+            background-image: url(./images/fm.jpg);
+            background-position: -683px 0;
+            width: 683px;
+            height: 600px;
+        } */
+        
+        .box::before,
+        .box::after {
+            float: left;
+            content: "";
+            background-image: url(./images/fm.jpg);
+            width: 683px;
+            height: 100%;
+            transition: all 1s;
+        }
+        
+        .box::after {
+            background-position: right 0;
+        }
+        
+        .box:hover::before {
+            /* 伪元素直接连着写即可 */
+            /* 鼠标移上开门 */
+            transform: translate(-100%);
+        }
+        
+        .box:hover::after {
+            transform: translateX(100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="mask"></div>
+    </div>
+</body>
+
+</html>

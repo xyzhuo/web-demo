@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>加载4490地图</title>
+
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script> -->
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css">
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script>
+
+    <!-- 投影定义 -->
+    <script src="../lib/leaflet/proj4js/2.4.3/proj4.js"></script>
+    <!-- Leaflet对proj4的扩展插件 -->
+    <script src="../lib/leaflet/proj4leaflet/1.0.1/proj4leaflet.js"></script>
+
+    <!-- leaflet-esri -->
+    <script src="../lib/leaflet/leaflet.esri@v3.0.8/esri-leaflet.js"></script>
+
+    <!-- 坐标拾取 -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/leaflet-mouse-position@1.2.0/src/L.Control.MousePosition.min.js"></script> -->
+
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <script type="text/javascript">
+        /**
+         * 参考：
+         * https://blog.csdn.net/u012320231/article/details/81905986
+         * 
+         */
+
+
+        // 这里可以有origin、transformation、scales、resulutions、bounds几个参数提供
+        // 选择，其中scales与resolutions不能同时配置
+        let EPSG4490 = new L.Proj.CRS("EPSG:4490", "+proj=longlat +ellps=GRS80 +no_defs", {
+            resolutions: [
+                1.40625,
+                0.703125,
+                0.3515625,
+                0.17578125,
+                0.087890625,
+                0.0439453125,
+                0.02197265625,
+                0.010986328125,
+                0.0054931640625,
+                0.00274658203125,
+                0.001373291015625,
+                6.866455078125E-4,
+                3.4332275390625E-4,
+                1.71661376953125E-4,
+                8.58306884765625E-5,
+                4.291534423828125E-5,
+                2.1457672119140625E-5,
+                1.0728836059570312E-5,
+                5.364418029785156E-6,
+                2.682209064925356E-6,
+                1.3411045324626732E-6
+            ],
+            origin: [-179.9999, 90.00016],
+            bounds: L.bounds([117.75370429660006, 26.99449191557761], [123.63262097540007, 32.2668788575695])
+        });
+
+        let map = L.map("map", {
+            crs: EPSG4490, // 指定地图坐标系 // 默认crs的坐标值为：L.CRS.EPSG3857
+            maxZoom: 18, // 指定地图最大级别
+            zoom: 8, // 指定地图初始化后加载的级别
+            center: [23.65, 108.25], // 指定地图初始化后定位的位置
+        });
+
+        // L.control.mousePosition({
+        //     "position": "bottomleft"
+        // }).addTo(map);
+
+
+        // // 加载iServer rest服务
+        // // 在加载还图层的时候注意，此时的URL只能是动态图层服务地址，不能具体到某个图层。
+        // let url = "http://10.3.4.22:31922/iserver/services/map-ugcv5-GuangXi_4490/rest/maps/GuangXi_4490";
+        // L.supermap.tiledMapLayer(url).addTo(map);
+
+        // 在加载还图层的时候注意，此时的URL只能是动态图层服务地址，不能具体到某个图层。
+        let url2 = "http://10.3.4.22:31922/iserver/services/map-kingbaseDB_arm64/rest/maps/GuangXi_4490";
+        L.supermap.tiledMapLayer(url2).addTo(map);
+    </script>
+</body>
+
+</html>

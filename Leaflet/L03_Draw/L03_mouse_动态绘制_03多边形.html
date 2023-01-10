@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>leaflet绘制多边形</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css"> -->
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script> -->
+
+    <!-- <script src="../lib/jQuery/jquery-3.2.1.min.js"></script> -->
+
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <div style="position: absolute;z-index: 9999;left: 50px;top: 10px;">
+        <div>
+            <button id="mapClickEventEle" onclick="drawPolygon()">绘制矩形</button>
+        </div>
+        <div id="hintInfoEle" style="background-color: beige;">点击开始绘制，鼠标右键点击结束绘制。</div>
+    </div>
+    <script type="text/javascript">
+        /**
+         * 动态绘制图形(点、线、圆、多边形)
+         * https://blog.csdn.net/xtfge0915/article/details/80275094
+         * 
+         * 动态绘多边形同样涉及到三个事件:click,dbclick,mousemove
+         * */
+        const map = L.map("map", {
+            center: [23.458207269894125, 113.48739624023439], // 地图初始化后的中心点
+            zoom: 5, // 地图初始化后显示的层级
+            maxZoom: 18, // 地图显示最大层级
+            crs: L.CRS.EPSG4326
+        });
+
+        // 添加地图
+        L.tileLayer("http://t{s}.tianditu.com/img_c/wmts?layer=img&style=default&tilematrixset=c&Service=WMTS&Request=GetTile&Version=1.0.0&Format=tiles&TileMatrix={z}&TileCol={x}&TileRow={y}&tk=93724b915d1898d946ca7dc7b765dda5", {
+            subdomains: [0, 1, 2, 3, 4, 5, 6, 7],
+            maxZoom: 18,
+            tileSize: 256,
+            zoomOffset: 1,
+            minZoom: 1
+        }).addTo(map);
+
+        function drawPolygon() {
+            drawPolygonEvent(event => {
+                console.log("event", event);
+
+                // event.polygon.remove();
+            })
+        }
+
+        /**
+         * 绘制事件
+         */
+        function drawPolygonEvent(callback) {
+
+            let polygon; // 绘制好的面
+            let lines = new L.polyline([]); // 绘制时，最后一个点 与 将要绘制的点 形成的虚线。
+            // const geometry = [];
+            let points = [];
+
+            // 已经绘制好的临时线
+            let tempLines = new L.polyline([], {
+                dashArray: 5
+            });
+
+            map.on("click", onClick); // 点击地图
+            map.on("contextmenu", onEndDraw); // 右键结束绘制
+            map.on("mousemove", onMove) // 双击地图
+
+
+            /**
+             * 点击：绘制点
+             * */
+            function onClick(event) {
+
+                points.push([event.latlng.lat, event.latlng.lng]);
+                lines.addLatLng(event.latlng);
+                map.addLayer(tempLines);
+                map.addLayer(lines);
+                // const node = L.circle(event.latlng, {
+                //     color: "#ff0000",
+                //     fillColor: "ff0000",
+                //     fillOpacity: 1
+                // });
+                // map.addLayer(node);
+                // geometry.push(node);
+            }
+
+            /**
+             * 鼠标移动，绘制临时边
+             */
+            function onMove(event) {
+                if (points.length > 0) {
+                    const ls = [points[points.length - 1],
+                        [event.latlng.lat, event.latlng.lng], points[0]
+                    ]
+                    tempLines.setLatLngs(ls); // 用给定的地理点数组替换折线中的所有点。
+                    // map.addLayer(tempLines)
+                }
+            }
+
+            /**
+             * 结束绘制
+             */
+            function onEndDraw(event) {
+                // geometry.push(L.polygon(points).addTo(map)); // 批量绘制
+                polygon = L.polygon(points).addTo(map);
+
+                // 清空数据
+                // points = [];
+
+                lines.remove();
+                tempLines.remove(); // //map.removeLayer(tempLines)
+                // lines = new L.polyline([]);
+
+                map.off("click") // 结束绘制，关闭点击事件
+                map.off("contextmenu") // 结束绘制，关闭点击事件
+                map.off("mousemove") // 结束绘制，关闭点击事件
+
+                const coordinates = [];
+                for (const point of points) {
+                    coordinates.push([point[1], point[0]])
+                }
+                console.log("coordinates", coordinates);
+
+                const geojson = {
+                    "type": "FeatureCollection",
+                    "features": [{
+                        "type": "Feature",
+                        "properties": {},
+                        "geometry": {
+                            "type": "Polygon",
+                            "coordinates": [
+                                coordinates
+                            ]
+                        }
+                    }]
+                };
+
+                // L.geoJSON(geojson).addTo(map);
+
+                if (typeof callback === "function") {
+                    callback({
+                        "geojson": geojson,
+                        "polygon": polygon
+                    });
+                }
+            }
+
+        }
+    </script>
+</body>
+
+</html>

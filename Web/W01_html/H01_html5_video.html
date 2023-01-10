@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <video src="./video/mda-nf69tvzhyuip9u8a.mp4">您的浏览器不支持Video标签。</video>
+
+    <div style="width: 500px;">
+        <!--
+            controls：显示视频控制按钮 
+            type="video/mp4"
+         -->
+        <video src="./video/mda-nf69tvzhyuip9u8a.mp4" style="width: 100%;" controls></video>
+    </div>
+    <hr>
+    <br />
+
+    <script>
+        /**
+         * Video标签支持监测
+         * */
+        function checkVideo() {
+            var support = "非常棒！你的浏览器支持HTML5 video标签！",
+                someSupport = "支持一些格式",
+                notSupport = "对不起，浏览器不支持视频播放。",
+                vidTest = document.createElement("video"),
+                result;
+
+            console.log("vidTest", vidTest);
+
+            if (!vidTest.canPlayType) {
+                result = notSupport;
+            } else {
+                var oggTest = vidTest.canPlayType('video/ogg; codecs="theora, vorbis"'),
+                    h264Test = vidTest.canPlayType('video/mp4; codecs="avc1.42E01E, mp4a.40.2"');
+
+                if (!oggTest) {
+                    if (!h264Test) {
+                        result = notSupport;
+                    } else {
+                        result = h264Test === "probably" ? support : someSupport;
+                    }
+                } else {
+                    result = oggTest === "probably" ? support : someSupport;
+                }
+            }
+
+            console.log("监测结果：", result);
+        }
+
+        checkVideo();
+    </script>
+</body>
+
+</html>

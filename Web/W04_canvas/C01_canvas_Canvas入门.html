@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas</title>
+</head>
+
+<body>
+    <!-- 1、在页面中添加画布元素 -->
+    <canvas id="canvas" width="300" height="300">不支持Canvas元素</canvas>
+
+    <script>
+        /**
+         * 参考：https://www.runoob.com/tags/ref-canvas.html
+         * */
+        // 2、获取画布
+        const canvas = document.getElementById("canvas");
+        // 3、获取画布元素的上下文环境对象
+        const context = canvas.getContext("2d"); // 获取二维画笔工具集
+        console.log("context", context);
+
+        // 4、使用上下文环境对象绘制图形，保存在内存中
+        // 4.2、画笔移动到一个位置：设置线起始点（起点）
+        context.moveTo(50, 50);
+
+        // 4.2、拖动画笔绘制。绘制一个线条(终点)
+        context.lineTo(200, 200); // 从当前位置绘制直线到x,y坐标
+
+        // 5、绘制已定义的路径
+        context.stroke();
+
+        // font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif
+    </script>
+</body>
+
+</html>

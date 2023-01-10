@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>清除浮动</title>
+    <style>
+        .father2 {
+            background-color: red;
+            width: 500px;
+            overflow: hidden;
+        }
+        
+        .father {
+            background-color: orange;
+            width: 500px;
+            /* height: 300px; */
+        }
+        
+        .son {
+            background-color: skyblue;
+            width: 200px;
+            height: 300px;
+            float: left;
+        }
+        
+        .clean-float {
+            /* 清除浮动 */
+            clear: both;
+        }
+        
+        .father-after {
+            width: 500px;
+            background-color: darkolivegreen;
+        }
+        
+        .clearfix2::after {
+            content: "";
+            display: block;
+            clear: both;
+            /* 让页面看不到伪元素 */
+            height: 0;
+            visibility: hidden;
+        }
+        
+        .clearfix::before,
+        .clearfix::after {
+            content: "";
+            display: table;
+        }
+        
+        .clearfix::after {
+            clear: both;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="father2">
+        <div class="son">子元素</div>
+    </div>
+    <hr>
+
+    <div class="father">
+        <div class="son">子元素</div>
+        <!-- 清除浮动的块元素 -->
+        <div class="clean-float"></div>
+    </div>
+    <hr>
+
+
+    <div class="father-after clearfix">
+        <div class="son">子元素</div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex布局-主轴对齐方式</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .box {
+            /* 视觉效果：子项水平排列（一行） */
+            /* 水平排列：弹性盒子沿着主轴排列，默认主轴的排列方向是水平的 */
+            display: flex;
+            /* 容器主轴对齐方式*/
+            /* （1）从起始点开始排列，没有间隙 */
+            /* justify-content: flex-start; */
+            /* （2）从终点出开始排列，没有间隙 */
+            /* justify-content: flex-end; */
+            /* （3）排列在容器的中间，没有间隙 */
+            /* justify-content: center; */
+            /* （4）盒子间留有空隙，两侧空隙为盒子间空隙的一半 */
+            justify-content: space-around;
+            /* （5）盒子间留有空隙，两侧空隙不留空隙 */
+            /* justify-content: space-between; */
+            /* （6）盒子间留有空隙，两侧空隙等于盒子间的空隙 */
+            /* justify-content: space-evenly; */
+            border: 1px solid red;
+        }
+        
+        .box>div {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+    </div>
+</body>
+
+</html>

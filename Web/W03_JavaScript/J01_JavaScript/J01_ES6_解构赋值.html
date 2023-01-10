@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解构赋值</title>
+</head>
+
+<body>
+    <script>
+        setArr(...[1, 2, 3, 4])
+        setArr(...[1, 2, 3])
+        setArr(...[1, 2, 3, 4, 5])
+
+        function setArr(a, b, c, d) {
+            console.log("a,b,c,d", a, b, c, d);
+        }
+
+        // 异步调用
+        // Promise 的基本使用
+        let pro = new Promise(function(resolve, reject) {
+            // 实现异步调用
+            setTimeout(function() {
+                var flag = true;
+
+                if (flag) {
+                    resolve("data");
+                } else {
+                    reject("error info");
+                }
+
+            }, 100);
+        });
+
+        pro.then(function(data) {
+            // console.log(data);
+        }, function(info) {
+            console.log(info);
+        });
+
+
+        function getInfo() {
+            return Promise.resolve("Promise getInfo");
+        }
+
+        let infoPromise = getInfo();
+        console.log("infoPromise", infoPromise);
+        infoPromise.then(info => {
+            // console.log("infoPromise", info);
+        });
+
+
+        // 解构赋值
+        const info = {
+            "selectColor": {
+                // 选取对象的显示风格，模型纹理与颜色混合显示或纯色显示。参考 Cesium.SelectColorType 的取常量值。
+                "selectColorType": 1, // 默认 Cesium.SelectColorType.MIX，取值为0。纯色显示：Cesium.SelectColorType.REPLACE，取值为1
+                // 选中图层显示的高亮颜色
+                "selectedColor2": {
+                    alpha: 1,
+                    blue: 1,
+                    green: 0.7,
+                    red: 0.7
+                }
+            }
+        }
+        console.log("info", info);
+
+        const {
+            selectColor = {
+                selectColorType: 2,
+                selectedColor: {},
+                // type:2
+            }
+        } = info;
+        console.log("selectColor", selectColor);
+
+        let layerInfo = {
+            selectColor: {
+                selectColorType: 2,
+                selectedColor: {},
+                type: 2
+            }
+        };
+        Object.assign(layerInfo, info);
+
+        console.log("layerInfo", layerInfo);
+    </script>
+</body>
+
+</html>

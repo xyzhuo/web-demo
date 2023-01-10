@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex布局-伸缩比</title>
+    <style>
+        .box {
+            display: flex;
+            height: 300px;
+            border: 1px solid red;
+        }
+        
+        .box div {
+            height: 200px;
+            /* 这里为了便于观察子元素的内容宽度。没有设置的话，内容是拼接在一切的。 */
+            margin: 0 20px;
+            background-color: pink;
+        }
+        
+        .box div:nth-child(1) {
+            width: 50px;
+        }
+        
+        .box div:nth-child(2) {
+            /* （1）如果只是这里设置了flex属性【nth-child(2)没有设置宽度、flex属性】*/
+            /* 剩余内容为： 【 .box宽度 】 - 【 nth-child(1)的宽度 】 - 【 nth-child(3)内容自动填充的宽度 】 */
+            flex: 1;
+            /* （2）nth-child(3) ==> 设置了 flex: 3后，需要将剩余的内容划分为4份，nth-child(2)占有1份*/
+            /* 剩余内容为： 【 .box宽度 】 - 【 nth-child(1)的宽度 】 */
+        }
+        
+        .box div:nth-child(3) {
+            /* 占有剩余内容的3份*/
+            flex: 3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+    </div>
+</body>
+
+</html>

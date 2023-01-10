@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>加载广州2000平面坐标系</title>
+    <!-- 本地引入依赖 -->
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium/Cesium.js"></script>
+
+    <script src="../lib/iServerQuery/SuperMap-7.1-11828.js"></script>
+
+    <!-- 使用远程依赖 -->
+    <!-- <link href="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Cesium.js"></script> -->
+
+    <!-- Earth -->
+    <!--<link href="http://www.supermapol.com/earth/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script type="text/javascript" src="http://www.supermapol.com/earth/Build/Cesium/Cesium.js"></script>-->
+
+    <!--<script src="http://support.supermap.com.cn:8090/webgl/examples/webgl/js/supermap/SuperMap-7.1-11828.js"></script>-->
+
+    <!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>-->
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+
+    <script type="text/javascript">
+        const viewer = new Cesium.Viewer("cesiumContent", {
+            navigation: false,
+            infoBox: false
+        });
+        const scene = viewer.scene;
+        // viewer.sceneMode = Cesium.SceneMode.COLUMBUS_VIEW;
+        scene.mode = Cesium.SceneMode.COLUMBUS_VIEW; // 设置为哥伦布模式
+        viewer.imageryLayers._layers[0].show = false; // 隐藏默认背景图层
+        scene.globe.baseColor = Cesium.Color.WHITE;
+
+        // var point = new Cesium.Cartesian3(79814.20432301628, 239601.87928034933, 285188.58983803046);
+        // var pointCartographic = scene.camera._projection.unproject(point);
+        // var pointCX = Cesium.Math.toDegrees(pointCartographic.longitude);
+        // var pointCY = Cesium.Math.toDegrees(pointCartographic.latitude);
+
+        // //设置相机位置，定位至模型
+        // scene.camera.flyTo({
+        //     destination: Cesium.Cartesian3.fromDegrees(pointCX, pointCY, pointCartographic.height),
+        //     orientation: {
+        //         heading: 4.4231285301066237e-13,
+        //         pitch: -1.5707963267948966,
+        //         roll: 0
+        //     }
+        // });
+
+        // 加载广州坐标系二维影像
+        const layer = viewer.imageryLayers.addImageryProvider(new Cesium.SuperMapImageryProvider({
+            url: 'http://localhost:8090/iserver/services/map-ugcv5-2020WPCGCS2000ZW2V2014/rest/maps/2020WP_CGCS2000_ZW2_V2014',
+            tilingScheme: new Cesium.WebMercatorTilingScheme({
+                projection: new Cesium.GeographicProjection()
+            })
+        }));
+        console.log("layer", layer);
+
+        scene.open("http://localhost:8090/iserver/services/3D-nanshai/rest/realspace");
+    </script>
+</body>
+
+</html>

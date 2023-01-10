@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>鼠标移入显示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .father {
+            width: 300px;
+            height: 300px;
+            background-color: skyblue;
+        }
+        
+        .son {
+            width: 100px;
+            height: 100px;
+            /* 设置背景颜色和图片，让背景图片居中显示 */
+            background: pink;
+            display: none;
+        }
+        
+        .father:hover .son {
+            /* 当鼠标移入到 .father 里面时 .son 显示 */
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="father">
+        <div class="son"></div>
+    </div>
+</body>
+
+</html>

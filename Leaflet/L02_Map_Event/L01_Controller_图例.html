@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Leaflet地图控件</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css">
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script>
+
+    <!-- jQuery -->
+    <script src="../lib/jQuery/jquery-3.2.1.min.js"></script>
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <div id="latlngInfo" style="position: absolute;z-index: 9999;left: 10px;bottom: 0px;"></div>
+    <script type="text/javascript">
+        /**
+         * https://blog.csdn.net/jsrookie/article/details/84814149
+         * 缩放滑块
+         * L.Control.Zoomslider
+         * */
+
+        let map = L.map('map', {
+            center: [23.458207269894125, 113.48739624023439], // 地图初始化后的中心点
+            zoom: 10, // 地图初始化后显示的层级
+            maxZoom: 18, // 地图显示最大层级
+            zoomControl: false, // 缩放控件，默认true，显示控件
+            crs: L.CRS.TianDiTu_WGS84CRS, // 设置坐标系
+        });
+
+        // 添加地图
+        L.supermap.tiandituTileLayer({
+            // layerType: "img",
+            key: "1d109683f4d84198e37a38c442d68311"
+        }).addTo(map);
+
+        // 添加地图图例控件
+        initLegendView();
+
+        /**
+         * 图例控件
+         */
+        function initLegendView() {
+
+            const legendView = L.control({
+                position: "bottomright"
+            });
+            legendView.onAdd = function() {
+                console.log("div");
+                this._div = L.DomUtil.create("div", "panel panel-primary legend "); // 创建一个div元素，并设置元素的class属性
+                // 通过style修改样式
+                this._div.style.background = "#dddbd7";
+                this._div.style.borderRadius = "5px";
+                this._div.style.padding = "5px";
+
+                // 图例的每一项
+                const title = "<div class='panel-heading'><h5 class='panel-title text-center'>图列</h5></div>";
+                $(title +
+                    "<div class='panel-body text-left'><table>" +
+                    "<tr><td class='legendItemHeader'>土地类型</td><td class='legendItemValue'>颜色</td></tr>" +
+                    "<tr> <td class='legendItemHeader'>草地</td> <td class='legendItemValue' style='background: #C1FFC1'></td></tr>" +
+                    "<tr> <td class='legendItemHeader'>城市</td> <td class='legendItemValue' style='background: #CD7054'></td> </tr>" +
+                    "<tr> <td class='legendItemHeader'>灌丛</td> <td class='legendItemValue' style='background: #7CCD7C'></td> </tr>" +
+                    "<tr> <td class='legendItemHeader'>旱地</td> <td class='legendItemValue' style='background: #EE9A49'></td> </tr>" +
+                    "<tr> <td class='legendItemHeader'>湖泊水库</td> <td class='legendItemValue' style='background: #8EE5EE'></td> </tr>" +
+                    "<tr> <td class='legendItemHeader'>经济林</td> <td class='legendItemValue' style='background: #548B54'></td> </tr>" +
+                    "<tr><td class='legendItemHeader'>沙漠</td> <td class='legendItemValue' style='background: #DEB887'></td> </tr>" +
+                    "<tr><td class='legendItemHeader'>水浇地</td> <td class='legendItemValue' style='background: #E0FFFF'></td> </tr>" +
+                    "<tr><td class='legendItemHeader'>水田</td> <td class='legendItemValue' style='background: #388E8E'></td> </tr>" +
+                    "<tr> <td class='legendItemHeader'>用材林</td> <td class='legendItemValue' style='background: #556B2F'></td> </tr>" +
+                    "<tr> <td class='legendItemHeader'>沼泽</td> <td class='legendItemValue' style='background: #2F4F4F'></td> </tr>" +
+                    "<tr> <td class='legendItemHeader'>缺省风格</td> <td class='legendItemValue' style='background: #ABABAB'></td> </tr>" +
+                    "</table></div>"
+                ).appendTo(this._div);
+                handleMapEvent(this._div, this._map);
+                return this._div;
+            };
+            legendView.addTo(map);
+        }
+
+        function handleMapEvent(div, map) {
+            if (!div || !map) {
+                return;
+            }
+            div.addEventListener("mouseover", function() {
+                map.dragging.disable(); // 是否允许地图被鼠标拖动，默认true
+                map.scrollWheelZoom.disable(); // 是否启用滚轮缩放，默认true
+                map.doubleClickZoom.disable(); // 双击放大
+            });
+            div.addEventListener("mouseout", function() {
+                map.dragging.enable();
+                map.scrollWheelZoom.enable();
+                map.doubleClickZoom.enable();
+            });
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Leaflet地图控件</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css">
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script>
+
+    <!-- Leaflet卷帘扩展插件 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet.sidebyside/leaflet-side-by-side.js"></script>
+
+    <link rel="stylesheet" href="../lib/leaflet/@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.min.js">
+    <script type="text/javascript" src="../lib/leaflet/@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.min.js"></script>
+
+    <!-- Leaflet鹰眼图插件 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet.miniMap/3.6.1/dist/Control.MiniMap.min.css">
+    <script type="text/javascript" src="../lib/leaflet/leaflet.miniMap/3.6.1/dist/Control.MiniMap.js"></script>
+
+    <!-- jQuery -->
+    <script src="../lib/jQuery/jquery-3.2.1.min.js"></script>
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <div id="latlngInfo" style="position: absolute;z-index: 9999;left: 10px;bottom: 0px;"></div>
+    <script type="text/javascript">
+        /**
+         * 通过 L.control 进行图层控制
+         * */
+        let map = L.map("map", {
+            center: [23.458207269894125, 113.48739624023439], // 地图初始化后的中心点
+            zoom: 3, // 地图初始化后显示的层级
+            maxZoom: 18, // 地图显示最大层级
+            zoomControl: false, // 缩放控件，默认true，显示控件
+            crs: L.CRS.TianDiTu_Mercator, // 设置坐标系 L.CRS.TianDiTu_WGS84
+            // layers: [tiandituImg, tiandituVec] // 图层列表
+        });
+
+
+        // 加载天地图影像
+        const tiandituImg = L.supermap
+            .tiandituTileLayer({
+                layerType: 'img',
+                key: '1d109683f4d84198e37a38c442d68311'
+            }).addTo(map);
+
+        // 加载天地图影像标注
+        const tiandituImgLabel = L.supermap
+            .tiandituTileLayer({
+                layerType: 'img',
+                isLabel: true,
+                key: '1d109683f4d84198e37a38c442d68311'
+            })
+            // .addTo(map);
+
+        // 加载天地图矢量
+        const tiandituVec = L.supermap
+            .tiandituTileLayer({
+                key: '1d109683f4d84198e37a38c442d68311'
+            }).addTo(map);
+
+        // 加载天地图矢量标注
+        const tiandituVecLabel = L.supermap
+            .tiandituTileLayer({
+                isLabel: true,
+                key: '1d109683f4d84198e37a38c442d68311'
+            }).addTo(map);
+
+        /***
+         * 
+         * 图层列表控件 中 要控制的图层列表
+         *      图层控件，需要指定图层及名称
+         * 参数：
+         *      baseLayers：互斥的图层（在地图上同一时间只能有一个图层可见），以单选形式展示
+         *          参数：
+         *              {
+         *                  "name显示的图层名称": 图层对象,
+         *                  "天地图矢量": tiandituVec
+         *              }
+         *      overLayers：在base layer之上放置的其他东西，以checkbox形式展示。
+         */
+        // 直接控制一个Leaflet的图层
+        // L.control.layers({
+        //     tiandituImg,
+        //     tiandituVec
+        // }).addTo(map); // 图层控件，需要指定图层及名称
+
+        // 图层组一：base layer—互斥的图层（在地图上同一时间只能有一个图层可见）
+        const baseLayers = {
+            // "tiandituImg": tiandituImg,
+            // "tiandituVec": tiandituVec
+            "天地图影像": tiandituImg,
+            "天地图矢量": tiandituVec
+        };
+
+        // 图层组二
+        const overLayers = {
+            "天地图影像标注": tiandituImgLabel, // tiandituImgLabel，图层在地图中不加载，控制列表中不勾选
+            // "<h3>天地图矢量标注</h3>": tiandituVecLabel // tiandituVecLabel，对象的key可以为html元素，leaflet会渲染
+            "天地图矢量标注": tiandituVecLabel // tiandituVecLabel，对象的key可以为html元素，leaflet会渲染
+        };
+
+        // 加载图层到图层控制列表
+        const layersControl = L.control.layers(baseLayers, overLayers).addTo(map);
+        // layersControl.addOverlay(layer, e.layerName); // 在图层控制管理器中动态添加覆盖图层
+        // layersControl.addBaseLayer(layer, e.layerName); // 在图层控制管理器中动态添加基础图层
+    </script>
+
+</body>
+
+</html>

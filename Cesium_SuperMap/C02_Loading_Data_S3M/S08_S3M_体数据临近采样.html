@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>体数据临近采样</title>
+    <!-- 本地引入依赖 -->
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium/Cesium.js"></script>
+
+    <script src="../lib/jQuery/jquery-3.2.1.min.js"></script>
+
+    <script src="../lib/iServerQuery/SuperMap-7.1-11828.js"></script>
+
+    <!-- 使用远程依赖 -->
+    <!-- <link href="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Cesium.js"></script> -->
+
+    <!-- Earth -->
+    <!--<link href="http://www.supermapol.com/earth/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script type="text/javascript" src="http://www.supermapol.com/earth/Build/Cesium/Cesium.js"></script>-->
+
+    <!--<script src="http://support.supermap.com.cn:8090/webgl/examples/webgl/js/supermap/SuperMap-7.1-11828.js"></script>-->
+
+    <!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>-->
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            -webkit-user-select: none;
+        }
+        
+        div>label {
+            background-color: #adf;
+            padding: 5px;
+            margin: 5px;
+        }
+        
+        div>button {
+            background-color: #adf;
+            padding: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+
+    <div style="position: absolute; top: 20px; left: 20px;border: 1px solid rgb(6, 168, 231); padding: 10px;">
+        <div class="param-item">
+            <label>倾斜透明度</label>
+            <input type="number" id="layerAlpha" min="0" max="1" value="0" step="0.1" style="width: 140px">
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        let viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false
+        });
+        let scene = viewer.scene;
+        const camera = viewer.camera;
+
+        let promise = scene.open("http://www.supermapol.com/realspace/services/3D-compare/rest/realspace");
+        let layer;
+        let layers;
+        promise.then(_layers => {
+            layer = _layers[0];
+            layers = _layers;
+            console.log("layers", layers);
+
+            for (let _layer of layers) {
+
+                _layer.selectEnabled = false;
+                _layer.cullEnabled = true;
+                _layer.style3D.fillStyle = Cesium.FillStyle.Fill_And_WireFrame;
+                _layer.wireFrameMode = Cesium.WireFrameType.Sketch;
+                _layer.style3D.lineColor = Cesium.Color.fromCssColorString("#9F9F9F");
+                _layer.style3D.lineWidth = 0.5;
+            }
+
+            let colorTable = new Cesium.ColorTable();
+
+            colorTable.insert(0, Cesium.Color.fromCssColorString("#ec0300"));
+            colorTable.insert(4.99, Cesium.Color.fromCssColorString("#ec0300"));
+            colorTable.insert(5, Cesium.Color.fromCssColorString("#f89c01"));
+            colorTable.insert(9.99, Cesium.Color.fromCssColorString("#f89c01"));
+            colorTable.insert(10, Cesium.Color.fromCssColorString("#fffd00"));
+            colorTable.insert(19.99, Cesium.Color.fromCssColorString("#fffd00"));
+            colorTable.insert(20, Cesium.Color.fromCssColorString("#37ce00"));
+            colorTable.insert(29.99, Cesium.Color.fromCssColorString("#37ce00"));
+            colorTable.insert(30, Cesium.Color.fromCssColorString("#0000fa"));
+            colorTable.insert(39.99, Cesium.Color.fromCssColorString("#0000fa"));
+            colorTable.insert(40, Cesium.Color.fromCssColorString("#ff00cc"));
+            colorTable.insert(49.99, Cesium.Color.fromCssColorString("#ff00cc"));
+            colorTable.insert(50, Cesium.Color.fromCssColorString("#000000"));
+
+            let hypsometricSetting = new Cesium.HypsometricSetting();
+            hypsometricSetting.ColorTable = colorTable;
+            hypsometricSetting.DisplayMode = Cesium.HypsometricSettingEnum.DisplayMode.FACE;
+            hypsometricSetting.Opacity = 1.0;
+            hypsometricSetting.LineInterval = 1.0;
+            hypsometricSetting.ColorTableMaxKey = layer._fMaxValue;
+            hypsometricSetting.ColorTableMinKey = layer._fMinValue;
+            hypsometricSetting.MaxVisibleValue = layer._fMaxValue;
+            hypsometricSetting.MinVisibleValue = layer._fMinValue;
+            hypsometricSetting.filterMode = Cesium.HypsometricSettingEnum.FilterMode.NEAREST;
+            layer.hypsometricSetting = {
+                hypsometricSetting: hypsometricSetting,
+                analysisMode: Cesium.HypsometricSettingEnum.AnalysisRegionMode.ARM_ALL
+            }
+
+        });
+
+        // 点击进行属性查询
+        let handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+        handler.setInputAction(function(e) {
+            console.log(e);
+            labelPosition = e;
+            clickPt = scene.pickPosition(e.position);
+            let ellipsoid = viewer.scene.globe.ellipsoid;
+            let cartographic = ellipsoid.cartesianToCartographic(clickPt);
+            let lat = Cesium.Math.toDegrees(cartographic.latitude);
+            let lng = Cesium.Math.toDegrees(cartographic.longitude);
+
+            query({
+                x: lng,
+                y: lat
+            });
+            //创建弹出框信息
+
+        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+        function query(pt) {
+            var geometry = new SuperMap.Geometry.Point(pt.x, pt.y);
+            var getFeatureParameter, getFeatureService;
+            getFeatureParameter = new SuperMap.REST.GetFeaturesByBufferParameters({
+                bufferDistance: 0.00005,
+                //attributeFilter: "SMID > 0",
+                datasetNames: ["mr:mr"],
+                returnContent: true,
+                geometry: geometry
+            });
+            getFeatureService = new SuperMap.REST.GetFeaturesByBufferService("http://www.supermapol.com/realspace/services/data-compare/rest/data", {
+                eventListeners: {
+                    "processCompleted": processCompleted,
+                    "processFailed": null
+                }
+            });
+            getFeatureService.processAsync(getFeatureParameter);
+
+        }
+
+        function processCompleted(result) {
+            console.log("查询结果：result", result);
+        }
+    </script>
+</body>
+
+</html>

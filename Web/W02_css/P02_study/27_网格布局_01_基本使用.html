@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>网格布局</title>
+    <style>
+        .box {
+            /* 使用网格布局：块级网格 */
+            display: grid;
+            width: 100px;
+            height: 100px;
+            background-color: skyblue;
+        }
+        
+        .box02 {
+            /* 使用网格布局：行内网格 */
+            display: inline-grid;
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <span>头上</span>
+        <span class="box"> </span>
+        <span>脚下</span>
+    </div>
+    <hr>
+    <div>
+        <span>左护法</span>
+        <div class="box02"></div>
+        <span>右护法</span>
+    </div>
+</body>
+
+</html>

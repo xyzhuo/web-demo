@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>伪类选择器</title>
+    <style>
+        .father {
+            width: 300px;
+            height: 300px;
+            background-color: orange;
+        }
+        
+        .father::before {
+            /* 在元素的html子元素之后添加内容 */
+            content: "我是通过伪元素::before添加的";
+            display: block;
+            width: 230px;
+            height: 100px;
+            background-color: springgreen;
+        }
+        
+        .father::after {
+            /* 在元素的html子元素之后添加内容 */
+            content: "我是通过伪元素::after添加的";
+            display: block;
+            width: 230px;
+            height: 100px;
+            background-color: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="father">
+        <h3>我是father元素的内容</h3>
+    </div>
+</body>
+
+</html>

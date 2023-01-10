@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>加载ArcGIS地图</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css">
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script>
+
+    <!-- Arcgis 提供的插件 -->
+    <script src="../lib/leaflet/esri-leaflet@2.2.1/dist/esri-leaflet.js"></script>
+
+    <!-- jQuery -->
+    <script src="../lib/jQuery/jquery-3.2.1.min.js"></script>
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <div id="latlngInfo" style="position: absolute;z-index: 9999;left: 10px;bottom: 0px;"></div>
+    <script type="text/javascript">
+        /**
+         * ArcGIS Leaflet 提供的在线帮助
+         *      
+         */
+
+        let map = L.map("map", {
+            center: [23.458207269894125, 113.48739624023439], // 地图初始化后的中心点
+            zoom: 3, // 地图初始化后显示的层级
+            maxZoom: 18, // 地图显示最大层级
+        });
+
+        // // 加载Arcgis server提供的地图服务
+        // L.esri.tiledMapLayer({
+        //     url: "https://metadata.maptiles.arcgis.com/arcgis/rest/services/World_Imagery_Metadata_2022_r02/MapServer"
+        // }).addTo(map);
+
+        // // 加载arcgis切片地图服务：使用xyz格式
+        // L.tileLayer("http://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineCommunity/MapServer/tile/{z}/{y}/{x}", {
+        //     maxZoom: 18,
+        //     minZoom: 4,
+        //     pane: "overlayPane"
+        // }).addTo(map);
+
+        L.supermap.wmtsLayer("http://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineCommunity/MapServer/WMTS", {
+            layer: "ChinaOnlineCommunity",
+            style: "default",
+            tilematrixSet: "default028mm",
+            format: "image/png",
+            // requestEncoding: "REST"
+        }).addTo(map);
+
+        // L.supermap.wmtsLayer("https://metadata.maptiles.arcgis.com/arcgis/rest/services/World_Imagery_Metadata_2022_r02/MapServer/WMTS", {
+        //     layer: "World_Imagery_Metadata_2022_r02",
+        //     style: "default",
+        //     tilematrixSet: "default028mm",
+        //     format: "image/png",
+        //     // requestEncoding: "REST"
+        // }).addTo(map);
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>加载SuperMap地形服务</title>
+    <!-- 本地引入依赖 -->
+    <link href="../../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../../lib/Cesium/Cesium.js"></script>
+
+    <!-- 使用远程依赖 -->
+    <!-- <link href="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Cesium.js"></script> -->
+
+    <!-- Earth -->
+    <!--<link href="http://www.supermapol.com/earth/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script type="text/javascript" src="http://www.supermapol.com/earth/Build/Cesium/Cesium.js"></script>-->
+
+    <!--<script src="http://support.supermap.com.cn:8090/webgl/examples/webgl/js/supermap/SuperMap-7.1-11828.js"></script>-->
+
+    <!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>-->
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+
+    <script type="text/javascript">
+        /***
+         * SuperMap地形数据处理：https://www.jianshu.com/p/8df809ee93cb
+         *      https://blog.csdn.net/supermapsupport/article/details/89448119
+         */
+
+        var viewer;
+
+        viewer = new Cesium.Viewer('cesiumContainer');
+        let scene = viewer.scene;
+        scene.debugShowFramesPerSecond = true; //显示帧率，默认不显示
+
+        // 加载iServer发布的地形服务
+        viewer.terrainProvider = new Cesium.CesiumTerrainProvider({
+            url: "http://localhost:8090/iserver/services/3D-hndem/rest/realspace/datas/hndem",
+            requestWaterMask: true,
+            requestVertexNormals: true,
+            isSct: true
+        });
+
+        // 加载iServer转发的天地图服务
+        let imgUrl = "https://106.15.40.105:8090/iserver/services/map-tianditu/rest/maps/影像底图_墨卡托";
+        viewer.imageryLayers.addImageryProvider(new Cesium.SuperMapImageryProvider({
+            url: imgUrl
+        }));
+
+        // 相机定位
+        viewer.camera.flyTo({
+            destination: new Cesium.Cartesian3(-1988563.5178758805, 5718827.479041204, 2013984.4098543907),
+            orientation: {
+                heading: 0.22306936756003282,
+                pitch: -0.3238648446870178,
+                roll: 6.283185307179572
+            }
+        });
+    </script>
+</body>
+
+</html>

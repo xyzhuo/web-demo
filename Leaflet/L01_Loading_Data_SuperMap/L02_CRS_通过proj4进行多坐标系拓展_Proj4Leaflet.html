@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>使用原生Leaflet加载iServer的WMS服务</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- 投影定义 -->
+    <script src="../lib/leaflet/proj4js/2.4.3/proj4.js"></script>
+    <!-- Leaflet对proj4的扩展插件 -->
+    <script src="../lib/leaflet/proj4leaflet/1.0.1/proj4leaflet.js"></script>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css"> -->
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script> -->
+
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <!-- 坐标信息 -->
+    <div id="latlngInfo" style="position: absolute;z-index: 9999;left: 10px;bottom: 0px;">latlng</div>
+    <script type="text/javascript">
+        /**
+         * EPSG参考：
+         *      https://epsg.io/4490 
+         * 
+         * Proj4Leaflet仓库地址
+         *      https://github.com/kartena/Proj4Leaflet
+         * 
+         * L.Proj.CRS(code, proj4def, options) 参数：
+         * code是投影的 SRS 代码（仅由 Proj4js 库内部使用）
+         * proj4def是投影使用的 Proj4 定义字符串
+         * options是一个带有这些可能参数的选项对象：
+         *      origin- 用作地图像素原点的投影坐标；如果设置，则覆盖transformation选项
+         *      transformation-用于将投影坐标转换​​为像素坐标的L.Transformation ；默认是L.Transformation(1, 0, -1, 0)
+         *      scales- 每个相应缩放级别的比例数组（每个投影坐标单元的像素）；默认是使用 Leaflet 的原生音阶。您应该使用scales or resolutions，而不是两者。
+         *      resolutions- 每个相应缩放级别的分辨率数组（每个像素的投影坐标单位）；默认是使用 Leaflet 的原生分辨率。您应该使用scales or resolutions，而不是两者。
+         *      bounds-在投影坐标中提供 CRS 边界的L.Bounds 。如果已定义，Proj4Leaflet 将在getSize方法中使用它，否则将恢复为 Leaflet 的 Spherical Mercator 的默认大小。
+         */
+
+        // 定义坐标系
+        const crs = new L.Proj.CRS('EPSG:3006',
+            '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs', {
+                origin: [218128.7031, 6126002.9379],
+                resolutions: [8192, 4096, 2048] // 3 example zoom level resolutions。3个例子缩放级别分辨率
+            }
+        );
+
+        // 创建地图
+        const map = L.map("map", {
+            crs: crs, // 设置为自定义的坐标系
+            center: [0, 0], // 地图中心
+            zoom: 5, //缩放比列
+            continuousWorld: true,
+            worldCopyJump: false
+        });
+
+
+        // 鼠标移动事件
+        map.on("mousemove", function(event) {
+            // console.log("mousemove event", event);
+            document.getElementById("latlngInfo").innerHTML = `x：${event.latlng.lng}，y：${event.latlng.lat}`;
+        });
+    </script>
+</body>
+
+</html>

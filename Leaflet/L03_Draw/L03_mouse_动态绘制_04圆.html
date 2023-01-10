@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>leaflet绘制圆</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css"> -->
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script> -->
+
+    <!-- <script src="../lib/jQuery/jquery-3.2.1.min.js"></script> -->
+
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <script type="text/javascript">
+        /**
+         * 动态绘制图形(点、线、圆、多边形)
+         * https://blog.csdn.net/xtfge0915/article/details/80275094
+         * 
+         * 鼠标按下：确定圆心
+         * 按住拖动鼠标：确定半径
+         * 松开鼠标：绘制
+         * */
+        const map = L.map("map", {
+            center: [23.458207269894125, 113.48739624023439], // 地图初始化后的中心点
+            zoom: 5, // 地图初始化后显示的层级
+            maxZoom: 18, // 地图显示最大层级
+            crs: L.CRS.EPSG4326
+        });
+
+        // 添加地图
+        L.tileLayer("http://t{s}.tianditu.com/img_c/wmts?layer=img&style=default&tilematrixset=c&Service=WMTS&Request=GetTile&Version=1.0.0&Format=tiles&TileMatrix={z}&TileCol={x}&TileRow={y}&tk=93724b915d1898d946ca7dc7b765dda5", {
+            subdomains: [0, 1, 2, 3, 4, 5, 6, 7],
+            maxZoom: 18,
+            tileSize: 256,
+            zoomOffset: 1,
+            minZoom: 1
+        }).addTo(map);
+
+        var radius = 0
+        var center = null
+        var tempCircle = new L.circle()
+        var circle;
+
+        map.on("mousedown", onmouseDown);
+        map.on("mouseup", onmouseUp);
+        map.on("mousemove", onMove)
+
+        function onmouseDown(event) {
+            // 确定圆心
+            center = event.latlng;
+            // 绘制时，禁用地图点击移动
+            map.dragging.disable();
+        }
+
+        function onMove(event) {
+            if (center) {
+                radius = L.latLng(event.latlng).distanceTo(center);
+                tempCircle.setLatLng(center);
+                tempCircle.setRadius(radius);
+                tempCircle.setStyle({
+                    color: "#0066ff",
+                    fillColor: "#0066ff66",
+                    fillOpacity: 0.5
+                })
+                map.addLayer(tempCircle)
+            }
+        }
+
+        function onmouseUp(event) {
+            radius = L.latLng(event.latlng).distanceTo(center); //计算半径
+            console.log("半径", radius);
+            if (tempCircle) {
+                tempCircle.removeFrom(map)
+            }
+            circle = L.circle(center, {
+                radius: radius,
+                color: "#ff0000",
+                fillColor: "#ff0000",
+                fillOpacity: 0.5
+            }).addTo(map);
+            center = null;
+            radius = 0;
+            map.dragging.enable(); // 开启鼠标长按拖动地图
+        }
+    </script>
+</body>
+
+</html>

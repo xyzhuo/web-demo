@@ -1,0 +1,1956 @@
+{
+    "metadata": {
+        "mapcenter": [
+            113.21382754294032,
+            23.425180283117115
+        ],
+        "indexbounds": [-180, -270,
+            180,
+            90
+        ],
+        "mapscale": 0.000003461455053784833,
+        "epsgcode": 0,
+        "topscale": 3.38032714320531e-9,
+        "mapbounds": [
+            112.9527861828372,
+            23.23318806597193,
+            113.47486890304344,
+            23.617172500262296
+        ]
+    },
+    "sources": {
+        "Huadu": {
+            "tiles": [
+                "http://localhost:8090/iserver/services/map-mvt-Huadu/restjsr/v1/vectortile/maps/Huadu/tiles/{z}/{x}/{y}.mvt"
+            ],
+            "bounds": [-180, -90,
+                180,
+                90
+            ],
+            "type": "vector"
+        }
+    },
+    "center": [
+        113.21382754294032,
+        23.425180283117115
+    ],
+    "name": "Huadu",
+    "sprite": "http://localhost:8090/iserver/services/map-mvt-Huadu/restjsr/v1/vectortile/maps/Huadu/sprites/sprite",
+    "layers": [{
+            "paint": {
+                "background-color": "rgba(255,255,255,1.00)"
+            },
+            "id": "background",
+            "type": "background"
+        },
+        {
+            "layout": {
+                "visibility": "visible"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花都区界Buffer20@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "fill-pattern": "fill_955826_",
+                "fill-antialias": true
+            },
+            "id": "花都区界Buffer20@huadu20210218(8_21)",
+            "source": "Huadu",
+            "source-layer": "花都区界Buffer20@huadu20210218",
+            "type": "fill",
+            "minzoom": 8
+        },
+        {
+            "layout": {
+                "visibility": "visible"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花都区界Buffer20@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 11.34,
+                "line-color": "rgba(239,194,215,1.00)"
+            },
+            "id": "花都区界Buffer20@huadu20210218_outline(8_21)",
+            "source": "Huadu",
+            "source-layer": "花都区界Buffer20@huadu20210218",
+            "type": "line",
+            "minzoom": 8
+        },
+        {
+            "layout": {
+                "visibility": "visible"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花都区界Buffer10@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "fill-color": "rgba(245,243,240,1.00)",
+                "fill-antialias": true
+            },
+            "id": "花都区界Buffer10@huadu20210218(8_21)",
+            "source": "Huadu",
+            "source-layer": "花都区界Buffer10@huadu20210218",
+            "type": "fill",
+            "minzoom": 8
+        },
+        {
+            "layout": {
+                "visibility": "visible"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花都区界Buffer10@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.78,
+                "line-dasharray": [
+                    2.5,
+                    2
+                ],
+                "line-color": "rgba(128,128,128,1.00)"
+            },
+            "id": "花都区界Buffer10@huadu20210218_outline(8_21)",
+            "source": "Huadu",
+            "source-layer": "花都区界Buffer10@huadu20210218",
+            "type": "line",
+            "minzoom": 8
+        },
+        {
+            "layout": {
+                "visibility": "visible"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花都区界_1@huadu20210218#1#1"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "fill-color": "rgba(245,243,240,1.00)",
+                "fill-antialias": true
+            },
+            "id": "花都区界_1@huadu20210218#3(8_21)",
+            "source": "Huadu",
+            "source-layer": "花都区界_1@huadu20210218",
+            "type": "fill",
+            "minzoom": 8
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "round",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花都区界_1@huadu20210218#1#1"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 0.38,
+                "line-dasharray": [
+                    20,
+                    20
+                ],
+                "line-color": "rgba(178,178,178,1.00)"
+            },
+            "id": "花都区界_1@huadu20210218#3_outline_0(8_21)",
+            "source": "Huadu",
+            "source-layer": "花都区界_1@huadu20210218",
+            "type": "line",
+            "minzoom": 8
+        },
+        {
+            "layout": {
+                "visibility": "visible"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花都绿化@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "fill-color": "rgba(193,220,185,1.00)",
+                "fill-antialias": true
+            },
+            "id": "花都2绿化@huadu20210218(12_21)",
+            "source": "Huadu",
+            "source-layer": "花都绿化@huadu20210218",
+            "type": "fill",
+            "minzoom": 12
+        },
+        {
+            "layout": {
+                "visibility": "visible"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "绿地@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "fill-color": "rgba(193,220,185,1.00)",
+                "fill-antialias": true
+            },
+            "id": "绿地@huadu20210218(12_21)",
+            "source": "Huadu",
+            "source-layer": "绿地@huadu20210218",
+            "type": "fill",
+            "minzoom": 12
+        },
+        {
+            "layout": {
+                "visibility": "visible"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花都水系@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "fill-color": "rgba(167,192,224,1.00)",
+                "fill-antialias": true
+            },
+            "id": "花都2水系@huadu20210218(12_21)",
+            "source": "Huadu",
+            "source-layer": "花都水系@huadu20210218",
+            "type": "fill",
+            "minzoom": 12
+        },
+        {
+            "layout": {
+                "visibility": "visible"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花都房屋@huadu20210218"
+            },
+            "maxzoom": 16,
+            "paint": {
+                "fill-color": "rgba(236,234,231,1.00)",
+                "fill-antialias": true
+            },
+            "id": "花都房屋@huadu20210218#1(14_16)",
+            "source": "Huadu",
+            "source-layer": "花都房屋@huadu20210218",
+            "type": "fill",
+            "minzoom": 14
+        },
+        {
+            "layout": {
+                "visibility": "visible"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花都房屋@huadu20210218#1"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "fill-pattern": [
+                    "match", [
+                        "get",
+                        "SmUserID"
+                    ],
+                    0,
+                    "fill_0_E0E0E0FF_FFFFFFFF",
+                    "fill_0_BDEBFFFF_FFFFFFFF"
+                ],
+                "fill-antialias": true
+            },
+            "id": "花都房屋@huadu20210218#2_unique_(16_21)",
+            "source": "Huadu",
+            "source-layer": "花都房屋@huadu20210218",
+            "type": "fill",
+            "minzoom": 16
+        },
+        {
+            "layout": {
+                "visibility": "visible"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花都房屋@huadu20210218#2"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "fill-color": "rgba(250,250,250,1.00)",
+                "fill-antialias": true
+            },
+            "id": "花都房屋@huadu20210218(16_21)",
+            "source": "Huadu",
+            "source-layer": "花都房屋@huadu20210218",
+            "type": "fill",
+            "minzoom": 16
+        },
+        {
+            "layout": {
+                "visibility": "visible"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花都镇界_2@huadu20210218#1"
+            },
+            "maxzoom": 14,
+            "paint": {
+                "line-width": 1.89,
+                "line-color": "rgba(252,85,0,1.00)"
+            },
+            "id": "花都镇界_2@huadu20210218#1_outline(9_14)",
+            "source": "Huadu",
+            "source-layer": "花都镇界_2@huadu20210218",
+            "type": "line",
+            "minzoom": 9
+        },
+        {
+            "layout": {
+                "visibility": "visible"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "单元网格@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 1.13,
+                "line-color": "rgba(255,0,0,1.00)"
+            },
+            "id": "单元网格@huadu20210218_outline(14_21)",
+            "source": "Huadu",
+            "source-layer": "单元网格@huadu20210218",
+            "type": "line",
+            "minzoom": 14
+        },
+        {
+            "layout": {
+                "visibility": "visible"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花都村界@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 1.13,
+                "line-color": "rgba(9,130,35,1.00)"
+            },
+            "id": "花都村界@huadu20210218_outline(13_21)",
+            "source": "Huadu",
+            "source-layer": "花都村界@huadu20210218",
+            "type": "line",
+            "minzoom": 13
+        },
+        {
+            "layout": {
+                "visibility": "visible"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "工业园数据84@huadu20210218"
+            },
+            "maxzoom": 15,
+            "paint": {
+                "fill-color": "rgba(23,126,232,0.20)",
+                "fill-antialias": true
+            },
+            "id": "工业园数据84@huadu20210218(11_15)",
+            "source": "Huadu",
+            "source-layer": "工业园数据84@huadu20210218",
+            "type": "fill",
+            "minzoom": 11
+        },
+        {
+            "layout": {
+                "visibility": "visible"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Polygon"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "工业园数据84@huadu20210218"
+            },
+            "maxzoom": 15,
+            "paint": {
+                "line-width": 0.76,
+                "line-color": "rgba(15,106,224,1.00)"
+            },
+            "id": "工业园数据84@huadu20210218_outline(11_15)",
+            "source": "Huadu",
+            "source-layer": "工业园数据84@huadu20210218",
+            "type": "line",
+            "minzoom": 11
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "交通局空港委道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(206,207,206,1.00)"
+            },
+            "id": "交通局空港委道路@huadu20210218_0(15_21)",
+            "source": "Huadu",
+            "source-layer": "交通局空港委道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "交通局空港委道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.02,
+                "line-color": "rgba(255,255,255,1.00)"
+            },
+            "id": "交通局空港委道路@huadu20210218_1(15_21)",
+            "source": "Huadu",
+            "source-layer": "交通局空港委道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "赤坭镇道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(206,207,206,1.00)"
+            },
+            "id": "赤坭镇道路@huadu20210218_0(15_21)",
+            "source": "Huadu",
+            "source-layer": "赤坭镇道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "赤坭镇道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.02,
+                "line-color": "rgba(255,255,255,1.00)"
+            },
+            "id": "赤坭镇道路@huadu20210218_1(15_21)",
+            "source": "Huadu",
+            "source-layer": "赤坭镇道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花城街道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(206,207,206,1.00)"
+            },
+            "id": "花城街道路@huadu20210218_0(15_21)",
+            "source": "Huadu",
+            "source-layer": "花城街道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花城街道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.02,
+                "line-color": "rgba(255,255,255,1.00)"
+            },
+            "id": "花城街道路@huadu20210218_1(15_21)",
+            "source": "Huadu",
+            "source-layer": "花城街道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花东镇道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(206,207,206,1.00)"
+            },
+            "id": "花东镇道路@huadu20210218_0(15_21)",
+            "source": "Huadu",
+            "source-layer": "花东镇道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花东镇道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.02,
+                "line-color": "rgba(255,255,255,1.00)"
+            },
+            "id": "花东镇道路@huadu20210218_1(15_21)",
+            "source": "Huadu",
+            "source-layer": "花东镇道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花山镇道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(206,207,206,1.00)"
+            },
+            "id": "花山镇道路@huadu20210218_0(15_21)",
+            "source": "Huadu",
+            "source-layer": "花山镇道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "花山镇道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.02,
+                "line-color": "rgba(255,255,255,1.00)"
+            },
+            "id": "花山镇道路@huadu20210218_1(15_21)",
+            "source": "Huadu",
+            "source-layer": "花山镇道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "狮岭镇道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(206,207,206,1.00)"
+            },
+            "id": "狮岭镇道路@huadu20210218_0(15_21)",
+            "source": "Huadu",
+            "source-layer": "狮岭镇道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "狮岭镇道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.02,
+                "line-color": "rgba(255,255,255,1.00)"
+            },
+            "id": "狮岭镇道路@huadu20210218_1(15_21)",
+            "source": "Huadu",
+            "source-layer": "狮岭镇道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "炭步镇道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(206,207,206,1.00)"
+            },
+            "id": "炭步镇道路@huadu20210218_0(15_21)",
+            "source": "Huadu",
+            "source-layer": "炭步镇道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "炭步镇道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.02,
+                "line-color": "rgba(255,255,255,1.00)"
+            },
+            "id": "炭步镇道路@huadu20210218_1(15_21)",
+            "source": "Huadu",
+            "source-layer": "炭步镇道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "梯面镇道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(206,207,206,1.00)"
+            },
+            "id": "梯面镇道路@huadu20210218_0(15_21)",
+            "source": "Huadu",
+            "source-layer": "梯面镇道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "梯面镇道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.02,
+                "line-color": "rgba(255,255,255,1.00)"
+            },
+            "id": "梯面镇道路@huadu20210218_1(15_21)",
+            "source": "Huadu",
+            "source-layer": "梯面镇道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "新华街道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(206,207,206,1.00)"
+            },
+            "id": "新华街道路@huadu20210218_0(15_21)",
+            "source": "Huadu",
+            "source-layer": "新华街道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "新华街道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.02,
+                "line-color": "rgba(255,255,255,1.00)"
+            },
+            "id": "新华街道路@huadu20210218_1(15_21)",
+            "source": "Huadu",
+            "source-layer": "新华街道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "新雅街道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(206,207,206,1.00)"
+            },
+            "id": "新雅街道路@huadu20210218_0(15_21)",
+            "source": "Huadu",
+            "source-layer": "新雅街道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "新雅街道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.02,
+                "line-color": "rgba(255,255,255,1.00)"
+            },
+            "id": "新雅街道路@huadu20210218_1(15_21)",
+            "source": "Huadu",
+            "source-layer": "新雅街道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "秀全街道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(206,207,206,1.00)"
+            },
+            "id": "秀全街道路@huadu20210218_0(15_21)",
+            "source": "Huadu",
+            "source-layer": "秀全街道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "秀全街道路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.02,
+                "line-color": "rgba(255,255,255,1.00)"
+            },
+            "id": "秀全街道路@huadu20210218_1(15_21)",
+            "source": "Huadu",
+            "source-layer": "秀全街道路@huadu20210218",
+            "type": "line",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "乡道@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(206,207,206,1.00)"
+            },
+            "id": "乡道@huadu20210218_0(13_21)",
+            "source": "Huadu",
+            "source-layer": "乡道@huadu20210218",
+            "type": "line",
+            "minzoom": 13
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "乡道@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.02,
+                "line-color": "rgba(255,255,255,1.00)"
+            },
+            "id": "乡道@huadu20210218_1(13_21)",
+            "source": "Huadu",
+            "source-layer": "乡道@huadu20210218",
+            "type": "line",
+            "minzoom": 13
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "县道@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 7.56,
+                "line-color": "rgba(231,227,231,1.00)"
+            },
+            "id": "县道@huadu20210218_0(13_21)",
+            "source": "Huadu",
+            "source-layer": "县道@huadu20210218",
+            "type": "line",
+            "minzoom": 13
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "县道@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 5.29,
+                "line-color": "rgba(255,255,255,1.00)"
+            },
+            "id": "县道@huadu20210218_1(13_21)",
+            "source": "Huadu",
+            "source-layer": "县道@huadu20210218",
+            "type": "line",
+            "minzoom": 13
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "round",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "支线@huadu20210218#1"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.02,
+                "line-color": "rgba(201,140,3,1.00)"
+            },
+            "id": "支线@huadu20210218#1_0(14_21)",
+            "source": "Huadu",
+            "source-layer": "支线@huadu20210218",
+            "type": "line",
+            "minzoom": 14
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "round",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "支线@huadu20210218#1"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 2.27,
+                "line-color": "rgba(249,222,182,1.00)"
+            },
+            "id": "支线@huadu20210218#1_1(14_21)",
+            "source": "Huadu",
+            "source-layer": "支线@huadu20210218",
+            "type": "line",
+            "minzoom": 14
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "次干道@huadu20210218#1"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(255,222,102,1.00)"
+            },
+            "id": "次干道@huadu20210218#1_0(14_21)",
+            "source": "Huadu",
+            "source-layer": "次干道@huadu20210218",
+            "type": "line",
+            "minzoom": 14
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "次干道@huadu20210218#1"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.78,
+                "line-color": "rgba(254,253,177,1.00)"
+            },
+            "id": "次干道@huadu20210218#1_1(14_21)",
+            "source": "Huadu",
+            "source-layer": "次干道@huadu20210218",
+            "type": "line",
+            "minzoom": 14
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "主干道@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(239,197,129,1.00)"
+            },
+            "id": "主干道@huadu20210218_0(13_21)",
+            "source": "Huadu",
+            "source-layer": "主干道@huadu20210218",
+            "type": "line",
+            "minzoom": 13
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "主干道@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.02,
+                "line-color": "rgba(255,238,187,1.00)"
+            },
+            "id": "主干道@huadu20210218_1(13_21)",
+            "source": "Huadu",
+            "source-layer": "主干道@huadu20210218",
+            "type": "line",
+            "minzoom": 13
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "round",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "铁路@huadu20210218#1"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.02,
+                "line-color": "rgba(147,147,147,1.00)"
+            },
+            "id": "铁路@huadu20210218#1_0(12_21)",
+            "source": "Huadu",
+            "source-layer": "铁路@huadu20210218",
+            "type": "line",
+            "minzoom": 12
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "round",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "铁路@huadu20210218#1"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 1.51,
+                "line-dasharray": [
+                    15,
+                    15
+                ],
+                "line-color": "rgba(255,255,255,1.00)"
+            },
+            "id": "铁路@huadu20210218#1_1(12_21)",
+            "source": "Huadu",
+            "source-layer": "铁路@huadu20210218",
+            "type": "line",
+            "minzoom": 12
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "国道@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(229,205,94,1.00)"
+            },
+            "id": "国道@huadu20210218_0(12_21)",
+            "source": "Huadu",
+            "source-layer": "国道@huadu20210218",
+            "type": "line",
+            "minzoom": 12
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "国道@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.78,
+                "line-color": "rgba(255,247,116,1.00)"
+            },
+            "id": "国道@huadu20210218_1(12_21)",
+            "source": "Huadu",
+            "source-layer": "国道@huadu20210218",
+            "type": "line",
+            "minzoom": 12
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "省道@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(229,205,94,1.00)"
+            },
+            "id": "省道@huadu20210218_0(12_21)",
+            "source": "Huadu",
+            "source-layer": "省道@huadu20210218",
+            "type": "line",
+            "minzoom": 12
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "省道@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.78,
+                "line-color": "rgba(255,247,116,1.00)"
+            },
+            "id": "省道@huadu20210218_1(12_21)",
+            "source": "Huadu",
+            "source-layer": "省道@huadu20210218",
+            "type": "line",
+            "minzoom": 12
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "高速公路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 4.54,
+                "line-color": "rgba(223,170,86,1.00)"
+            },
+            "id": "高速公路@huadu20210218_0(12_21)",
+            "source": "Huadu",
+            "source-layer": "高速公路@huadu20210218",
+            "type": "line",
+            "minzoom": 12
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "line-cap": "butt",
+                "line-join": "round"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "LineString"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "高速公路@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "line-width": 3.02,
+                "line-color": "rgba(254,195,101,1.00)"
+            },
+            "id": "高速公路@huadu20210218_1(12_21)",
+            "source": "Huadu",
+            "source-layer": "高速公路@huadu20210218",
+            "type": "line",
+            "minzoom": 12
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "icon-size": 1,
+                "icon-image": "marker_16_5_7B4E7C"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Point"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "地铁出入口@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {},
+            "id": "地铁出入口@huadu20210218(14_21)",
+            "source": "Huadu",
+            "source-layer": "地铁出入口@huadu20210218",
+            "type": "symbol",
+            "minzoom": 14
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "icon-size": 1,
+                "icon-image": "marker_152_5_366092"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Point"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "跨河桥@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {},
+            "id": "跨河桥@huadu20210218(15_21)",
+            "source": "Huadu",
+            "source-layer": "跨河桥@huadu20210218",
+            "type": "symbol",
+            "minzoom": 15
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "icon-size": 1,
+                "icon-image": "marker_97_6_366092"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Point"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "文物@huadu20210218#1"
+            },
+            "maxzoom": 21,
+            "paint": {},
+            "id": "文物@huadu20210218#1(16_21)",
+            "source": "Huadu",
+            "source-layer": "文物@huadu20210218",
+            "type": "symbol",
+            "minzoom": 16
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "icon-size": 1,
+                "icon-image": "marker_197_8_BA9916"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Point"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "洒水车加水点@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {},
+            "id": "洒水车加水点@huadu20210218(16_21)",
+            "source": "Huadu",
+            "source-layer": "洒水车加水点@huadu20210218",
+            "type": "symbol",
+            "minzoom": 16
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "icon-size": 1,
+                "icon-image": "marker_206_4_953734"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Point"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "加油站@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {},
+            "id": "加油站@huadu20210218(16_21)",
+            "source": "Huadu",
+            "source-layer": "加油站@huadu20210218",
+            "type": "symbol",
+            "minzoom": 16
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "icon-size": 1,
+                "icon-image": "marker_46_7_953734"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Point"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "银行自助设备@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {},
+            "id": "银行自助设备@huadu20210218(16_21)",
+            "source": "Huadu",
+            "source-layer": "银行自助设备@huadu20210218",
+            "type": "symbol",
+            "minzoom": 16
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "icon-size": 1,
+                "icon-image": "marker_166_2_5F497A"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Point"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "停车场@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {},
+            "id": "停车场@huadu20210218(16_21)",
+            "source": "Huadu",
+            "source-layer": "停车场@huadu20210218",
+            "type": "symbol",
+            "minzoom": 16
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "icon-size": 1,
+                "icon-image": "marker_6_5_724F5C"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Point"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "过街天桥@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {},
+            "id": "过街天桥@huadu20210218(16_21)",
+            "source": "Huadu",
+            "source-layer": "过街天桥@huadu20210218",
+            "type": "symbol",
+            "minzoom": 16
+        },
+        {
+            "layout": {
+                "visibility": "visible",
+                "icon-size": 1,
+                "icon-image": "marker_907985_4_624054"
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Point"
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "公交站亭@huadu20210218"
+            },
+            "maxzoom": 21,
+            "paint": {},
+            "id": "公交站亭@huadu20210218(16_21)",
+            "source": "Huadu",
+            "source-layer": "公交站亭@huadu20210218",
+            "type": "symbol",
+            "minzoom": 16
+        },
+        {
+            "layout": {
+                "icon-rotation-alignment": "viewport",
+                "visibility": "visible",
+                "text-field": "{挂接字段}",
+                "text-size": 15.26,
+                "text-anchor": "top-left",
+                "text-allow-overlap": false,
+                "icon-size": 1,
+                "symbol-placement": "point",
+                "icon-image": "marker_0_5_FF0000",
+                "text-font": [
+                    "Microsoft YaHei UI"
+                ],
+                "text-rotate": 360,
+                "text-letter-spacing": 0,
+                "text-justify": "left",
+                "text-rotation-alignment": "viewport",
+                "text-ignore-placement": false
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Point"
+                ],
+                [
+                    "has",
+                    "挂接字段"
+                ],
+                [
+                    "!=",
+                    "挂接字段",
+                    ""
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "常口自编门牌_红色@huadu20210218#1"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "text-color": "rgba(255,0,0,1.00)",
+                "text-translate": [
+                    0,
+                    0
+                ]
+            },
+            "id": "常口自编门牌_红色@huadu20210218#1(17_21)",
+            "source": "Huadu",
+            "source-layer": "常口自编门牌_红色@huadu20210218",
+            "type": "symbol",
+            "minzoom": 17
+        },
+        {
+            "layout": {
+                "icon-rotation-alignment": "viewport",
+                "visibility": "visible",
+                "text-field": "{挂接字段}",
+                "text-size": 11.19,
+                "text-anchor": "top-left",
+                "text-allow-overlap": false,
+                "icon-size": 1,
+                "symbol-placement": "point",
+                "icon-image": "marker_0_2_0070C0",
+                "text-font": [
+                    "Microsoft YaHei UI"
+                ],
+                "text-rotate": 360,
+                "text-letter-spacing": 0,
+                "text-justify": "left",
+                "text-rotation-alignment": "viewport",
+                "text-ignore-placement": false
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Point"
+                ],
+                [
+                    "has",
+                    "挂接字段"
+                ],
+                [
+                    "!=",
+                    "挂接字段",
+                    ""
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "正式门牌_蓝色@huadu20210218#1"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "text-halo-color": "rgba(255,255,255,1.00)",
+                "text-color": "rgba(0,112,192,1.00)",
+                "text-halo-width": 1,
+                "text-translate": [
+                    0,
+                    0
+                ]
+            },
+            "id": "正式门牌_蓝色@huadu20210218#1(17_21)",
+            "source": "Huadu",
+            "source-layer": "正式门牌_蓝色@huadu20210218",
+            "type": "symbol",
+            "minzoom": 17
+        },
+        {
+            "layout": {
+                "icon-rotation-alignment": "viewport",
+                "visibility": "visible",
+                "text-field": "{挂接字段}",
+                "text-size": 11.19,
+                "text-anchor": "top-left",
+                "text-allow-overlap": false,
+                "icon-size": 1,
+                "symbol-placement": "point",
+                "icon-image": "marker_0_2_00B250",
+                "text-font": [
+                    "Microsoft YaHei UI"
+                ],
+                "text-rotate": 360,
+                "text-letter-spacing": 0,
+                "text-justify": "left",
+                "text-rotation-alignment": "viewport",
+                "text-ignore-placement": false
+            },
+            "filter": [
+                "all", [
+                    "==",
+                    "$type",
+                    "Point"
+                ],
+                [
+                    "has",
+                    "挂接字段"
+                ],
+                [
+                    "!=",
+                    "挂接字段",
+                    ""
+                ]
+            ],
+            "metadata": {
+                "layer:caption": "临时门牌_绿色@huadu20210218#1"
+            },
+            "maxzoom": 21,
+            "paint": {
+                "text-halo-color": "rgba(255,255,255,1.00)",
+                "text-color": "rgba(0,178,80,1.00)",
+                "text-halo-width": 2,
+                "text-translate": [
+                    0,
+                    0
+                ]
+            },
+            "id": "临时门牌_绿色@huadu20210218#1(17_21)",
+            "source": "Huadu",
+            "source-layer": "临时门牌_绿色@huadu20210218",
+            "type": "symbol",
+            "minzoom": 17
+        }
+    ],
+    "zoom": 10,
+    "glyphs": "http://localhost:8090/iserver/services/map-mvt-Huadu/restjsr/v1/vectortile/maps/Huadu/fonts/{fontstack}/{range}",
+    "version": 8
+}

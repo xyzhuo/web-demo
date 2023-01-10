@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>绘制满天星星</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #canvas {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #canvas {
+            /* 设置背景图片 */
+            background-image: url(./images/sky.jpg);
+            background-repeat: 100% 100%;
+            background-size: 100% 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <!-- 顶点着色器源码 -->
+    <script id="vertexShader" type="x-shader/x-vertex">
+        // 定义一个attribute变量，接收顶点的位置
+        attribute vec4 a_Position;
+        // 定义一个attribute变量，接收顶点的大小。float：类型为浮点类型
+        attribute float a_PointSize;
+        void main() {
+            gl_Position = a_Position; // 顶点使用 接收到的外部顶点的位置
+            gl_PointSize = a_PointSize; // 顶点大小
+        }
+    </script>
+    <!-- 片元着色器源码 -->
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        precision mediump float;
+        uniform vec4 u_FragColor;
+        void main() {
+            // 计算两个点之间的距离
+            float dist = distance(gl_PointCoord, vec2(0.5, 0.5));
+            // 距离小于一半
+            if (dist < 0.5) {
+                gl_FragColor = u_FragColor; // 顶点颜色
+            } else {
+                discard; // 距离大于0.5，放弃渲染
+            }
+        }
+    </script>
+    <script type="module">
+        import { initShaders, getWebGLPositionByMouse } from "./lib/WebglUtil.js";
+        import Compose from "./lib/Compose.js";
+        import Track from "./lib/Track.js";
+
+
+        /** @type {HTMLCanvasElement} */
+        const canvas = document.getElementById("canvas");
+        const gl = canvas.getContext("webgl");
+
+        // 开启片元的颜色合成功能
+        gl.enable(gl.BLEND);
+
+        // 设置片元的合成方式
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+        // 清空绘制面板，颜色为透明背景色
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+        // 获取到顶点着色器、片元着色器的代码文本。
+        const vsSource = document.getElementById("vertexShader").innerText;
+        const fsSource = document.getElementById("fragmentShader").innerText;
+
+        // 将代码加载到程序中
+        const program = initShaders(gl, vsSource, fsSource);
+
+        // 获取attribute变量
+        const a_Position = gl.getAttribLocation(program, "a_Position"); // 顶点位置
+        const a_PointSize = gl.getAttribLocation(program, "a_PointSize"); // 顶点大小
+        // 获取设置颜色的uniform对象
+        const u_FragColor = gl.getUniformLocation(program, "u_FragColor");
+
+        // 合成对象的实例化
+        const compose = new Compose()
+        const stars = []; // 存储顶点数据的集合
+        canvas.addEventListener("click", event => {
+
+            const { x, y } = getWebGLPositionByMouse(event, canvas);
+            // console.log("x, y", x, y);
+
+            // 5 在顶点位置存储数组添加点
+            const pointSize = Math.random() * 5 + 2;
+            const a = 1;
+            const obj = {
+                x, y,
+                s: pointSize,
+                a: a
+            }
+            stars.push(obj);
+            // 时间轨道对象的实例化
+            const track = new Track(obj);
+            track.start = new Date();
+            track.keyMap = new Map([
+                ["a", [
+                    [500, a],
+                    [1000, 0],
+                    [1500, a],
+                ]]
+            ])
+            track.timeLen = 2000;
+            track.loop = true;
+            compose.add(track);
+        });
+
+        // 用请求动画帧驱动动画，连续更新数据，渲染视图。
+        !(function ani() {
+            // 更新时间
+            compose.update(new Date());
+            // 6 绘制顶点
+            render();
+            // 继续执行动画
+            requestAnimationFrame(ani);
+        })();
+
+        /**
+         * 渲染存储的点
+         * */
+        function render() {
+            gl.clear(gl.COLOR_BUFFER_BIT);
+            // 绘制点
+            stars.forEach(({ x, y, pointSize, a }) => {
+                // 通过顶点位置变量对象，设置位置
+                gl.vertexAttrib2f(a_Position, x, y);
+                // 通过顶点大小变量对象，设置大小
+                gl.vertexAttrib1f(a_PointSize, pointSize);
+
+                // 通过着色器变量对象，设置颜色（传递参数）
+                // uniform4fv参数：片元着色器变量名对象，要传递的参数
+                gl.uniform4fv(u_FragColor, new Float32Array([0.87, 0.91, 1, a]));
+
+                gl.drawArrays(gl.POINTS, 0, 1);
+            });
+        }
+    </script>
+</body>
+
+</html>

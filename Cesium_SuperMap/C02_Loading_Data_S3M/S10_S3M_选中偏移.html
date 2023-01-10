@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>选中偏移</title>
+    <!-- 本地引入依赖 -->
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium/Cesium.js"></script>
+
+    <script src="../lib/jQuery/jquery-3.2.1.min.js"></script>
+
+    <script src="../lib/iServerQuery/SuperMap-7.1-11828.js"></script>
+
+    <!-- 使用远程依赖 -->
+    <!-- <link href="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Cesium.js"></script> -->
+
+    <!-- Earth -->
+    <!--<link href="http://www.supermapol.com/earth/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script type="text/javascript" src="http://www.supermapol.com/earth/Build/Cesium/Cesium.js"></script>-->
+
+    <!--<script src="http://support.supermap.com.cn:8090/webgl/examples/webgl/js/supermap/SuperMap-7.1-11828.js"></script>-->
+
+    <!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>-->
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            -webkit-user-select: none;
+        }
+        
+        .tools {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            border: 1px solid rgb(6, 168, 231);
+            padding: 10px;
+        }
+        
+        .tools>div {
+            height: 35px;
+        }
+        
+        .tools>p {
+            background-color: #adf;
+        }
+        
+        div>label {
+            background-color: #adf;
+            padding: 5px;
+            margin: 5px;
+        }
+        
+        div>button {
+            background-color: #adf;
+            padding: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+
+    <div class="tools">
+        <div>
+            <label>x轴偏移量</label>
+            <input type="number" id="xTranslation" min="0" max="100" value="5" step="5" style="width: 140px">
+        </div>
+
+        <div>
+            <label>y轴偏移量</label>
+            <input type="number" id="yTranslation" min="0" max="100" value="0" step="1" style="width: 140px">
+        </div>
+
+        <div>
+            <label>z轴偏移量</label>
+            <input type="number" id="zTranslation" min="0" max="100" value="0" step="1" style="width: 140px">
+        </div>
+
+        <p>点击模型进行偏移，不选中元素则为恢复。</p>
+    </div>
+
+    <script type="text/javascript">
+        let viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false
+        });
+        let scene = viewer.scene;
+        const camera = viewer.camera;
+
+        let promise = scene.addS3MTilesLayerByScp("http://www.supermapol.com/realspace/services/3D-individualHouse/rest/realspace/datas/专题户型面_拉伸/config", { // 分层分户矢量图层
+            name: "fcfh_vector"
+        });
+        let vectorLayer;
+        let layers;
+        promise.then(_layer => {
+            vectorLayer = _layer;
+            console.log("vectorLayer", vectorLayer);
+
+            vectorLayer.selectedColor = Cesium.Color.RED; // 选中时的颜色
+            vectorLayer.multiChoose = true; // 设置图层是否支持多选
+
+            viewer.camera.setView({
+                destination: new Cesium.Cartesian3(-1849922.0941717909, 5579380.061900704, 2476448.3635135884),
+                orientation: {
+                    heading: 6.157461328573951,
+                    pitch: -0.38562467789982513,
+                    roll: 8.446576771348191e-13
+                }
+            });
+
+        });
+
+        let selectedIds = {}; // { id: 偏移量, ... }
+        let lastSelectedId; // 最后一个被选中id
+        let screenSpaceEventHandler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+        screenSpaceEventHandler.setInputAction(function() {
+
+            if (vectorLayer.getSelection().length > 0) {
+
+                var selection = vectorLayer.getSelection(); // 获取已经被选中的选择集
+                console.log("selection", selection);
+
+                // 获取最后一次选中的 选择集
+                lastSelectedId = Number(selection[selection.length - 1]);
+                setTranslation(vectorLayer, lastSelectedId); // 设置高亮和偏移
+            } else {
+                releaseHightlightAndTranslation(vectorLayer);
+            }
+        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+        // x，y，z 方向的偏移量
+        let xTranslationEle = $("#xTranslation"),
+            yTranslationEle = $("#yTranslation"),
+            zTranslationEle = $("#zTranslation");
+
+        // 设置图元的偏移量，参数：图元所在的图层、所选中的图元id
+        function setTranslation(vectorLayer, selectedId) {
+
+            // 根据id设置图层中图元的偏移，参数：图元id[ Array ]、偏移量[ Cartesian3 ]
+            // vectorLayer.setObjsTranslate(selectedId, new Cesium.Cartesian3(5, 0, 0)); // 相对于原来位置，在x轴偏移5
+            vectorLayer.setObjsTranslate(
+                selectedId,
+                new Cesium.Cartesian3(
+                    Number(xTranslationEle.val()), // x方向偏移量
+                    Number(yTranslationEle.val()), // y方向偏移量
+                    Number(zTranslationEle.val()) // z方向偏移量
+                )
+            ); // 相对于原来位置，在x轴偏移5
+        }
+
+        // 清除高亮和偏移
+        function releaseHightlightAndTranslation(layer) {
+            layer.releaseSelection(); // 释放选择集
+            layer.removeAllObjsTranslate(); // 移除所有对象的偏移
+        }
+    </script>
+</body>
+
+</html>

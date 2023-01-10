@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>分层分户查询</title>
+    <!-- 引入本地的cesium支持js和css文件，更快并节约流量 -->
+    <link href="../../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../../lib/Cesium/Cesium.js"></script>
+    <!-- <link href="./lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="./lib/Cesium/Cesium.js"></script> -->
+    <script src="../../lib/iServerQuery/SuperMap-7.1-11828.js"></script>
+    <script src="../../lib/jQuery/jquery-3.2.1.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        #attrInfo {
+            z-index: 999;
+            position: absolute;
+            top: 150px;
+            right: 50px;
+            background-color: skyblue;
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 10px;
+            display: none;
+        }
+        
+        table {
+            /*把单元格间隙设置为0*/
+            border-spacing: 0;
+            /* 设置单元格的边框合并为1 */
+            border-collapse: collapse;
+        }
+        
+        tr {
+            border: 1px solid slategray;
+        }
+        
+        tr td {
+            padding: 5px;
+        }
+        
+        tr td:nth-child(1) {
+            text-align: center;
+            border-right: 1px solid slategray;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+    <!-- 属性信息 -->
+    <div id="attrInfo">
+        <h3>属性</h3>
+        <table id="attrInfoTable">
+            <!-- <tr>
+                <td>abc</td>
+                <td>abc</td>
+            </tr> -->
+        </table>
+    </div>
+    <script>
+        let viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false,
+            navigation: false
+        });
+
+        let scene = viewer.scene;
+        // 加载倾斜摄影图层
+        let url = "http://www.supermapol.com/realspace/services/3D-FCFH_Shangdong/rest/realspace/datas/config/config";
+        let promise = scene.addS3MTilesLayerByScp(url, {
+            name: "oblique photography"
+        });
+
+        promise.then(function(obliqueLayers) {
+            viewer.camera.setView({ // 精确定位
+                destination: new Cesium.Cartesian3(-2387685.5300606918, 4546843.024531732, 3782446.1843654616),
+                orientation: {
+                    heading: 3.5848126302038947,
+                    pitch: -0.38864153252552613,
+                    roll: 0.000004955793702521305
+                }
+            });
+
+            let handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+            handler.setInputAction(function(e) {
+
+                // 清空属性表中的元素
+                // $("#attrInfoTable").empty();
+                $("#attrInfo").hide();
+
+                // 获取点击位置笛卡尔坐标
+                let position = scene.pickPosition(e.position);
+                if (!position) {
+                    position = Cesium.Cartesian3.fromDegrees(0, 0, 0);
+                }
+                // 从笛卡尔坐标获取经纬度
+                let cartographic = Cesium.Cartographic.fromCartesian(position);
+                let longitude = Cesium.Math.toDegrees(cartographic.longitude);
+                let latitude = Cesium.Math.toDegrees(cartographic.latitude);
+                let height = cartographic.height;
+                console.log(`${longitude}, ${latitude}, ${height}`);
+
+                // 设置查询条件。Z在本例数据中代表户型面的底部高程，CENGG为层高，SmSdriW为最西边的经度，SmSdriE为最东边的经度，SmSdriS为最南边的纬度，SmSdriN为最北边的纬度
+                doSqlQuery(`bottom < ${height} and ${height} < (bottom + LSG) and ${longitude} > SmSdriW and ${longitude} < SmSdriE and ${latitude} > SmSdriS and ${latitude} < SmSdriN`);
+            }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+        });
+
+        /**
+         * 执行SQL查询
+         * 这里可根据需要自己请求工具封装
+         * @param SQL SQL查询条件
+         */
+        function doSqlQuery(SQL) {
+            console.log("SQL", SQL);
+            var getFeatureParam, getFeatureBySQLService, getFeatureBySQLParams;
+            getFeatureParam = new SuperMap.REST.FilterParameter({
+                attributeFilter: SQL
+            });
+            getFeatureBySQLParams = new SuperMap.REST.GetFeaturesBySQLParameters({
+                queryParameter: getFeatureParam,
+                toIndex: -1,
+                datasetNames: ["mian:" + "mian"] // 本例中“户型面”为数据源名称，“专题户型面2D”为楼层面相应的数据集名称
+            });
+            var url = "http://www.supermapol.com/realspace/services/data-FCFH_Shangdong/rest/data"; // 数据服务地址
+            getFeatureBySQLService = new SuperMap.REST.GetFeaturesBySQLService(url, {
+                eventListeners: {
+                    // 查询成功时的回调函数
+                    processCompleted: result => {
+                        console.log("result", result);
+
+                        // 清除所有的Entity，如果有其他业务性的Entity，需要定向清除viewer.entities.remove();
+                        viewer.entities.removeAll();
+
+                        if (result && result.originResult && result.originResult.featureCount < 1) {
+                            console.log("查询结果为空");
+                            return;
+                        }
+
+                        const selectedFeature = result.originResult.features[0];
+                        // 底部高程
+                        if (selectedFeature.fieldNames && selectedFeature.fieldNames.includes("BOTTOM")) {
+                            Cesium.GroundPrimitive.bottomAltitude = Number(selectedFeature.fieldValues[selectedFeature.fieldNames.indexOf("BOTTOM")]); // 矢量面贴对象的底部高程
+                        } else {
+                            console.log("找不到底部高程字段：BOTTOM");
+                        }
+
+                        // 层高（拉伸高度）
+                        if (selectedFeature.fieldNames && selectedFeature.fieldNames.includes("LSG")) {
+                            Cesium.GroundPrimitive.extrudeHeight = Number(selectedFeature.fieldValues[selectedFeature.fieldNames.indexOf("LSG")]);; // 矢量面贴对象的拉伸高度
+                        } else {
+                            console.log("找不到层高（拉伸高度）字段：LSG");
+                        }
+
+                        // 构建高亮矢量面
+                        let points3D = []; // [经度, 纬度, 经度, 纬度, ...]的形式，存放楼层面上的点坐标
+                        for (let pt of selectedFeature.geometry.points) {
+                            points3D.push(pt.x, pt.y);
+                        }
+                        viewer.entities.add({
+                            polygon: {
+                                hierarchy: Cesium.Cartesian3.fromDegreesArray(points3D),
+                                material: new Cesium.Color(223 / 255, 199 / 255, 0 / 255, 0.4)
+                            },
+                            classificationType: Cesium.ClassificationType.S3M_TILE // 贴在S3M模型表面
+                        });
+
+                        // 处理属性信息
+                        // console.log("fieldNames：", selectedFeature.fieldNames);
+                        // console.log("fieldValues：", selectedFeature.fieldValues);
+                        const attrInfo = [];
+                        $("#attrInfoTable").empty(); // 将原有属性表清空
+                        // 滚动条复位
+                        $("#attrInfo").animate({
+                            scrollTop: 0
+                        });
+                        for (const index in selectedFeature.fieldNames) {
+                            attrInfo.push({
+                                fieldName: selectedFeature.fieldNames[index],
+                                fieldValue: selectedFeature.fieldValues[index]
+                            });
+                            $("#attrInfoTable").prepend(`<tr><td>${selectedFeature.fieldNames[index]}</td><td>${selectedFeature.fieldValues[index]}</td></tr>`);
+                        }
+                        // 显示属性表
+                        $("#attrInfo").show();
+                        console.log("attrInfo", attrInfo);
+                    },
+                    // 查询失败时的回调函数
+                    processFailed: errorInfo => {
+                        console.error("查询失败，错误信息", errorInfo);
+                    }
+                }
+            });
+            getFeatureBySQLService.processAsync(getFeatureBySQLParams);
+        }
+    </script>
+</body>
+
+</html>

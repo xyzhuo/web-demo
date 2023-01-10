@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>01_WebGL入门</title>
+</head>
+
+<body>
+    <!-- 1、建立canvas 画布 -->
+    <canvas id="canvas"></canvas>
+    <script>
+        /** @type {HTMLCanvasElement} */
+
+        // 2、获取canvas画布
+        const canvas = document.getElementById("canvas");
+
+        // 3、使用canvas 获取webgl 绘图上下文
+        const gl = canvas.getContext("webgl");
+        console.log("webgl", gl);
+
+        // 4、指定将要用来清空绘图区的颜色
+        gl.clearColor(0.1, 0.8, 1, 0.5);
+
+        // 5、使用之前指定的颜色，清空绘图区
+        gl.clear(gl.COLOR_BUFFER_BIT);
+    </script>
+</body>
+
+</html>

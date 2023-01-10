@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>获取鼠标在WebGL中点击的位置</title>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script id="vertexShader" type="x-shader/x-vertex">
+        // 定义一个attribute变量，接收顶点的位置
+        attribute vec4 a_Position;
+        void main() {
+            gl_Position = a_Position; // 顶点使用 接收到的外部顶点的位置
+            gl_PointSize = 20.0; // 顶点大小
+        }
+    </script>
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        void main() {
+            gl_FragColor = vec4(0.9, 1.0, 0.2, 1.0); // 顶点颜色
+        }
+    </script>
+    <script type="module">
+        import { initShaders } from "./lib/WebglUtil.js";
+
+
+        /** @type {HTMLCanvasElement} */
+        const canvas = document.getElementById("canvas");
+        const gl = canvas.getContext("webgl");
+
+        // 清空绘制面板
+        gl.clearColor(0.2, 0.2, 0.5, 1.0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+        // 获取到顶点着色器、片元着色器的代码文本。
+        const vsSource = document.getElementById("vertexShader").innerText;
+        const fsSource = document.getElementById("fragmentShader").innerText;
+
+        // 将代码加载到程序中
+        const program = initShaders(gl, vsSource, fsSource);
+
+        // 获取attribute变量
+        const a_Position = gl.getAttribLocation(program, "a_Position");
+        console.log("a_Position", a_Position);
+
+
+        // const drawPoints = [];
+
+        // 对画布绑定监听事件
+        canvas.addEventListener("click", event => {
+            console.log("event", event);
+            // 1、获取鼠标点击位置的坐标，这个坐标是相对于浏览器(屏幕)的坐标
+            const { clientX, clientY } = event;
+            console.log("clientX, clientY = ", clientX, clientY);
+            // 2、获取Canvas在网页中的位置
+            const { left, top } = canvas.getBoundingClientRect();
+            console.log("left, top = ", left, top);
+
+            // 3、获取到鼠标在Canvas的坐标
+            const [cssX, cssY] = [clientX - left, clientY - top];
+            console.log("cssX, cssY = ", cssX, cssY);
+
+            // 4、将Canvas的坐标转换为WebGL坐标
+            // 4.1 获取Canvas的宽、高
+            const { width, height } = canvas.getBoundingClientRect();
+            // 4.2 canvas 画布中心的位置
+            const [halfWidth, halfHeight] = [width / 2, height / 2];
+            // 4.3 鼠标基于画布中心的位置。
+            // 坐标系中心点平移：坐标中心从左上角平移到以canvas画布为中心的坐标系。
+            // 从canvas的平面坐标系 ==> webgl非缩放坐标系(还未进行缩放)。
+            const [xBaseCenter, yBaseCenter] = [cssX - halfWidth, cssY - halfHeight];
+            console.log("xBaseCenter, yBaseCenter = ", xBaseCenter, yBaseCenter);
+
+            // 4.4 解决 y 方向的差异：因为webgl的y轴与 Canvas 2d的y轴方向相反
+            const yBaseCenterTop = -yBaseCenter;
+
+            // 4.5 解决坐标基底的差异，webgl非缩放坐标系 ==> webgl缩放坐标系（缩放，webgl坐标系）
+            const [x, y] = [xBaseCenter / halfWidth, yBaseCenterTop / halfHeight];
+            console.log("x, y = ", x, y);
+
+            // drawPoints.push({ x, y });
+
+            // 清除原有绘制
+            gl.clear(gl.COLOR_BUFFER_BIT);
+            // 对attribute传递变量：设置绘制点的坐标值
+            gl.vertexAttrib2f(a_Position, x, y);
+            // 绘制顶点
+            gl.drawArrays(gl.POINTS, 0, 1); // 同步绘图，因为webgl 同步绘图
+
+            // // 可以将所有点放到一个数组中，在同一个js主线程中有效。如果重新点击了，就是另外一个线程了，就是重新绘制，也就会重头再来。
+            // drawPoints.forEach(item => {
+            //     gl.vertexAttrib2f(a_Position, item.x, item.y);
+            //     gl.drawArrays(gl.POINTS, 0, 1);
+            // });
+
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,312 @@
+.xtx_body {
+    padding: 30px 0 85px;
+    background-color: #f6f6f6;
+}
+
+.user_center {
+    display: flex;
+}
+
+/* 左侧菜单 */
+.menu {
+    width: 227px;
+    margin-right: 18px;
+    background-color: #ffffff;
+}
+
+.menu .account {
+    width: 93px;
+    margin: 36px auto 33px;
+    text-align: center;
+}
+
+.menu .account h3 {
+    font-size: 18px;
+}
+
+.menu .account p {
+    width: 93px;
+    height: 26px;
+    padding: 2px;
+    border-radius: 5%;
+    background-image: linear-gradient(264deg,
+            #e05e2f 0%,
+            #ea745e 95%);
+    background-blend-mode: normal,
+        normal;
+    font-size: 14px;
+    line-height: 26px;
+    color: #f9f9f9;
+}
+
+.menu .account p img {
+    width: 15px;
+    height: 15px;
+}
+
+/* 我的账户 */
+.menu .my_account {
+    text-align: center;
+    padding-top: 33px;
+    border-top: 1px solid #f4f4f4;
+}
+
+.menu .my_account h3 {
+    font-size: 18px;
+}
+
+.menu .my_account ul li {
+    font-size: 14px;
+    line-height: 32px;
+    color: #666666;
+}
+
+.menu .my_account ul li:first-child {
+    color: #5cb99e;
+}
+
+
+/* 右侧内容 */
+.main {
+    width: 999px;
+}
+
+/* 用户概览 start*/
+.main .overview {
+    display: flex;
+    padding: 20px 0;
+    background-color: #ffffff;
+}
+
+.main .overview>div {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex: 1;
+}
+
+.main .overview>div:first-child {
+    border-right: 1px solid #f4f4f4;
+}
+
+.main .overview>div>a {
+    text-align: center;
+}
+
+.main .overview>div>a>p {
+    font-size: 16px;
+}
+
+.main .overview>div>a>img {
+    width: 25px;
+    height: 22px;
+    margin-bottom: 10px;
+}
+
+.main .overview>div>a:last-child>img {
+    width: 18px;
+    height: 25px;
+}
+
+.main .overview>div>a>span {
+    display: block;
+    height: 19px;
+    font-size: 25px;
+    color: #e05e30;
+    margin-bottom: 19px;
+}
+
+.main .panel {
+    margin-top: 18px;
+    padding: 28px 18px;
+    background-color: #ffffff;
+}
+
+.color_red {
+    color: #9a2e1f;
+}
+
+.main .panel .title {
+    display: flex;
+    justify-content: space-between;
+    height: 45px;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.main .panel .title h4 {
+    color: #333333;
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.main .panel .title a {
+    margin-top: 8px;
+    color: #999999;
+    font-size: 16px;
+}
+
+/* 我的订单 start */
+
+.main .myorder .order_list {
+    /* 让标题的边框与订单列表的上边框重叠 */
+    margin-top: -1px;
+}
+
+/* 订单项 */
+.main .myorder .order_list>.order_item {
+    display: flex;
+    height: 137px;
+    margin-bottom: 20px;
+    border: solid 1px #f4f4f4;
+    padding: 15px 12px;
+}
+
+.main .myorder .order_list>.order_item:last-child {
+    margin-bottom: 0px;
+}
+
+.main .myorder .order_list>.order_item>.order_info {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    margin-right: 120px;
+}
+
+.main .myorder .order_list>.order_item>.order_pay_status {
+    width: 120px;
+}
+
+.main .myorder .order_list>.order_item>.order_info>div:first-child {
+    width: 107px;
+    height: 107px;
+}
+
+.main .myorder .order_list>.order_item>.order_info>div:last-child {
+    flex: 1;
+    /* 溢出的时候显示省略号 */
+    /* 因为弹性盒子的尺寸可以被内容撑开，不换行的文字可以撑开这个盒子的尺寸 */
+    width: 0;
+}
+
+.main .myorder .order_list>.order_item>.order_info>div:last-child>h5 {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.main .myorder .order_list>.order_item>.order_pay_info {
+    width: 200px;
+    border-left: 1px solid #e8e8e8;
+    border-right: 1px solid #e8e8e8;
+}
+
+/* 订单公共属性 */
+.main .myorder .order_list>.order_item>.common {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 订单状态 */
+.main .myorder .order_list>.order_item>.order_pay_status {
+    font-size: 14px;
+}
+
+.main .myorder .order_list>.order_item>.order_pay_status>:first-child {
+    color: #e05e30;
+}
+
+.main .myorder .order_list>.order_item>.order_pay_status>:last-child {
+    color: #999999;
+}
+
+/* 订单支付信息 */
+.main .myorder .order_list>.order_item>.order_pay_info {
+    font-size: 14px;
+    color: #333333;
+}
+
+.main .myorder .order_list>.order_item>.order_pay_info>p:first-child {
+    color: #9a2e1f;
+}
+
+/* 订单操作 */
+.main .myorder .order_list>.order_item>.order_pay_action {
+    width: 180px;
+    font-size: 14px;
+}
+
+.main .myorder .order_list>.order_item>.order_pay_action>a {
+    margin-bottom: 10px;
+}
+
+.main .myorder .order_list>.order_item>.order_pay_action>a:first-child {
+    width: 100px;
+    height: 30px;
+    background-color: #5eb69c;
+    border-radius: 2px;
+    text-align: center;
+    line-height: 30px;
+    color: #ffffff;
+    margin-bottom: 14px;
+}
+
+.main .myorder .order_list>.order_item>.order_pay_action>a:last-child {
+    margin-bottom: 0;
+}
+
+/* 我的订单 end */
+
+.main .goods_list {
+    display: flex;
+    justify-content: space-between;
+    padding: 33px 18px;
+}
+
+.main .goods_list>li {
+    position: relative;
+    width: 178px;
+}
+
+
+/* 收藏的商品 start */
+.main .goods_list .img {
+    padding: 9px 12px;
+}
+
+.main .goods_list p {
+    font-size: 16px;
+    color: #333333;
+}
+
+.main .goods_list div {
+    font-size: 17px;
+}
+
+.main .goods_list div>span {
+    font-size: 22px;
+}
+
+.discount {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 28px;
+    height: 51px;
+    border-radius: 3px;
+    border: solid 1px #5eb69c;
+    font-size: 20px;
+    font-weight: normal;
+    color: #5eb69c;
+    text-align: center;
+}
+
+
+
+/* 收藏的商品 end */
+
+/* 我的足迹 start */
+/* 我的足迹 end */
+
+/* 用户概览 end*/

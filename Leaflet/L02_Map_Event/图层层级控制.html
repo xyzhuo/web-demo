@@ -1,0 +1,25 @@
+Leaflet中通过setZIndex实现图层层级控制
+
+https://www.cnblogs.com/badaoliumangqizhi/p/16106512.html
+
+
+//声明osm地图图层
+var osmLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+attribution: "osm"
+});
+osmLayer.setZIndex(10);
+osmLayer.addTo(map);
+
+
+<!-- 图层显示/隐藏：弊端，隐藏时还是会有请求 -->
+layer.setOpacity(1);
+layer.setOpacity(0);
+
+<!-- 设置图层顺序+remove/add -->
+// layerConfigs[layerId].layer.setVisible(visible);
+// const layerExist = leafletMap.hasLayer(layerConfigs[layerId].layer);
+// console.log("tiandituImg Exist", layerExist);
+
+
+openlayer:9-1，不断在上面放东西，先加载的在下面。
+leaflet:1-9

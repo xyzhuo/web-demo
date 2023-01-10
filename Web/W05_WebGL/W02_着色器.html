@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>着色器</title>
+</head>
+
+<body>
+    <!-- 1、添加一个画布元素 -->
+    <canvas id="cvs" style="border: 2px dashed red;" width="300" height="300">当前浏览器不支持Canvas</canvas>
+    <script>
+        /** @type {HTMLCanvasElement} */
+
+        // 2、获取到画布元素：getElementById();
+        const cvs = document.getElementById("cvs");
+
+        // 3、获取画布元素基于WebGL的上下文环境对象：canvas.getContext("webgl");
+        const gl = cvs.getContext("webgl");
+        console.log("WebGL", gl);
+
+        /**
+         * 4、创建着色器程序
+         * 4.1 创建 顶点着色器代码、片段着色器代码
+         * 4.2 加载 顶点着色器代码、片段着色器代码 并 编译
+         * 4.3 创建着色器程序，将编译好的 顶点、片段两个着色器加载到着色器程序中
+         * 4.4 在 gl 中链接着色器
+         * 4.5 开启着色器的使用
+         * 
+         * 总结：着色器程序=顶点着色器 + 片段着色器
+         * （1）创建 顶点着色器代码并编译；
+         * （2）创建 片段着色器代码并编译；
+         * （3）创建着色器程序并加载 顶点着色器、片段着色器
+         * （4）在 webgl 中链接着色器并开启着色器
+        */
+        // 4.1.1 顶点着色器代码
+        const VSHADER_SOURCE =
+            "void main() {" +
+            // 定义点的坐标并转换为变量保存。vec4()定义的是一个四维向量。
+            // 这里用vec4()定义了一个三维点（x,y,z）。第4个在参数没用，这里随便填写。
+            "gl_Position = vec4(0.0, 0.0, 0.0, 1.0);" +
+            // 设置缩放距离的直径
+            "gl_PointSize = 10.0;" +
+            "}";
+        // 4.1.2 片段着色器代码
+        const FSHADER_SOURCE =
+            "void main() {" +
+            // 设置图形像素的样色并保存。这里通用vec4()定义，其参数分别代表颜色取值：r、g、b、a
+            "gl_FragColor = vec4(0.0, 0.0, 1.0, 1.0);" +
+            "}";
+
+        // 4.2.1 创建用于加载顶点着色器代码的着色器对象
+        const vertShader = gl.createShader(gl.VERTEX_SHADER);
+        // 加载并保存顶点着色器代码
+        gl.shaderSource(vertShader, VSHADER_SOURCE)
+        // 编译顶点着色器
+        gl.compileShader(vertShader);
+
+        // 4.2.2 创建用于加载片段着色器代码的着色器对象
+        const fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+        // 加载并保存片段着色器代码
+        gl.shaderSource(fragShader, FSHADER_SOURCE);
+        // 编译片段着色器
+        gl.compileShader(fragShader);
+
+        // 4.3.1 创建着色器程序
+        const shaderProgram = gl.createProgram();
+
+        // 4.3.2 附加 编译好的着色对象（顶点着色器+片段着色器）到 着色器程序
+        gl.attachShader(shaderProgram, vertShader); // 加载顶点着色器
+        gl.attachShader(shaderProgram, fragShader); // 加载片段着色器
+
+        // 4.4 链接的着色器程序
+        gl.linkProgram(shaderProgram);
+
+        // 4.5 开启着色器程序的使用
+        gl.useProgram(shaderProgram);
+
+        // 5 在指定的位置绘制图形：这里绘制点
+        gl.drawArrays(gl.POINTS, 0, 1);
+
+    </script>
+
+</body>
+
+</html>

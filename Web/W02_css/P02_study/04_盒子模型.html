@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>盒子模型</title>
+    <style>
+        .title-border {
+            border-style: dashed;
+            border-width: 2px;
+            border-color: brown;
+            /* 边框圆角大小 */
+            border-radius: 2px;
+        }
+        
+        .title-border>div {
+            /* 设置边框的：上、下、左、右边框样式 */
+            border-top: 5px dotted red;
+            border-bottom: 5px dotted red;
+            border-left: 10px solid darkgoldenrod;
+            border-right: 10px solid salmon;
+            margin: 5px;
+            height: 50px;
+            width: 200px;
+        }
+        
+        .title-padding>div {
+            border: 1px solid red;
+        }
+        
+        .title-padding>div:first-child {
+            /* 设置 上下左右 的内边距 */
+            padding: 10px;
+            /* 设置 上下、左右 的内边距 */
+            padding: 10px 20px;
+            /* 设置 上、左右、下 的内边距 */
+            padding: 10px 20px 30px;
+            /* 设置 上、左、右、下 的内边距 */
+            padding: 10px 20px 30px 50px;
+        }
+        
+        .title-padding>div:last-child {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        
+        .title-margin,
+        .title-margin>div {
+            border: 1px solid red;
+        }
+        
+        .title-margin>div:first-child {
+            /* 设置 上下左右 的内边距 */
+            margin: 10px;
+            /* 设置 上下、左右 的内边距 */
+            margin: 10px 20px;
+            /* 设置 上、左右、下 的内边距 */
+            margin: 10px 20px 30px;
+            /* 设置 上、左、右、下 的内边距 */
+            margin: 10px 20px 30px 50px;
+        }
+        
+        .title-margin>div:last-child {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="title-border">
+            <div>我也是大标题</div>
+            <div>我也是大标题</div>
+        </div>
+        <hr>
+
+        <div class="title-padding">
+            <div>我也是大标题</div>
+            <div>我也是大标题</div>
+        </div>
+        <hr>
+
+        <div class="title-margin">
+            <div>我也是大标题</div>
+            <div>我也是大标题</div>
+        </div>
+
+    </div>
+</body>
+
+</html>

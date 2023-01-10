@@ -1,0 +1,80 @@
+<!-- 
+    自定义属性框
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>牵引线弹窗</title>
+    <!-- 引入本地的cesium支持js和css文件，更快并节约流量 -->
+    <link href="../../../lib/Cesium1100/Widgets/widgets.css" rel="stylesheet">
+    <script src="../../../lib/Cesium1100/Cesium.js"></script>
+    <script src="./Popup.js"></script>
+    <style>
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+    <div id="popup">
+    </div>
+    <script>
+        //options对象做为配置参数
+        let viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false
+        });
+
+        viewer.imageryLayers.addImageryProvider(new Cesium.SuperMapImageryProvider({
+            url: "http://106.15.40.105:8090/iserver/services/map-tianditu/rest/maps/影像底图_经纬度"
+        }));
+
+        const position = {
+            longitude: 113.3191235197911,
+            latitude: 23.109043765744044
+        };
+
+        const popupInfo = {
+            contents: [{
+                key: "编码",
+                value: "10000000001"
+            }, {
+                key: "地点",
+                value: "广州塔"
+            }, {
+                key: "地址",
+                value: "广东省广州市海珠区阅江西路222号"
+            }, {
+                key: "简介",
+                value: "广州塔又称广州新电视塔，昵称小蛮腰。位于广州市海珠区赤岗塔附近，距离珠江南岸125米，与珠江新城、花城广场、海心沙岛隔江相望。广州塔塔身主体高454米，天线桅杆高146米，总高度600米。是中国第一高塔，世界第二高塔，仅次于东京晴空塔，是国家AAAA级旅游景区。"
+            }],
+            position: position
+        }
+
+        Popup("popup", viewer, popupInfo);
+
+
+        var entity = viewer.entities.add({
+            position: Cesium.Cartesian3.fromDegrees(position.longitude, position.latitude, 0),
+            label: {
+                text: "编码：10000000001",
+                font: "15",
+                disableDepthTestDistance: Number.POSITIVE_INFINITY, // 去掉地形遮挡
+                heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+                eyeOffset: new Cesium.Cartesian3(0, 0, 200)
+            }
+        });
+        viewer.flyTo(entity);
+    </script>
+</body>
+
+</html>

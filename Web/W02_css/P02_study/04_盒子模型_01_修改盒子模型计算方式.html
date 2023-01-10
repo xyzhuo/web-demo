@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>盒子模型-盒子模型计算方式</title>
+    <style>
+        .box01 {
+            width: 200px;
+            height: 200px;
+            border: 10px solid black;
+            background-color: skyblue;
+            /* 盒子模型：标准的盒子模型、默认值。*/
+            /* 盒子真实宽度 = 内容宽度（width） + 内边距 + 边框大小 + 外边距。 */
+            /* 这里的宽度为：200 + 10 * 2 = 220px */
+            box-sizing: content-box;
+        }
+        
+        .box02 {
+            width: 200px;
+            height: 200px;
+            border: 10px solid black;
+            margin-top: 20px;
+            background-color: royalblue;
+            /* 盒子模型：标准的盒子模型、默认值。*/
+            /* 盒子真实宽度 = 内部宽度（width）【内容宽度 + 内边距 + 边框大小】 + 外边距。 */
+            /* 这里的宽度为：（内容【180】 + 内边距【10*2】） = 200px */
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="box01"></div>
+    <div class="box02"></div>
+</body>
+
+</html>

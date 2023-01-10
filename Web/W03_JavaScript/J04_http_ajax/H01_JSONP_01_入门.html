@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JSONP入门</title>
+</head>
+
+<body>
+    <script>
+        // jsonp请求成功回调函数
+        function success(param) {
+            console.log("请求的响应结果", param);
+        }
+    </script>
+
+    <!-- 使用script发送请求，使用“callback”指定请求回调函数 -->
+    <script src="http://106.55.197.23:8090/iserver/services.jsonp?callback=success&name=zs&age=20"></script>
+</body>
+
+</html>

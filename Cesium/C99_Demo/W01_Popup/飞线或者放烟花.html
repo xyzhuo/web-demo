@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+		<title>飞线</title>
+		<link href="../../Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+		<link href="./css/pretty.css" rel="stylesheet">
+		<script src="./js/jquery.min.js"></script>
+		<!-- spectrum.js为设置尾迹线颜色 -->
+		<script src="./js/spectrum.js"></script>
+		<script type="text/javascript" src="../../Build/Cesium/Cesium.js"></script>
+	</head>
+	<body>
+		<div id="cesiumContainer"></div>
+		<div class="params-setting-container">
+			<div class="params-setting-anchor" title="显示/隐藏参数面板"><span class="fui-expand"></span></div>
+			<div class="params-setting">
+				<div class="divider"></div>
+				<div class="param-item">
+					<label for="bloomShow">开启泛光</label>
+					<input type="checkbox" id="bloomShow" checked>
+				</div>
+				<div class="param-item">
+					<label>亮度阈值</label>
+					<input type="range" id="bloom-threshold" min="0" max="1" value="0.01" step="0.01" style="width: 150px">
+					<label id="bloom-threshold-label"></label>
+				</div>
+				<div class="param-item">
+					<label>泛光强度</label>
+					<input type="range" id="bloom-intensity" min="0" max="2" value="0.02" step="0.01" style="width: 150px">
+					<label id="bloom-intensity-label"></label>
+				</div>
+				<div class="param-item">
+					<label for="bloomShow">开启HDR</label>
+					<input type="checkbox" id="openHDR" checked>
+				</div>
+			</div>
+		</div>
+		<script>
+			function onload(Cesium) {
+				var viewer = new Cesium.Viewer('cesiumContainer', {
+					infoBox: false,
+					selectionIndicator: false
+				});
+
+				imageLayer = viewer.imageryLayers.addImageryProvider(new Cesium.SingleTileImageryProvider({
+					url: './images/BlackMarble_2016-1.jpg'
+				}));
+
+				var scene = viewer.scene;
+				scene.sun.show = false;
+				viewer.scene.open("http://localhost:8090/iserver/services/3D-bj/rest/realspace");
+				scene.skyAtmosphere.show = false;
+
+				scene.bloomEffect.show = true; //开启泛光
+				var threshold = $("#bloom-threshold").val();
+				var intensity = $("#bloom-intensity").val();
+				scene.bloomEffect.threshold = threshold;
+				scene.bloomEffect.bloomIntensity = intensity;
+				scene.hdrEnabled = true; // 开启hdr
+
+
+				var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+				//设置鼠标左键单击回调事件
+				handler.setInputAction(function(e) {
+				
+					var r = Math.floor(Math.random() * 255);
+					var g = Math.floor(Math.random() * 255);
+					var b = Math.floor(Math.random() * 255);
+					var v = Math.random();
+					
+					//获取点击位置笛卡尔坐标
+					//var pickedObject = viewer.scene.pick(e.endPosition);
+					var position = scene.pickPosition(e.position);
+					var trailLineColor = new Cesium.Color(r, g, b, 1.0); //初始化尾迹线颜色
+
+					//将笛卡尔坐标转化为经纬度坐标
+					var cartographic = Cesium.Cartographic.fromCartesian(position);
+					var longitude = Cesium.Math.toDegrees(cartographic.longitude);
+					var latitude = Cesium.Math.toDegrees(cartographic.latitude);
+					var height = cartographic.height;
+					if (height < 0) {
+						height = 0;
+					}
+					viewer.entities.add({ // 用于打底的线
+						polyline: {
+							positions: Cesium.Cartesian3.fromDegreesArrayHeights([longitude, latitude, height + 0.5, longitude, latitude,
+								height + 10000
+							]),
+							width: 1.5, // 线的宽度，像素为单位
+							material: Cesium.Color.fromCssColorString("rgba(118, 233, 241, 0.1)")
+						}
+					});
+
+					viewer.entities.add({ // 尾迹线
+						polyline: {
+							positions: Cesium.Cartesian3.fromDegreesArrayHeights([longitude, latitude, height + 0.5, longitude, latitude,
+								height + 10000
+							]),
+							width: 0.5, // 线的宽度，像素为单位
+							material: new Cesium.PolylineTrailMaterialProperty({ // 尾迹线材质
+								color: trailLineColor,
+								trailLength: 0.2,
+								period: 5.5
+							})
+						}
+					});
+					// viewer.entities.removeAll();
+				}, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+
+				//泛光开关
+				$("#bloomShow").on("input change", function() {
+					viewer.scene.bloomEffect.show = this.checked;
+					viewer.scene.bloomEffect.threshold = $("#bloom-threshold").val();
+					viewer.scene.bloomEffect.bloomIntensity = $("#bloom-intensity").val();
+				});
+
+				//调节泛光阈值
+				$("#bloom-threshold").on("input change", function() {
+					viewer.scene.bloomEffect.threshold = $("#bloom-threshold").val();
+				});
+				//调节泛光强度
+				$("#bloom-intensity").on("input change", function() {
+					viewer.scene.bloomEffect.bloomIntensity = $("#bloom-intensity").val();
+				});
+				//HDR开关
+				$("#openHDR").on('input propertychange', function() {
+					scene.hdrEnabled = this.checked;
+				});
+
+				$(".params-setting-anchor").click(function() {
+					$(".params-setting").toggleClass("params-setting-hide");
+				});
+			}
+			if (typeof Cesium !== 'undefined') {
+				window.startupCalled = true;
+				onload(Cesium);
+			}
+		</script>
+	</body>
+</html>

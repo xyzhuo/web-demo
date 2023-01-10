@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>相机旋转</title>
+    <!-- 本地引入依赖 -->
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium/Cesium.js"></script>
+
+    <script src="../lib/jQuery/jquery-3.2.1.min.js"></script>
+
+    <!-- 使用远程依赖 -->
+    <!-- <link href="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Cesium.js"></script> -->
+
+    <!-- Earth -->
+    <!--<link href="http://www.supermapol.com/earth/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script type="text/javascript" src="http://www.supermapol.com/earth/Build/Cesium/Cesium.js"></script>-->
+
+    <!--<script src="http://support.supermap.com.cn:8090/webgl/examples/webgl/js/supermap/SuperMap-7.1-11828.js"></script>-->
+
+    <!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>-->
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            -webkit-user-select: none;
+        }
+        
+        div>label {
+            background-color: #adf;
+            padding: 5px;
+            margin: 5px;
+        }
+        
+        div>button {
+            background-color: #adf;
+            padding: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+
+    <div style="position: absolute; top: 20px; left: 20px;border: 1px solid rgb(6, 168, 231); padding: 10px;">
+        <div>
+            <button id="dixinRotatingEle">绕地心旋转</button>
+            <button id="zidingyiRotatingEle">自定义旋转点</button>
+        </div>
+        <div>
+            <button id="startEle">开始旋转</button>
+            <button id="stopEle">停止旋转</button>
+            <button id="xuanzhuanEle">循环旋转</button>
+            <button id="s3mEle">指北旋转</button>
+        </div>
+        <div style="margin-top: 10px;">
+            <label>
+                旋转速度
+                <input type="range" name="xuanzhuan" id="speedRatio" value="1">
+                <input type="number" name="xuanzhuan" id="speedNum">
+            </label>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        let viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false
+        });
+        let scene = viewer.scene;
+        const camera = viewer.camera;
+        $("#speedNum").val($("#speedRatio").val());
+        camera.speedRatio = $("#speedRatio").val();
+
+        let promise = scene.open("http://www.supermapol.com/realspace/services/3D-CBD/rest/realspace");
+
+
+        // 旋转位置
+        let position = new Cesium.Cartesian3(0, 0, 0);
+
+        $("#xuanzhuanEle").click(function() {
+
+            if (this.innerText === "循环旋转") {
+                this.innerText = "单次旋转";
+                camera.flyCircleLoop = true;
+            } else {
+                this.innerText = "循环旋转";
+                camera.flyCircleLoop = false;
+            }
+
+        });
+
+        // 绕地心旋转
+        $("#dixinRotatingEle").click(() => {
+            position = new Cesium.Cartesian3(0, 0, 0);
+        });
+
+        // 绘制点
+        let handlerPoint = new Cesium.DrawHandler(viewer, Cesium.DrawMode.Point);
+        handlerPoint.drawEvt.addEventListener(function(result) {
+            position = result.object.position;
+        });
+
+        // 自定义旋转点
+        $("#zidingyiRotatingEle").click(() => {
+            handlerPoint.activate();
+        });
+
+        // 开始旋转
+        $("#startEle").click(() => {
+            if (position) {
+                camera.flyCircle(position);
+            }
+
+        });
+
+        // 停止旋转
+        $("#stopEle").click(() => {
+            camera.stopFlyCircle();
+        });
+
+        // 旋转速度
+        $("#speedRatio").bind("input propertychange", function() {
+            let spd = Number(this.value);
+            camera.speedRatio = spd;
+            $("#speedNum").val(spd);
+        });
+
+        $("#speedNum").bind("input propertychange", function() {
+            var spd = Number(this.value);
+            camera.speedRatio = spd;
+            $("#speedRatio").val(spd);
+        });
+    </script>
+</body>
+
+</html>

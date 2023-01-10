@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>绘制点线面</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css"> -->
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script> -->
+
+    <!-- <script src="../lib/jQuery/jquery-3.2.1.min.js"></script> -->
+
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <script type="text/javascript">
+        const map = L.map("map", {
+            center: [23.458207269894125, 113.48739624023439], // 地图初始化后的中心点
+            zoom: 5, // 地图初始化后显示的层级
+            maxZoom: 18, // 地图显示最大层级
+            crs: L.CRS.EPSG4326
+        });
+
+        // 添加地图
+        L.tileLayer("http://t{s}.tianditu.com/img_c/wmts?layer=img&style=default&tilematrixset=c&Service=WMTS&Request=GetTile&Version=1.0.0&Format=tiles&TileMatrix={z}&TileCol={x}&TileRow={y}&tk=93724b915d1898d946ca7dc7b765dda5", {
+            subdomains: [0, 1, 2, 3, 4, 5, 6, 7],
+            maxZoom: 18,
+            tileSize: 256,
+            zoomOffset: 1,
+            minZoom: 1
+        }).addTo(map);
+
+        // 1、添加注记
+        const markers = [
+            [19, 112],
+            [21, 110],
+            [23, 113]
+        ]
+        for (i = 0; i < markers.length; i++) {
+            console.log("markers[i]", markers[i]);
+            L.marker(markers[i]).addTo(map);
+        }
+
+        // 2、绘制点
+        // 在leafletAPI中没有找到绘制点的函数，但是有绘制圆的，点不就是小一点的圆吗
+        L.circle([23, 110], {
+            color: "#FF0000", // fillColor和Color需要一致，否则看起来是一个环。或着设置weight属性为0 。
+            fillColor: "#FF0000",
+            radius: 50000, // 设置点的大小
+            fillOpacity: 1 // fillOpacity指填充色的透明度，必须设为1。我没有研究color有没有透明度，如果有，把两个值设相同也行。
+        }).addTo(map);
+
+        // 3、绘制线
+        const latlngs = [
+            [19, 112],
+            [21, 110],
+            [23, 113]
+        ]
+        const polyline = L.polyline(latlngs, {
+            color: "red"
+        }).addTo(map);
+
+        // 4、绘制多边形
+        const latlngsPolygon = [
+            [27, 114],
+            [25, 104],
+            [33, 114],
+            [26, 115]
+        ]
+        const polygon = L.polygon(latlngsPolygon, {
+            color: "#000eff",
+            fillColor: "#0000ed",
+            weight: 1
+        }).addTo(map);
+
+        // 5、绘制弹出框
+        const popup = L.popup()
+            .setLatLng([25, 114])
+            .setContent("<h3>这是一个弹窗框</h3>")
+            .openOn(map);
+        // 对绘制好的图形绑定弹出框， 在点击这个图形后会弹出你想要你内容
+        polygon.bindPopup("我是个多边形");
+    </script>
+</body>
+
+</html>

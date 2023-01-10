@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>绘制矩形</title>
+
+    <style>
+        #canvas {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 1、在页面中添加画布元素 -->
+    <canvas id="canvas" width="300" height="300"></canvas>
+
+    <script>
+        /** @type {HTMLCanvasElement} */
+
+        // 2、获取画布
+        const canvas = document.getElementById("canvas");
+        // 3、获取画布元素的上下文环境对象
+        const ctx = canvas.getContext("2d"); // 获取二维画笔工具集
+        console.log("context", ctx);
+
+        // 4、绘制矩形
+        // 4.1 先描边后绘制
+        // ctx.rect(x, y, width, height); 参数：矩形左上角x1、y1，矩形宽高width、height
+        ctx.rect(50, 50, 200, 200); // 绘制路径。
+        // ctx.stroke(); // 描边（对矩形路径描边）
+        ctx.fill(); // 填充（对矩形路径填充）
+
+
+        // 4.2 直接一步到位绘制
+        // ctx.strokeStyle = "skyblue";
+        // ctx.strokeRect(20, 30, 180, 200); // 直接描边
+        ctx.fillStyle = "red";
+        ctx.fillRect(20, 30, 180, 200); // 直接填充
+
+        ctx.clearRect(80, 80, 50, 50); // 清除指定范围内容的像素
+    </script>
+</body>
+
+</html>

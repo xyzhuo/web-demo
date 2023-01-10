@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperMap差旅计算</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .caclu-box {
+            margin: 50px auto;
+            width: 600px;
+            border: 1px solid red;
+            padding: 10px;
+        }
+
+        select,
+        input[type="date"] {
+            width: 80%;
+        }
+
+        .caclu-box>.caclu-title {
+            text-align: center;
+        }
+
+        .caclu-box>.caclu-content {
+            display: grid;
+            grid-template-columns: 20% 45% 35%;
+            row-gap: 10px;
+            width: 100%;
+            padding-top: 10px;
+        }
+
+
+        .caclu-box>.caclu-info {
+            display: grid;
+            grid-template-columns: 100%;
+            width: 100%;
+        }
+
+        .caclu-box>.caclu-footer {
+            padding-top: 10px;
+            display: grid;
+            grid-template-columns: 100%;
+            justify-items: end;
+            width: 100%;
+        }
+
+        .caclu-box>.caclu-footer>button {
+            width: 60px;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="xyz-content">
+        <div class="caclu-box">
+            <div class="caclu-title">
+                <h3>SuperMap差旅补贴计算器</h3>
+            </div>
+            <div class="caclu-content">
+                <span>城市类型</span>
+                <select name="" id="cityType" onchange="changeCityHandle(this)">
+                    <option value="classOne">一类城市</option>
+                    <option value="classTwo">二类城市</option>
+                    <option value="other">其他</option>
+                </select>
+                <span>计算标准：<span id="cityTypeHint">[80,60,50]</span></span>
+                <span>开始日期</span>
+                <input type="date" name="" id="startTimeEle">
+                <span></span>
+                <span>结束日期</span>
+                <input type="date" name="" id="endTimeEle">
+                <span></span>
+                <span>包含首日</span>
+                <label><input type="checkbox" checked="true" name="" id="includeOneDayEle">是</label>
+                <span></span>
+                <span>结果</span>
+                <span id="cacluResult">共0天，共计0元</span>
+                <span></span>
+            </div>
+
+            <div class="caclu-info">
+            </div>
+
+            <div class="caclu-footer">
+                <button onclick="calculateMoney()">计算</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById("startTimeEle").valueAsDate = new Date();
+        document.getElementById("endTimeEle").valueAsDate = new Date();
+
+        /**
+         * 选择城市
+         * */
+        function changeCityHandle(element) {
+            console.log("changeCityHandle", element);
+            // 获取补贴标准
+            const subsidyStandard = getSubsidyStandard(element.value);
+            console.log("changeCityHandle", subsidyStandard);
+            document.getElementById("cityTypeHint").innerHTML = `[${subsidyStandard}]`;
+
+            calculateMoney();
+        }
+
+        function calculateMoney() {
+
+            // 获取补贴标准
+            const subsidyStandard = getSubsidyStandard(document.getElementById("cityType").value);
+
+            const startTime = document.getElementById("startTimeEle").value; // 开始时间，valueAsDate
+            console.log("开始时间：", startTime);
+            const endTime = document.getElementById("endTimeEle").value; // 结束时间
+            console.log("结束时间", endTime);
+            const diffType = "day";
+            let dayCount = GetDateDiff(startTime, endTime, diffType); // 计算天数差
+            const includeOneDayEle = document.getElementById("includeOneDayEle").checked;
+            if (includeOneDayEle) {
+                dayCount++;
+            }
+            console.log("天数：", dayCount);
+
+            let money = 0;
+            if (dayCount <= 5) {
+                money = dayCount * subsidyStandard[0];
+            } else if (dayCount > 5 && dayCount <= 10) {
+                money = 5 * subsidyStandard[0] + (dayCount - 5) * subsidyStandard[1];
+            } else {
+                money = 5 * subsidyStandard[0] + 5 * subsidyStandard[1] + (dayCount - 10) * subsidyStandard[2];
+            }
+            console.log("money", money);
+
+            document.getElementById("cacluResult").innerHTML = `共${dayCount}天，共计${money}元`;
+        }
+
+        function getSubsidyStandard(type) {
+            switch (type) {
+                case "classOne":
+                    return [80, 60, 50];
+                case "classTwo":
+                    return [60, 50, 40];
+                case "other":
+                default:
+                    return [50, 40, 30];
+            }
+        }
+
+        //计算两个日期之差
+        function GetDateDiff(startTime, endTime, diffType) {
+            //将xxxx-xx-xx的时间格式，转换为 xxxx/xx/xx的格式
+            startTime = startTime.replace(/\-/g, "/");
+            endTime = endTime.replace(/\-/g, "/");
+            //将计算间隔类性字符转换为小写
+            diffType = diffType.toLowerCase();
+            var sTime = new Date(startTime); //开始时间
+            var eTime = new Date(endTime); //结束时间
+
+            if (sTime > eTime) {
+                alert("开始时间不能大于结束时间!!!");
+                return false;
+            }
+            //作为除数的数字
+            var divNum = 1;
+            switch (diffType) {
+                case "second":
+                    divNum = 1000;
+                    break;
+                case "minute":
+                    divNum = 1000 * 60;
+                    break;
+                case "hour":
+                    divNum = 1000 * 3600;
+                    break;
+                case "day":
+                    divNum = 1000 * 3600 * 24;
+                    break;
+                default:
+                    break;
+            }
+            var ts = parseInt((eTime.getTime() - sTime.getTime()) / parseInt(divNum));
+            // WfForm.changeFieldValue("field18729", { value: ts });
+            return ts;
+        }
+    </script>
+</body>
+
+</html>

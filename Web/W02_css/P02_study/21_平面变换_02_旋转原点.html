@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>平面变换-旋转原点</title>
+    <style>
+        .father {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            border: 2px solid red;
+        }
+        
+        img {
+            width: 100%;
+            height: 100%;
+            border: 1px solid #666;
+            /* 没有过渡属性，看不出效果 */
+            transition: all 2s;
+            /* 修改旋转的中心点，在要旋转的元素上改 */
+            /* transform-origin: right bottom; */
+            transform-origin: left bottom;
+        }
+        
+        img:hover {
+            transform: rotate(360deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="father">
+        <img src="./images/rotate.png" alt="">
+    </div>
+</body>
+
+</html>

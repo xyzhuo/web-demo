@@ -1,0 +1,87 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>矢量瓦片图层重解析-对MVT生成每一个图层</title>
+
+    <script type="text/javascript" src="../lib/jquery/jquery-1.10.2.min.js">
+    </script>
+    <link href="../lib/mapbox-gl-js/mapbox-gl.css" rel="stylesheet">
+    <script type="text/javascript" src="../lib/mapbox-gl-js/mapbox-gl.js"></script>
+    <link href="../lib/mapbox-gl-js/plugins/mapbox-gl-draw.css" rel="stylesheet">
+    <script type="text/javascript" src="../lib/mapbox-gl-js/plugins/mapbox-gl-draw.js"></script>
+    <script type="text/javascript" src="../lib/mapbox-gl-js/iclient9-mapboxgl.js"></script>
+    <script type="text/javascript" src="../lib/proj4/proj4.js"></script>
+
+    <script src="./js/jszip/dist/jszip.js"></script>
+    <script src="./js/file-saver/dist/FileSaver.js"></script>
+
+    <link href="./modal/modal.css" rel="stylesheet">
+    <script src="./modal/modal.js"></script>
+    <script src="./js/index.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        #info {
+            display: block;
+            position: relative;
+            margin: 0px auto;
+            width: 50%;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            font-size: 12px;
+            text-align: center;
+            color: #222;
+            background: rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <div id="info" style="position: absolute; left: 10px;bottom: 10px; width: 20%;text-align: left;"></div>
+
+    <div style="position: absolute; top: 20px; right: 20px;">
+        <input id="mvtServiceUrlEle" type="text" value="./hdStyle.json" />
+        <button onclick="paseAndLoadEle()">解析并下载</button>
+        <button onclick="paseEle()">解析并按需下载</button>
+    </div>
+
+    <!-- 模态框 -->
+    <div class="containerModal">
+        <div class="mask"></div>
+        <div class="modal">
+            <div id="closeModalEle" class="modal-close">x</div>
+            <div class="modal-header" style="display: none;">
+                <p id="modalTitleEle" class="modal-title">请选择要下载的图层</p>
+            </div>
+            <div id="modalContentEle" class="modal-content" style="max-height: 500px; overflow: overlay;margin: 20px;">
+                <!-- <input type="checkbox" name="layers"> -->
+                <label><input type="checkbox" name="layersEle" value="历史变化趋势"><span>历史变化趋势</span></label>
+            </div>
+            <div style="margin: 10px;">
+                <div>导出设置</div>
+                <label><input type="radio" name="mergeLayersEle" value="true" checked="checked"><span>合并成一个图层</span></label>
+                <label><input type="radio" name="mergeLayersEle" value="false"><span>分别导出为一个图层</span></label>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmModalBtnEle" class="modal-close-btn btn">下载</button>
+                <button id="closeModalBtnEle" class="modal-close-btn btn">关闭</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

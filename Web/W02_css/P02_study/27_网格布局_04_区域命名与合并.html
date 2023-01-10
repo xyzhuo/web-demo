@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<head>
+    <title>网格布局-区域命名与合并</title>
+    <style>
+        .box {
+            /* 开启网格布局，设置每一个格子大小 */
+            display: grid;
+            grid-template-rows: repeat(3, 100px);
+            grid-template-columns: repeat(3, 100px);
+            /* 指定行列间距 */
+            gap: 10px;
+            /* 指定区域名称 */
+            grid-template-areas: "a a c" "d f f" "g f f";
+            width: 320px;
+            height: 320px;
+            background-color: skyblue;
+        }
+        
+        .box>div {
+            border: 1px solid red;
+        }
+        
+        .box>div:nth-child(1) {
+            /* 指定项目的名称，占用相同名称的区域 */
+            grid-area: a;
+        }
+        
+        .box>div:nth-child(2) {
+            /* 指定第二个子项目占用的区域名称为c */
+            grid-area: c;
+        }
+        
+        .box>div:nth-child(3) {
+            /* 指定第三个子项目占用的区域名称为d */
+            grid-area: d;
+        }
+        
+        .box>div:nth-child(4) {
+            /* 指定第四个子项目占用的区域名称为f */
+            grid-area: f;
+        }
+        
+        .box>div:nth-child(5) {
+            /* 指定第四个子项目占用的区域名称为f */
+            grid-area: g;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div>a</div>
+        <div>c</div>
+        <div>d</div>
+        <div>f</div>
+        <div>g</div>
+    </div>
+</body>
+
+</html>

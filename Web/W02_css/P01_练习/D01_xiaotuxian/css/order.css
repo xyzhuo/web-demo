@@ -1,0 +1,259 @@
+body {
+    background-color: #f7f7f8;
+}
+
+/* 公共样式 start*/
+.font-red {
+    color: #cf4444;
+}
+
+.pannel {
+    margin: 10px;
+    background-color: #ffffff;
+}
+
+/* 公共样式 end*/
+
+/* 主体内容：订单内容 start */
+.main {
+    /* 79px：底部的支付是一个固定定位，会遮住底部的内容，所有需要留白 */
+    padding: 12px 0 79px;
+}
+
+/* 收货地址信息 */
+.user_msg {
+    display: flex;
+    align-items: center;
+    padding: 15px 0 15px 11px;
+}
+
+.user_msg .location a {
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background-image: linear-gradient(90deg,
+            #6fc2aa 5%,
+            #54b196 100%);
+    text-align: center;
+    line-height: 30px;
+    color: #ffffff;
+}
+
+.user_msg .user {
+    flex: 1;
+}
+
+.user_msg .user .top {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #262626;
+}
+
+.user_msg .user .top>h5 {
+    width: 55px;
+}
+
+.user_msg .user .address {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #333333;
+}
+
+/* 更多 */
+.user_msg .more a {
+    display: block;
+    width: 44px;
+    height: 44px;
+    text-align: center;
+    line-height: 44px;
+    color: #808080;
+}
+
+/* 商品信息 */
+.goods {
+    display: flex;
+    /* align-items: center; */
+    padding: 10px 0 10px 10px;
+}
+
+.goods .images {
+    width: 85px;
+    height: 85px;
+    margin-right: 11px;
+}
+
+.goods .info {
+    flex: 1;
+}
+
+.goods .info>h5 {
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.goods .info .describe {
+    display: inline;
+    margin: 5px 0;
+    background-color: #f7f7f8;
+    border-radius: 2px;
+    font-size: 12px;
+    color: #888888;
+}
+
+.goods .info .describe>span {
+    margin: 0 3px;
+}
+
+.goods .info .price {
+    font-size: 12px;
+}
+
+.goods .info .price i {
+    font-size: 16px;
+}
+
+.goods .info .old_price {
+    font-size: 12px;
+    color: #999999;
+    text-decoration: line-through;
+}
+
+.goods .count {
+    width: 44px;
+    height: 44px;
+    text-align: center;
+    line-height: 44px;
+}
+
+/* 商品信息 */
+
+/* 其他信息 start*/
+.orther {
+    padding: 15px;
+}
+
+.orther div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 29px;
+}
+
+.orther div:last-child {
+    margin-bottom: 0;
+}
+
+/* 备注 */
+.orther .remark {
+    justify-content: flex-start;
+}
+
+.orther div h5 {
+    font-size: 13px;
+    color: #262626;
+    font-weight: 400;
+}
+
+.orther div>h5 {
+    margin-right: 19px;
+}
+
+.orther div p {
+    font-size: 13px;
+    color: #262626;
+}
+
+.orther div p>i {
+    font-size: 13px;
+}
+
+.orther div:nth-child(2) p {
+    font-size: 12px;
+    color: #989898;
+}
+
+
+/* 其他信息 end*/
+
+/* 支付信息 start*/
+.pay_info {
+    padding: 14px;
+}
+
+.pay_info div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 29px;
+}
+
+.pay_info div:last-child {
+    margin-bottom: 0;
+}
+
+.pay_info div h5 {
+    font-size: 13px;
+    color: #262626;
+}
+
+.pay_info div p {
+    font-size: 13px;
+}
+
+.pay_info div:not(3) {
+    color: #262626;
+}
+
+/* 支付信息 end*/
+
+
+/* 主体内容：订单内容 end */
+
+
+/* 底部内容：支付栏 start  */
+.pay {
+    /* 固定位置，一般底部的内容都需要固定定位 */
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+
+    /* 设置内容排列方式 */
+    display: flex;
+    /* 主轴对齐方式 */
+    justify-content: space-between;
+    /* 侧轴对齐方式 */
+    align-items: center;
+
+    /* 由于为固定定位，元素脱标，默认宽度为内容宽度，所以需要设置100%占满内容。 */
+    width: 100%;
+    height: 79px;
+    border-top: 1px solid #ededed;
+    padding: 0 11px;
+    /* background-color: skyblue; */
+}
+
+.pay .left {
+    /* 移动端浏览器字体最小的尺寸为12px */
+    font-size: 12px;
+}
+
+.pay .left span i {
+    font-size: 20px;
+}
+
+.pay .right a {
+    display: block;
+    width: 90px;
+    height: 35px;
+    background-image: linear-gradient(90deg,
+            #6fc2aa 5%,
+            #54b196 100%);
+    border-radius: 3px;
+    text-align: center;
+    line-height: 35px;
+    font-size: 13px;
+    color: #ffffff;
+}
+
+/* 底部内容：支付栏 end  */

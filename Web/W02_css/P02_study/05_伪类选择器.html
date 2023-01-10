@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>伪类选择器</title>
+    <style>
+        .ul-class>li:first-child {
+            /*1、找到第一个子元素，并且为li标签*/
+            background-color: orange;
+        }
+        
+        .ul-class>li:last-child {
+            /* 2、找到最后一个子元素，并且为li标签*/
+            background-color: skyblue;
+        }
+        
+        .ul-class>li:nth-child(3) {
+            /*3、找到第3个子元素，并且为li标签*/
+            color: red;
+            font-size: 23px;
+        }
+        
+        .ul-class>li:nth-last-child(3) {
+            /*4、找到倒数第3个子元素，并且为li标签*/
+            color: blue;
+            font-size: 23px;
+        }
+        
+        .ul-nth>li:nth-child(n) {
+            /* 选中所有元素 */
+            width: 300px;
+            list-style: none;
+        }
+        
+        .ul-nth>li:nth-child(even) {
+            /* .ul-nth>li:nth-child(2n) { */
+            /*1、找到编号为 偶数 的li*/
+            background-color: rgb(71, 65, 65);
+        }
+        
+        .ul-nth>li:nth-child(odd) {
+            /* .ul-nth>li:nth-child(2n-1) { */
+            /*2、找到编号为 奇数 的li*/
+            background-color: rgb(153, 94, 94);
+        }
+        
+        .ul-nth>li:nth-child(-n+5) {
+            /*3、找到前5个 */
+            font-size: 23px;
+        }
+        
+        .ul-nth>li:nth-child(n+6) {
+            /*4、找到从第6个元素往后 */
+            color: red;
+        }
+        
+        .ul-fist-a>li:first-child a {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="ul-class">
+        <li>第1个li标签</li>
+        <li>第2个li标签</li>
+        <li>第3个li标签</li>
+        <li>第4个li标签</li>
+        <li>第5个li标签</li>
+        <li>第6个li标签</li>
+        <li>第7个li标签</li>
+        <li>第8个li标签</li>
+        <li>第9个li标签</li>
+        <li>第10个li标签</li>
+    </ul>
+
+
+    <!-- 注意事项 -->
+    <ul class="ul-class">
+        <!-- 这个div虽然是ul的第一个子元素，但不是li元素，所以 ul>li:first-child的样式不会作用在这里 -->
+        <div>这个是用来搞事情的</div>
+
+        <!-- 这个li不是ul的第一个子元素，所以 ul>li:first-child的样式不会作用在这里 -->
+        <li>第1个li标签</li>
+        <li>第2个li标签</li>
+        <li>第3个li标签</li>
+        <li>第4个li标签</li>
+        <li>第5个li标签</li>
+    </ul>
+
+
+    <ul class="ul-nth">
+        <li>第1个li标签</li>
+        <li>第2个li标签</li>
+        <li>第3个li标签</li>
+        <li>第4个li标签</li>
+        <li>第5个li标签</li>
+        <li>第6个li标签</li>
+        <li>第7个li标签</li>
+        <li>第8个li标签</li>
+        <li>第9个li标签</li>
+        <li>第10个li标签</li>
+    </ul>
+
+    <ul class="ul-fist-a">
+        <li>
+            <a href="">第1个li标签</a>
+        </li>
+        <li>
+            <a href="">第2个li标签</a>
+        </li>
+        <li>
+            <a href="">第3个li标签</a>
+        </li>
+    </ul>
+</body>
+
+</html>

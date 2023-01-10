@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS背景样式</title>
+    <style>
+        .title {
+            /* 设置背景颜色 */
+            /* background-color: skyblue; */
+            /* background-color: rgba(200, 100, 50, 0.5); */
+            /* background-color: rgba(200, 100, 50); */
+            background-color: #aa8822;
+        }
+        
+        .title-bg-img {
+            /* 设置背景样式：背景颜色 背景图片 平铺方式 位置 */
+            background: #aa8822 url("./images/title-bg.jpeg") no-repeat 200px 200px;
+        }
+        
+        .title-bg-img2 {
+            /* 设置背景图片 */
+            background-image: url("./images/title-bg.jpeg");
+            /* 背景平铺：没有平铺 */
+            background-repeat: no-repeat;
+            /* background-repeat: repeat-x; */
+            /* background-repeat: repeat-y; */
+            /* 图片位置 */
+            /* background-position: center bottom; */
+            background-position: 200px 300px;
+        }
+    </style>
+</head>
+
+<body class="title-bg-img">
+    <div>
+        <div class="title">
+            <!-- 红色 -->
+            <h1>我是大标题</h1>
+            <div>
+                <!-- 红色 -->
+                <h1>我也是大标题</h1>
+            </div>
+        </div>
+
+        <div>
+            <!-- 红色 -->
+            <h1>我是大标题</h1>
+            <div>
+                <!-- 红色 -->
+                <h1>我也是大标题</h1>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

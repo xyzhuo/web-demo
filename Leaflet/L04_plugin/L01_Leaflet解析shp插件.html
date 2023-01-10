@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Leaflet地图控件</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css">
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script>
+
+    <!-- shp解析插件 -->
+    <script src="../lib/leaflet/shpjs@4.0.2/shp.js"></script>
+
+    <!-- jQuery -->
+    <script src="../lib/jQuery/jquery-3.2.1.min.js"></script>
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <div id="latlngInfo" style="position: absolute;z-index: 9999;left: 10px;bottom: 0px;"></div>
+    <script type="text/javascript">
+        /**
+         * shapfile解析
+         * */
+
+        let map = L.map("map", {
+            center: [23.458207269894125, 113.48739624023439], // 地图初始化后的中心点
+            crs: L.CRS.TianDiTu_WGS84, // 设置坐标系
+            zoom: 3, // 地图初始化后显示的层级
+            maxZoom: 18, // 地图显示最大层级
+            /***********************************************************************
+             * 
+             * 地图控件
+             * 
+             ***********************************************************************/
+            zoomControl: false, // 隐藏缩放控件。默认true，显示控件
+            attributionControl: false, // 隐藏信息控件。默认显示
+            logoControl: false // 隐藏logo图标。默认显示
+        });
+
+        L.supermap.tiandituTileLayer({
+            layerType: "img",
+            key: "1d109683f4d84198e37a38c442d68311"
+        }).addTo(map);
+
+
+        // for the shapefiles in the files folder called pandr.shp
+        shp("files/pandr.zip").then(function(geojson) {
+            // see bellow for whats here this internally call shp.parseZip()
+        });
+    </script>
+
+</body>
+
+</html>

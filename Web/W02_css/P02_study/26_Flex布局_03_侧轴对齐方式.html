@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex布局-侧轴对齐方式</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .box {
+            /* flex布局 */
+            display: flex;
+            /* 容器主轴对齐方式，针对父元素设置 */
+            /* 盒子间留有空隙，两侧空隙为盒子间空隙的一半 */
+            justify-content: space-around;
+            /* 容器侧轴对齐方式 */
+            /* （1）起点开始依次排列：从上往下排列 */
+            /* align-items: flex-start; */
+            /* （2）起点开始依次排列：从底部往上排列 */
+            /* align-items: flex-end; */
+            /* （3）在容器中垂直居中 */
+            align-items: center;
+            /* （4）起点开始依次排列：从上往下排列。在子元素没有设置高度的情况下，子元素会被拉伸填充满父元素的高度。 */
+            /* align-items: stretch; */
+            height: 200px;
+            border: 1px solid red;
+        }
+        
+        .box>div {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+        }
+        
+        .box2 {
+            display: flex;
+            height: 200px;
+            border: 1px solid blue;
+            margin-top: 20px;
+        }
+        
+        .box2>div {
+            width: 100px;
+            /* 如果没有高度，会自动拉伸 */
+            height: 100px;
+            background-color: pink;
+        }
+        
+        .box2>div:nth-child(2) {
+            /* 单独对某个子元素设置垂直对齐方式 */
+            align-self: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+    </div>
+
+
+    <div class="box2">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+    </div>
+</body>
+
+</html>

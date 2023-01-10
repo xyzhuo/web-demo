@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Leaflet自定义控件</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css">
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script>
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <div id="latlngInfo" style="position: absolute;z-index: 9999;left: 10px;bottom: 0px;"></div>
+    <script type="text/javascript">
+        let map = L.map("map", {
+            center: [23, 113],
+            maxZoom: 18,
+            zoom: 5,
+            crs: L.CRS.EPSG4326
+        });
+
+        // 添加地图
+        L.tileLayer("http://t{s}.tianditu.com/img_c/wmts?layer=img&style=default&tilematrixset=c&Service=WMTS&Request=GetTile&Version=1.0.0&Format=tiles&TileMatrix={z}&TileCol={x}&TileRow={y}&tk=93724b915d1898d946ca7dc7b765dda5", {
+            subdomains: [0, 1, 2, 3, 4, 5, 6, 7],
+            maxZoom: 17,
+            tileSize: 256,
+            zoomOffset: 1,
+            minZoom: 3
+        }).addTo(map);
+
+        /**
+         * 自定义控件
+         * */
+        L.Control.Logo = L.Control.extend({
+            /**
+             * 定义参数
+             * position:
+             *      topleft：地图的左上角
+             *      topright：地图的右上角
+             *      bottomleft：地图的左下角
+             *      bottomright：地图的右下角
+             */
+            options: {
+                position: 'topright' //初始位置
+
+            },
+
+            /**
+             * 初始化
+             */
+            initialize: function(options) {
+                L.Util.extend(this.options, options);
+
+            },
+            /**
+             * 添加控件内容
+             */
+            onAdd: function(map) {
+                //创建一个class为 leaflet-control-container的div
+                this._container = L.DomUtil.create('div', 'leaflet-control-container');
+                //创建一个图片要素
+                var img = L.DomUtil.create('img', 'leaflet-control-logo');
+
+                img.id = 'leaflet-control-clegend';
+                img.type = 'img';
+                img.src = "https://pic1.zhimg.com/v2-4413625468a60d03cc9844ef3aba1c83_is.jpg?source=32738c0c";
+                this._legendimg = img;
+
+                //创建一个关闭控件的按钮
+                var closeButton = L.DomUtil.create('a', 'leaflet-control-button');
+                closeButton.text = 'X';
+                closeButton.id = 'leaflet-control-geosearch-close';
+                this._closebutton = closeButton;
+
+
+                this._container.appendChild(this._legendimg);
+                this._container.appendChild(this._closebutton);
+
+                //注册关闭事件
+                L.DomEvent.addListener(this._closebutton, 'click', this._onCloseControl, this);
+
+                return this._container;
+            },
+            /**
+             *
+             * @private
+             */
+            _onCloseControl: function() {
+                this._map.options.Legend = false;
+                this.remove(this._map);
+            },
+        });
+
+
+        L.control.logo = function(options) {
+            return new L.Control.Logo(options)
+        };
+        L.control.logo().addTo(map);
+    </script>
+</body>
+
+</html>

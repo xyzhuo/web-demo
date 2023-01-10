@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>媒体查询字体大小取值</title>
+    <style>
+        /* 使用媒体查询，当宽度为375px时，设置html标签的字体大小 */
+        @media(width:375px) {
+
+            /* 设置css样式 */
+            html {
+                /* 将视口拆分为10等份，也就是宽度最大为10rem，<html>的字体大小取值为媒体宽度的1/10 */
+                font-size: 37.5px;
+            }
+        }
+
+        @media (width:320px) {
+            html {
+                font-size: 32px;
+            }
+        }
+
+        .box {
+            width: 5rem;
+            height: 3rem;
+            background-color: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+</body>
+
+</html>

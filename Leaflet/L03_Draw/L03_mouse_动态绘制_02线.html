@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>加载GeoJOSN</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css"> -->
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script> -->
+
+    <!-- <script src="../lib/jQuery/jquery-3.2.1.min.js"></script> -->
+
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <script type="text/javascript">
+        /**
+         * 动态绘制图形(点、线、圆、多边形)
+         * https://blog.csdn.net/xtfge0915/article/details/80275094
+         * 
+         * 动态绘线主要涉及到三个事件:click,dbclick,mousemove
+         * click确定线的折点，dbclick确定线的终点，mousemove绘制鼠标移动过程中图形的变化。如果我们有一个地图map,动态绘线的代码
+         * */
+        const map = L.map("map", {
+            center: [23.458207269894125, 113.48739624023439], // 地图初始化后的中心点
+            zoom: 5, // 地图初始化后显示的层级
+            maxZoom: 18, // 地图显示最大层级
+            crs: L.CRS.EPSG4326
+        });
+
+        // 添加地图
+        L.tileLayer("http://t{s}.tianditu.com/img_c/wmts?layer=img&style=default&tilematrixset=c&Service=WMTS&Request=GetTile&Version=1.0.0&Format=tiles&TileMatrix={z}&TileCol={x}&TileRow={y}&tk=93724b915d1898d946ca7dc7b765dda5", {
+            subdomains: [0, 1, 2, 3, 4, 5, 6, 7],
+            maxZoom: 18,
+            tileSize: 256,
+            zoomOffset: 1,
+            minZoom: 1
+        }).addTo(map);
+
+        var points = [],
+            geometry = []
+        var lines = new L.polyline(points)
+        var tempLines = new L.polyline([])
+        map.on('click', onClick); //点击地图
+        map.on('dblclick', onDoubleClick);
+
+
+        //map.off(....) 关闭该事件
+
+        function onClick(e) {
+
+            points.push([e.latlng.lat, e.latlng.lng])
+            lines.addLatLng(e.latlng)
+            map.addLayer(lines)
+            const node = L.circle(e.latlng, {
+                color: '#ff0000',
+                fillColor: 'ff0000',
+                fillOpacity: 1
+            })
+            map.addLayer(node)
+            geometry.push(node)
+            map.on('mousemove', onMove) //双击地图
+
+        }
+
+        function onMove(e) {
+            if (points.length > 0) {
+                ls = [points[points.length - 1],
+                    [e.latlng.lat, e.latlng.lng]
+                ]
+                tempLines.setLatLngs(ls)
+                map.addLayer(tempLines)
+            }
+        }
+
+        function onDoubleClick(e) {
+            geometry.push(L.polyline(points).addTo(map))
+            points = []
+            lines.remove();
+            map.off('mousemove')
+            tempLines.remove();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas</title>
+
+    <style>
+        #canvas {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 1、在页面中添加画布元素 -->
+    <canvas id="canvas" width="300" height="300"></canvas>
+
+    <script>
+        /** @type {HTMLCanvasElement} */
+
+        // 2、获取画布
+        const canvas = document.getElementById("canvas");
+        // 3、获取画布元素的上下文环境对象
+        const context = canvas.getContext("2d"); // 获取二维画笔工具集
+        console.log("context", context);
+
+        // 4、使用上下文环境对象绘制图形，保存在内存中
+        context.moveTo(135, 100); // 移动到三角形的第一个点的位置
+        context.lineTo(200, 200); // 确定第二个点的位置，绘制三角形的第一条边
+        context.lineTo(50, 200); // 确定第三个点的位置，绘制三角形的第二条边
+        // context.lineTo(135, 100); // 第三个点与第一个点相连接，绘制三角形的第三条边
+
+        // 5、闭合路径，创建从当前点回到起始点的路径。 // 不闭合路径就是两条边
+        context.closePath();
+
+        // 绘制已定义的路径
+        context.stroke()
+
+    </script>
+</body>
+
+</html>

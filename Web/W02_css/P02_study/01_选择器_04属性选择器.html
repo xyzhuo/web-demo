@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>CSS选择器-属性选择器</title>
+    <style>
+        input {
+            border: 1px solid orange;
+            background-color: skyblue;
+            margin: 10px;
+        }
+        
+        input[placeholder] {
+            /* 即使这个元素有这个属性，但没有显示写出，这是不会筛选到的。 */
+            padding: 10px;
+        }
+        
+        input[type="password"] {
+            border: 5px solid dodgerblue;
+        }
+        
+        input[type="button"] {
+            width: 80px;
+            height: 25px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <label>input[placeholder]：<input type="text" placeholder="请输入用户名"></label><br/>
+    <label>input[type="password"]：<input type="password"></label><br/>
+    <label>input[type="button"]<input type="button" value="确定"></label>
+</body>
+
+</html>

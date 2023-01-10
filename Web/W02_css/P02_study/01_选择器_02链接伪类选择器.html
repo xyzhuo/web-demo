@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>CSS选择器-链接伪类选择器</title>
+    <style>
+        a {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        /* 访问状态顺序：link、visited、hover、active */
+        
+        a:link {
+            /* 未访问过（链接没有被点击过） */
+            color: skyblue;
+        }
+        
+        a:visited {
+            /* 访问之后（链接被点击过） */
+            color: rebeccapurple;
+        }
+        
+        a:hover {
+            /* 鼠标移动到链接上 */
+            color: red;
+        }
+        
+        a:active {
+            /* 鼠标按下链接但没放开 */
+            color: orange;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <a href="https://v.qq.com">腾讯视频</a>
+        <hr>
+        <a href="https://www.baidu.com">百度一下</a>
+        <hr>
+        <a href="https://qq.com">腾讯新闻</a>
+        <hr>
+        <a href="https://baike.baidu.com/item/CT/122415?fr=aladdin">CT(电子计算机断层扫描) - 百度百科</a>
+    </div>
+</body>
+
+</html>

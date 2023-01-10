@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS背景大小</title>
+    <style>
+        div {
+            margin: 10px;
+            float: left;
+        }
+        
+        .title-bg-img {
+            border: 2px red solid;
+            width: 400px;
+            height: 500px;
+            /* 设置背景图片 */
+            background-image: url("./images/children.jpg");
+            /* 背景平铺：没有平铺 */
+            background-repeat: no-repeat;
+            /***设置背景图片的大小*******************************************/
+            /* background-size: 300px 300px; */
+            /* 百分百填充容器 */
+            background-size: 100% 100%;
+            /* 只要有一个方向填充满了，另一个方向不会继续填充（留白） */
+            /* background-size: contain; */
+            /* cover：垂直、水平方式都会填充满。某个方向会被拉伸遮挡 */
+            /* background-size: cover; */
+        }
+        
+        .title-bg-lx {
+            border: 2px red solid;
+            width: 500px;
+            height: 400px;
+            /* 设置背景样式：背景颜色 背景图片 平铺方式 位置 */
+            /* background: #aa8822 url("./images/children.jpg") no-repeat 50px 50px; */
+            /* 设置背景样式：背景颜色 背景图片 平铺方式 位置/大小 */
+            /* background: #aa8822 url("./images/children.jpg") no-repeat 10px 10px / 300px 300px; */
+            /* 以容器中心为缩放中心，图片等比缩放 */
+            background: #aa8822 url("./images/children.jpg") no-repeat center center/300px 300px;
+            /* size写在  background 的前面，没有效果
+            background-size: cover;
+            background: #aa8822 url("./images/children.jpg") no-repeat center center; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title-bg-img"></div>
+
+    <div class="title-bg-lx"></div>
+</body>
+
+</html>

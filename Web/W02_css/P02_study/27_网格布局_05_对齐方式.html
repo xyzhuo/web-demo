@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<head>
+    <title>网格布局-对齐方式</title>
+    <style>
+        .box3 {
+            /* 网格布局 */
+            display: grid;
+            /* 划分单元格行列大小 */
+            grid-template-rows: repeat(3, 100px);
+            grid-template-columns: repeat(3, 100px);
+            /* 设置对齐方式 */
+            /* （1）设置水平对齐方式 */
+            /* justify-items: center; */
+            /* （2）设置垂直对齐方式 */
+            /* align-items: center; */
+            /* （3）合并写法 */
+            /* place-items: center; */
+            /* place-items: center center; */
+            /* justify-content: center;
+            align-content: center; */
+            width: 300px;
+            height: 300px;
+            background-color: skyblue;
+        }
+        
+        .box {
+            /* 网格布局 */
+            display: grid;
+            /* 划分单元格行列大小：每一行、每一列的容器都没有占满父盒子 */
+            grid-template-rows: repeat(3, 50px);
+            grid-template-columns: repeat(3, 50px);
+            /* 让子元素在父容器中居中：默认情况从左上角开始排列。 */
+            /* 水平居中 */
+            justify-content: center;
+            /* 垂直居中 */
+            align-content: center;
+            width: 300px;
+            height: 300px;
+            background-color: skyblue;
+        }
+        
+        .box>div {
+            /* width: 50px;
+            height: 50px; */
+            border: 1px solid red;
+        }
+        
+        .box-flow {
+            /* 网格布局 */
+            display: grid;
+            /* 划分单元格行列大小 */
+            grid-template-rows: repeat(3, 100px);
+            grid-template-columns: repeat(3, 100px);
+            /* 设置排列方式 */
+            grid-auto-flow: column;
+            width: 300px;
+            height: 300px;
+            background-color: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+        <div>7</div>
+        <div>8</div>
+        <div>9</div>
+    </div>
+
+    <hr>
+    <br>
+    <br>
+
+    <div class="box-flow">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+        <div>7</div>
+        <div>8</div>
+        <div>9</div>
+    </div>
+</body>
+
+</html>

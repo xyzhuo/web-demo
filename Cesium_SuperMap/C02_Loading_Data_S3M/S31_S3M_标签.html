@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>平面场景</title>
+    <!-- 本地引入依赖 -->
+    <link href="../lib/Cesium1100/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium1100/Cesium.js"></script>
+
+    <script src="../lib/jQuery/jquery-3.2.1.min.js"></script>
+
+    <script src="../lib/iServerQuery/SuperMap-7.1-11828.js"></script>
+
+    <!-- 使用远程依赖 -->
+    <!-- <link href="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Cesium.js"></script> -->
+
+    <!-- Earth -->
+    <!--<link href="http://www.supermapol.com/earth/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script type="text/javascript" src="http://www.supermapol.com/earth/Build/Cesium/Cesium.js"></script>-->
+
+    <!--<script src="http://support.supermap.com.cn:8090/webgl/examples/webgl/js/supermap/SuperMap-7.1-11828.js"></script>-->
+
+    <!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>-->
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            -webkit-user-select: none;
+        }
+
+        .tools {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            border: 1px solid rgb(6, 168, 231);
+            padding: 10px;
+        }
+
+        .tools>div {
+            height: 35px;
+        }
+
+        .tools>p {
+            background-color: #adf;
+        }
+
+        div>label {
+            background-color: #adf;
+            padding: 5px;
+            margin: 5px;
+        }
+
+        div>button {
+            background-color: #adf;
+            padding: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+    <img src="./images/location4.png"  alt="找不到图片"/>
+    
+
+    <script type="text/javascript">
+        let viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false
+        });
+        let scene = viewer.scene; // viewer.sceneMode = Cesium.SceneMode.COLUMBUS_VIEW;
+
+        // scene.open("http://192.168.1.7:8090/iserver/services/3D-zhongshangaj/rest/realspace");
+
+        scene.open("http://localhost:8090/iserver/services/3D-buildingPOIce/rest/realspace").then(layers => {
+            console.log("layers", layers);
+            // flyToGZ();
+
+            for (const layer of layers) {
+                layer.isOverlapDisplayed = false;
+                /// layer.lodRangeScale = 0.1;
+            }
+        })
+
+    </script>
+</body>
+
+</html>

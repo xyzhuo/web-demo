@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS选择器-焦点伪类选择器</title>
+    <style>
+        input {
+            width: 300px;
+            height: 20px;
+            font-size: 20px;
+            padding: 10px;
+            border: 5px solid rgb(131, 131, 131);
+            border-radius: 5px 0 0 5px;
+        }
+        
+        input:focus {
+            /* 书写的时候注意：input:focus 与 input :focus 是不一样的*/
+            border: 5px solid dodgerblue;
+            /* background-color: skyblue; */
+        }
+    </style>
+</head>
+
+<body>
+    <input type="text">
+</body>
+
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>加载GeoServer WMS服务</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css"> -->
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script> -->
+
+    <!-- Leaflet卷帘扩展插件 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet.sidebyside/leaflet-side-by-side.js"></script>
+
+    <link rel="stylesheet" href="../lib/leaflet/@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.min.js">
+    <script type="text/javascript" src="../lib/leaflet/@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.min.js"></script>
+
+    <!-- Leaflet鹰眼图插件 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet.miniMap/3.6.1/dist/Control.MiniMap.min.css">
+    <script type="text/javascript" src="../lib/leaflet/leaflet.miniMap/3.6.1/dist/Control.MiniMap.js"></script>
+
+    <!-- jQuery -->
+    <script src="../../lib/jQuery/jquery-3.2.1.min.js"></script>
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <div id="latlngInfo" style="position: absolute;z-index: 9999;left: 10px;bottom: 0px;"></div>
+    <script type="text/javascript">
+        // 创建地图
+        let map = L.map("map").setView([31.864942016, 117.2882028929], 11);
+
+        // 加载Geoserver的WMS服务代码
+        let wmsLayer = L.tileLayer.wms("http://localhost:8080/geoserver/cite/wms?", {
+            layers: 'cite:bou2_4p', //需要加载的图层
+            format: 'image/png', //返回的数据格式
+            transparent: true,
+            //crs: L.CRS.EPSG4326
+        });
+        map.addLayer(wmsLayer);
+    </script>
+
+</body>
+
+</html>

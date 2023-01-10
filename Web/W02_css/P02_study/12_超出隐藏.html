@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>超出隐藏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        div {
+            width: 250px;
+            height: 150px;
+            float: left;
+            border: 2px solid red;
+            margin: 5px;
+        }
+        
+        div:nth-child(1) {
+            /* 超出 隐藏 */
+            overflow: hidden;
+            ;
+        }
+        
+        div:nth-child(2) {
+            /* 不管是否超出，均显示滚动条 */
+            overflow: scroll;
+        }
+        
+        div:nth-child(3) {
+            /* 不管是否超出，均显示滚动条 */
+            overflow: scroll;
+        }
+        
+        div:nth-child(4) {
+            /* 自动显示滚动条 */
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div>地理信息系统（Geographic Information System或 Geo Information system，GIS）有时又称为“地学信息系统”。它是一种特定的十分重要的空间信息系统。它是在计算机硬、软件系统支持下，对整个或部分地球表层（包括大气层）空间中的有关地理分布数据进行采集、储存、管理、运算、分析、显示和描述的技术系统。</div>
+    <div>位置与地理信息既是LBS的核心，也是LBS的基础。一个单纯的经纬度坐标只有置于特定的地理信息中，代表为某个地点、标志、方位后，才会被用户认识和理解。用户在通过相关技术获取到位置信息之后，还需要了解所处的地理环境，查询和分析环境信息，从而为用户活动提供信息支持与服务。</div>
+    <div>人员，是GIS中最重要的组成部分。开发人员必须定义GIS中被执行的各种任务，开发处理程序<span style="color: red;">(不管是否超出，均显示滚动条)</span>。</div>
+    <div>地理信息系统（GIS，Geographic Information System）是一门综合性学科，结合地理学与地图学以及遥感和计算机科学，已经广泛的应用在不同的领域，是用于输入、存储、查询、分析和显示地理数据的计算机系统，随着GIS的发展，也有称GIS为“地理信息科学”（Geographic Information Science），近年来，也有称GIS为"地理信息服务"（Geographic Information service）。GIS是一种基于计算机的工具，它可以对空间信息进行分析和处理（简而言之，是对地球上存在的现象和发生的事件进行成图和分析）。
+        GIS 技术把地图这种独特的视觉化效果和地理分析功能与一般的数据库操作（例如查询和统计分析等）集成在一起。</div>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绘制圆</title>
+
+    <style>
+        #canvas {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 1、在页面中添加画布元素 -->
+    <canvas id="canvas" width="300" height="300"></canvas>
+
+    <script>
+        /** @type {HTMLCanvasElement} */
+
+        // 2、获取画布
+        const canvas = document.getElementById("canvas");
+        // 3、获取画布元素的上下文环境对象
+        const ctx = canvas.getContext("2d"); // 获取二维画笔工具集
+        console.log("context", ctx);
+
+        // 绘制参考线
+        ctx.strokeStyle = "red";
+        ctx.moveTo(0, 100);
+        ctx.lineTo(300, 100);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(220, 0);
+        ctx.lineTo(220, 300);
+        ctx.stroke();
+        ctx.beginPath();
+
+        ctx.strokeStyle = "blue"; // 描边绘制使用的样式
+        ctx.fillStyle = "blue"; // 填充绘制使用的样式
+
+        /***
+         * 
+         * 绘制圆
+         * arc(x, y, r, startAngle, endAngle, clockwise); 
+         * 参数：x, y：圆心坐标、圆的半径、起始角度、结束角度、是否为逆时针绘制。
+         * 
+         * */
+
+        // （1）绘制一个圆形
+        ctx.arc(50, 100, 35, 0, Math.PI * 2, false); // Math.PI = 180度。绘制一个圆心为（100,100）、半径为50、的圆形
+
+        // 对路径直接描边，并开始新的绘制路径
+        ctx.stroke();
+        ctx.beginPath();
+
+        // （2）顺时针方向：绘制一个半圆
+        ctx.arc(130, 100, 35, 0, Math.PI, false); // 验证：绘制一个半圆，默认是顺时针绘制(false)
+
+        // 填充圆形，并开始新的绘制路径
+        ctx.fill();
+        ctx.beginPath();
+
+        // （3）绘制一个扇形
+        ctx.arc(220, 100, 35, Math.PI / 4, Math.PI); // 验证：结束角度值：相对于水平线量算，并不是起始角度所在的位置。
+
+        // 填充圆形
+        ctx.fill(); // 填充绘制
+    </script>
+</body>
+
+</html>

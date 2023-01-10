@@ -1,0 +1,64 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <script src="Build/Cesium/Cesium.js"></script>
+    <link rel="stylesheet" href="Build/Cesium/Widgets/widgets.css">
+	<script src="initMap.js"></script>
+
+	<script src="Build/ClusterAnalysis.js"></script>
+
+	
+	<script>
+         
+
+		var viewer=null;
+
+		function load() {
+			console.log("Cesium:",window.Cesium);
+		  //初始化地图
+			initMap();
+			//重点，必须设置该配置
+			viewer.scene.globe.depthTestAgainstTerrain = false;
+			//定位
+			var obj = {lng:118.1050887298584, lat: 24.449001083374023,eyeHeight:5000,pitch:-20,heading:0.0,time:1};
+			viewerFlyToLonLat(obj);
+
+		}
+
+		function addCluster(){
+			  var dataSource = new Cesium.CustomDataSource('myData');
+			  for(var i=0;i<500;i++){
+				var xTemp=118.03 + Math.random() * 0.10;
+				var yTemp=24.39 + Math.random() * 0.10;
+				dataSource.entities.add({
+				  position : Cesium.Cartesian3.fromDegrees(xTemp, yTemp, 0),
+				  billboard : {
+					image : 'images/add.png',
+					verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+					heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+					//必须加上宽高，否则第一次将不会进行聚合
+					width:42,
+					height:42
+				  }
+				});
+			  }
+			  viewer.dataSources.add(dataSource);
+			  const clusterImage = 'images/back.png';
+				ClusterAnalysis(viewer, dataSource, {
+				  pixelRange: 70,
+				  minimumClusterSize: 3,
+				  clusterRules: {
+					ranges: [1, 10, 100, 1000],
+					images: [clusterImage, clusterImage, clusterImage, clusterImage],
+					width: [36, 48, 64, 96],
+				  },
+				});
+		}
+		
+    </script>
+</head>
+<body onload="load()" >
+	<div id="map" style='z-index:100;position: absolute;top: 0; bottom: 0;right: 0;left: 0;'></div>
+	<input type="button" value="聚合图（自定义图片）" onclick="addCluster()"  style="position:absolute;left:50px;top:50px;background: blue;color:white;z-index: 9999;font-size: 24px"/>
+</body>
+</html>

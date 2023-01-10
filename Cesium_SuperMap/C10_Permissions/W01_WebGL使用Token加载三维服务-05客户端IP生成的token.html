@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>使用Token加载三维服务</title>
+    <!-- 引入本地的cesium支持js和css文件，更快并节约流量 -->
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium/Cesium.js"></script>
+
+    <script src="../lib/jQuery/jquery-3.2.1.min.js"></script>
+    <style>
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+    <script>
+        // 参考：https://blog.csdn.net/supermapsupport/article/details/121210572
+        // 参考：http://ask.supermap.com/95139?show=95139#q95139
+        // 1、在iserver服务管理中管理 --> 服务详细信息 --> 安全 --> 授权服务（锁图标）中，开启“指定用户访问”并对要访问服务的角色授权。
+        // 2、申请token：
+        // 服务地址 http://localhost:8090/iserver/services/security/tokens
+
+
+
+        // 4、创建webgl三维球
+        let viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false,
+            // // 5.1、加载地形
+            // terrainProvider: new Cesium.CesiumTerrainProvider({
+            //     url: "http://localhost/iserver/services/3D-hndem/rest/realspace/datas/hndem",
+            //     isSct: true //地形服务源自SuperMap iServer发布时需设置isSct为true
+            // })
+        });
+
+const args = {
+    // 用户名、密码
+    "userName": "SuperMap",
+    "password": "Super@Map123",
+
+    // 不做任何限制
+    // "clientType": "NONE",
+
+    // 限制为发送请求的客户端IP
+    // "clientType": "RequestIP", // 即发送申请令牌请求的客户端 IP
+
+    // 限制客户端ip
+    // "clientType": "IP", // 指定的 IP 地址
+    // "ip": "192.168.1.14", // "127.0.0.1", // 
+
+    // 在浏览器Network中查看对iServer的请求中携带的Referer请求头，可以限制某个第三方应用才能访问
+    "clientType": "Referer", // "127.0.0.1", // 即发送申请令牌请求的客户端 IP
+    "referer": "http://127.0.0.1:5504/",
+
+    // token有效时限
+    "expiration": 3600
+}
+
+const baseUrl = "http://192.168.1.3:8090"; // :8090
+const getToken = $.post(`${baseUrl}/iserver/services/security/tokens`, JSON.stringify(args));
+// console.log("getToken", getToken);
+
+getToken.then(result => {
+    console.log("result", result);
+
+    // 3、设置加载服务的token
+    // const token = "pDXoa_Ekp6DnlVl9aw_u_uaumDMmdsTvv8Wik9xABPngO5l1TOuIq8_kJBqNdAu-tg0QnjEFBZkjWgRdtqyNNA..";
+    // const token = "pDXoa_Ekp6DnlVl9aw_u_hH4dHRHom3DNt7gLOyxUqWRsQf8UWAs8vIz1rbSwZ4nUyqWovIJkGj0HC4PTWoq4w..";
+    // const token = "pDXoa_Ekp6DnlVl9aw_u_qXVotsvVLD0Ro2IqPSPT9ZCdP3pP6BTXtkRh3dxTUaH5hAhbdsFRFu8773rNyorYUq7ryEVT4sI0E6B85FcZUI.";
+    const token = result;
+
+    // 所有服务服务的都是一个iserver
+    Cesium.Credential.CREDENTIAL = new Cesium.Credential(token);
+
+    // 5.2、加载场景服务
+    viewer.scene.open(`http://192.168.1.3:8090/iserver/services/3D-qingxie/rest/realspace`);
+})
+    </script>
+</body>
+
+</html>

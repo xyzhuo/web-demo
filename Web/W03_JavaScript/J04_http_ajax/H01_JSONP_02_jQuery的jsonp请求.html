@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery的jsonp请求</title>
+</head>
+
+<body>
+
+    <script src="../../lib/jQuery/jquery-3.2.1.min.js"></script>
+    <script>
+        $.ajax({
+            url: "http://106.55.197.23:8090/iserver/services.jsonp",
+            // 如果要使用 $.ajax() 发起 JSONP 请求，必须指定 datatype 为 jsonp
+            dataType: "jsonp",
+            // 请求成功回调
+            success: function (result) {
+                console.log("请求响应结果：", result);
+            }
+        });
+
+        $.ajax({
+            url: "http://106.55.197.23:8090/iserver/services.jsonp",
+            // 指定 datatype 为 jsonp
+            dataType: "jsonp",
+            // 发送到服务端的参数名称，默认为：callback
+            jsonp: "callback",
+            // 自定义的回调函数名称，默认值为：jQueryXXX格式
+            jsonpCallback: "abc",
+            success: function (result) {
+                console.log("请求响应结果：", result);
+            }
+        });
+
+        function callback(params) {
+            console.log("params", params);
+        }
+    </script>
+</body>
+
+</html>

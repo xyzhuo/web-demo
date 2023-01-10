@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<head>
+    <title>网格布局-项目属性_网格合并</title>
+    <style>
+        .box {
+            /* 网格布局 */
+            display: grid;
+            /* 划分单元格行列大小：每一行、每一列的容器都没有占满父盒子 */
+            grid-template-rows: repeat(auto-fill, 100px);
+            grid-template-columns: repeat(auto-fill, 100px);
+            width: 500px;
+            height: 400px;
+            background-color: skyblue;
+        }
+
+        .box>div {
+            border: 1px solid red;
+        }
+
+        .box>div:nth-child(1) {
+            /* 第一个网格占用两列 */
+            grid-column-start: 1;
+            grid-column-end: 3;
+            /* 第一个网格占用两行 */
+            grid-row-start: 1;
+            grid-row-end: 3;
+        }
+
+        .box>div:nth-child(2) {
+            /* 第一个网格占用两列两行 */
+            grid-column: 3/5;
+            grid-row: 1/3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+        <div>7</div>
+        <div>8</div>
+        <div>9</div>
+    </div>
+
+</body>
+
+</html>

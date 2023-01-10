@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>地下管线</title>
+    <!-- 本地引入依赖 -->
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium/Cesium.js"></script>
+
+    <script src="../lib/jQuery/jquery-3.2.1.min.js"></script>
+
+    <!-- 使用远程依赖 -->
+    <!-- <link href="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Cesium.js"></script> -->
+
+    <!-- Earth -->
+    <!--<link href="http://www.supermapol.com/earth/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script type="text/javascript" src="http://www.supermapol.com/earth/Build/Cesium/Cesium.js"></script>-->
+
+    <!--<script src="http://support.supermap.com.cn:8090/webgl/examples/webgl/js/supermap/SuperMap-7.1-11828.js"></script>-->
+
+    <!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>-->
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            -webkit-user-select: none;
+        }
+        
+        div>label {
+            background-color: #adf;
+            padding: 5px;
+            margin: 5px;
+        }
+        
+        div>button {
+            background-color: #adf;
+            padding: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+
+    <div style="position: absolute; top: 20px; left: 20px;border: 1px solid rgb(6, 168, 231); padding: 10px;">
+        <div class="param-item">
+            <label>倾斜透明度</label>
+            <input type="number" id="layerAlpha" min="0" max="1" value="0" step="0.1" style="width: 140px">
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        let viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false
+        });
+        let scene = viewer.scene;
+        const camera = viewer.camera;
+
+        let promise = scene.open("http://www.supermapol.com/realspace/services/3D-pipe/rest/realspace");
+        let layer;
+        let layers;
+        promise.then(_layers => {
+            layers = _layers;
+            console.log("layers", layers);
+
+            // 设置部分图层的PBR材质
+            // 从JSON文件中导入PBR材质，参数为JSON文件的URL。
+            layers[4].setPBRMaterialFromJSON("./data/pbr/showUnderGround/piple.json");
+            layers[5].setPBRMaterialFromJSON("./data/pbr/showUnderGround/piple.json");
+            layers[10].setPBRMaterialFromJSON("./data/pbr/showUnderGround/piple.json");
+            layers[14].setPBRMaterialFromJSON("./data/pbr/showUnderGround/piple.json");
+            layers[15].setPBRMaterialFromJSON("./data/pbr/showUnderGround/piple.json");
+            layers[19].setPBRMaterialFromJSON("./data/pbr/showUnderGround/piple.json");
+            layers[20].setPBRMaterialFromJSON("./data/pbr/showUnderGround/piple.json");
+
+            for (const _layer of layers) {
+
+                _layer.lodRangeScale = 0.1;
+
+                // _layer.setPBRMaterialFromJSON("./data/pbr/showUnderGround/piple.json");
+                if (_layer.name === "Config") {
+                    layer = _layer;
+                    layer.style3D.fillForeColor.alpha = $("#layerAlpha").val();
+                }
+
+                const layerName = _layer.name;
+                if (layerName === "雨水井盖" || layerName === "消防水井盖" || layerName === "中水井盖" ||
+                    layerName === "生活水井盖" || layerName === "路灯井盖") {
+                    _layer.setPBRMaterialFromJSON("./data/pbr/showUnderGround/jing2/UnityUDBJG2.json");
+                }
+
+                if (layerName === "中水管线" || layerName === "雨水管线" || layerName === "消防水管线" ||
+                    layerName === "生活水管线" || layerName === "路灯管线") {
+                    _layer.setPBRMaterialFromJSON("./data/pbr/showUnderGround/piple.json");
+                }
+            }
+        });
+
+        // 调整图层的透明度：调整图层样式中填充颜色的alpha值
+        $("#layerAlpha").on("input change", function() {
+            layer.style3D.fillForeColor.alpha = parseFloat(this.value);
+        });
+    </script>
+</body>
+
+</html>

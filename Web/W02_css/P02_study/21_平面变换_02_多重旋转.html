@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>平面变换-多重转换</title>
+    <style>
+        .box {
+            width: 1000px;
+            height: 200px;
+            margin: 0 auto;
+            border: 2px solid red;
+        }
+        
+        img {
+            height: 100%;
+            /* 没有过渡属性，看不出效果 */
+            transition: all 3s;
+        }
+        
+        .box:hover img {
+            /* 实现轮胎边走边转的效果 */
+            transform: translate(800px, 0) rotate(360deg);
+            /* 旋转会改变坐标的轴线向，其实每一时刻都在先旋转，再位移。所以旋转往后放。 */
+            /* transform: rotate(360deg) translate(800px, 0); */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <img src="./images/tyre.png">
+    </div>
+</body>
+
+</html>

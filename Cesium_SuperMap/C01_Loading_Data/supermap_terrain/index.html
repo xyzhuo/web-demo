@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>加载地形测试</title>
+    <!-- 本地引入依赖 -->
+    <link href="./lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="./lib/Cesium/Cesium.js"></script>
+    <!-- <script src="./lib/ArcGisMapServerImageryProvider.js"></script> -->
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+
+    <script type="text/javascript">
+
+        let viewer = new Cesium.Viewer("cesiumContainer");
+
+        // 添加影像
+        // addImageryProvider();
+
+        let cgs2000Ellipsolid = new Cesium.Ellipsoid(6378137.0, 6378137.0, 6356752.31414035585)
+
+        // 加载ArcGIS提供的在线地形服务
+        let terrainProvider = new Cesium.ArcGISTiledElevationTerrainProvider({
+            url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
+            ellipsoid: cgs2000Ellipsolid
+        });
+        console.log("terrainProvider", terrainProvider);
+
+        // 需要异步等待，否则渲染失败
+        terrainProvider.readyPromise.then((args) => {
+            // console.log("terrainProvider", terrainProvider);
+            viewer.terrainProvider = terrainProvider;
+
+            let layer = terrainProvider;
+            let west = Cesium.Math.toRadians(layer._bounds.west);
+            let south = Cesium.Math.toRadians(layer._bounds.south);
+            let east = Cesium.Math.toRadians(layer._bounds.east);
+            let north = Cesium.Math.toRadians(layer._bounds.north);
+            let rectangle = new Cesium.Rectangle(west, south, east, north);
+            let camera = scene.camera;
+            camera.flyTo({
+                destination: rectangle
+            });
+
+            // 相机飞行定位
+            viewer.camera.flyTo({
+                destination: new Cesium.Cartesian3(-1992184.419727118, 5935178.44025237, 2614774.3157946854)
+            });
+        });
+
+        /**
+         * 添加影像
+        */
+        function addImageryProvider() {
+
+            // 加载iServer转发的天地图服务
+            let imgUrl = "http://106.15.40.105:8090/iserver/services/map-tianditu/rest/maps/影像底图_墨卡托";
+            viewer.imageryLayers.addImageryProvider(new Cesium.SuperMapImageryProvider({
+                url: imgUrl
+            }));
+
+            // 加载天地图注记
+            // viewer.imageryLayers.addImageryProvider(new Cesium.SuperMapImageryProvider({
+            //     url: "http://106.15.40.105:8090/iserver/services/map-tianditu/rest/maps/影像中文注记_墨卡托"
+            // }));
+        }
+
+    </script>
+</body>
+
+</html>

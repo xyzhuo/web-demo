@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绘制文本</title>
+
+    <style>
+        #canvas {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 1、在页面中添加画布元素 -->
+    <canvas id="canvas" width="300" height="300"></canvas>
+
+    <script>
+        /** @type {HTMLCanvasElement} */
+
+        // 2、获取画布
+        const canvas = document.getElementById("canvas");
+        // 3、获取画布元素的上下文环境对象
+        const ctx = canvas.getContext("2d"); // 获取二维画笔工具集
+        console.log("context", ctx);
+
+        // 绘制出交叉点，查看文本的对齐方式
+        ctx.strokeStyle = "red";
+        ctx.moveTo(0, 80);
+        ctx.lineTo(200, 80);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(50, 0);
+        ctx.lineTo(50, 200);
+        ctx.stroke();
+
+        ctx.fillText("我是Canvas画布", 50, 50); // 绘制文本
+
+        // 在这里设置，值对下面的绘制产生效果
+        ctx.font = "bold 32px sans-serif";
+        // 对齐方式相对于的是fillText()参数中的x、y坐标值
+        ctx.textAlign = "center"; // 水平方位值：center、left、right
+        ctx.textBaseline = "middle"; // 垂直方位值：top、middle、bottom
+
+
+        ctx.fillText("我是Canvas画布", 50, 80); // 填充形式绘制文本
+        ctx.strokeText("我是Canvas画布", 50, 150); // 描边形式绘制文本
+
+        // 将画布内容另存为图片
+        // canvas.toDataURL(type, encoderOptions); // type: image/png图片格式，encoderOptions: 0-1区间图片质量
+        const imgUrl = canvas.toDataURL("image/png", 1); // base64格式的URL
+        console.log("imgUrl", imgUrl);
+    </script>
+</body>
+
+</html>

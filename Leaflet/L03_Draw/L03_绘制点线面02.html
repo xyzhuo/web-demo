@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>点线面绘制</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css"> -->
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script> -->
+
+    <!-- <script src="../lib/jQuery/jquery-3.2.1.min.js"></script> -->
+
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <script type="text/javascript">
+        const map = L.map("map", {
+            center: [45.51, -122.68], // 地图初始化后的中心点
+            zoom: 3, // 地图初始化后显示的层级
+            maxZoom: 18, // 地图显示最大层级
+            crs: L.CRS.EPSG4326,
+            // renderer: L.svg() // 采用svg默认渲染
+            renderer: L.canvas() // 采用canvas默认渲染
+        });
+
+        // 添加地图
+        L.tileLayer("http://t{s}.tianditu.com/img_c/wmts?layer=img&style=default&tilematrixset=c&Service=WMTS&Request=GetTile&Version=1.0.0&Format=tiles&TileMatrix={z}&TileCol={x}&TileRow={y}&tk=93724b915d1898d946ca7dc7b765dda5", {
+            subdomains: [0, 1, 2, 3, 4, 5, 6, 7],
+            maxZoom: 18,
+            tileSize: 256,
+            zoomOffset: 1,
+            minZoom: 1
+        }).addTo(map);
+
+
+        // funLatLng();
+
+        /**
+         * 对LatLng的操作
+         *      LatLng是表示一个具有纬度(lat)和经度(lng)的地理坐标(以度为单位)。LatLng的以下组织形式均可用于leaflet的方法（除非有特殊说明）
+         * 
+         *  LatLng与Point互相转换
+         *      这两个函数会根据当前地图的缩放程度（zoom）转换地理点与像素点，返回值分别是Point和latLng。
+         *      （1）latLngToPoint(<LatLng> latlng, <Number> zoom) ==> Point
+         *          在同一缩放级别下，将地理坐标转换为像素坐标。
+         * 
+         *      （2）pointToLatLng(<Point> point, <Number> zoom) ==> LatLng
+         *          在同一缩放级别下，将像素坐标转换为地理坐标。
+         * 
+         *      共同点：
+         *          由于LatLng和Point均不是继承于Leaflet的L.Class对象，所以它们都不能拓展新的类，也不能通过include函数为其添加新的方法。
+         *      不同点：
+         *          LatLng是描述经纬度的坐标类，代表具有一定纬度和经度的地理点，而Point描述的是在屏幕上位置的像素点，主要用于屏幕交互事件上，比如鼠标单击双击事件，在屏幕上的触控滑动事件等，即当鼠标事件发生时，相对于地图图层或地图容器的点的像素坐标位置。在有些情况下，需要通过上述两个函数方法对二者进行相互转换。
+         * 
+         * 在地图上添加点
+         *      L。circle(); 
+         *      将radius设置为0，在地图上则显示为一个点。为了方便查看效果，将其设置为300。当然了，在这里的L.latlng只是一个保存坐标的作用。
+         * */
+        function funLatLng() {
+
+            // map.panTo([50, 30]); // 数组
+            // // 简单对象
+            // map.panTo({
+            //     lon: 30,
+            //     lat: 50
+            // });
+            // // 简单对象
+            // map.panTo({
+            //     lat: 50,
+            //     lng: 30
+            // });
+            // map.panTo(L.latLng(50, 30)); // 函数
+
+            // 使用方法：在地图上添加坐标点
+            let latLng = L.latLng(30.594331217463765, -114.28321838378906); // 创建坐标点
+            let circle = L.circle(latLng, {
+                radius: 30000, // 圆直径
+                weight: 5, // 圆最外层圈的厚度大小
+                color: "red", // 圆最外层圈的颜色
+                fillColor: "#fa3", // 圆里面的颜色
+                fillOpacity: 1 // 圆里面的颜色的透明度
+            });
+            // layer.addTo(<Map|LayerGroup> map) 将图层添加到给定的地图或图层组。
+            circle.addTo(map); // 将坐标点添加进图层
+
+            // // 从当前处于活动状态的地图中移除图层。
+            // circle.remove(); // 移除图层
+
+            // // removeFrom(<Map|LayerGroup> map); 从给定地图、图层组中删除图层
+            // circle.removeFrom(map);
+
+            let pane = circle.getPane();
+            console.log("pane", pane);
+
+            circle.bindTooltip("Tooltip"); // 鼠标移上时显示
+            circle.setTooltipContent("set TooltipContent");
+        }
+
+        /**
+         * Point
+         *      Point指的是用像素表示x和y的坐标点。Point的以下组织形式均可用于leaflet的方法和选项（除非有特殊说明）。
+         */
+        function funPoint() {
+            map.panBy([200, 300]); // 数组
+            map.panBy(L.point(200, 300)); // 函数
+
+            // 使用方法
+            var point = L.point(200, 300);
+        }
+
+        // funPolyline();
+
+        /**
+         * 对线的操作
+         */
+        function funPolyline() {
+
+            // 线段
+            let latlngs = [
+                [45.51333, -122.68],
+                [37.77, -122.43],
+                [34.04, -118.2]
+            ];
+            // L.polyline(<LatLng[]> latlngs, <Polyline options> options?)
+            // 实例化给定地理点数组和可选的选项对象的折线对象。通过传递地理点数组来创建具有多条独立直线(MultiPolyline)的Polyline对象
+            let polyline = L.polyline(latlngs, {
+                color: "red"
+            }).addTo(map);
+
+            // 在路径中继续添加点
+            polyline.addLatLng(L.latLng(20.5, -130.5)); // 将给定点添加到折线。默认情况下，如果是多折线，则添加到折线的第一个环，但可以通过将特定环作为 LatLng 数组传递来覆盖
+
+            // 重绘图层。有时在更改路径使用的坐标后很有用。
+            polyline.redraw();
+            // 将图层置于所有路径图层的顶部。
+            polyline.bringToFront();
+            // 将图层置于所有路径图层的底部。
+            polyline.bringToBack()();
+
+
+            // map.fitBounds(polyline.getBounds()); // 缩放到线
+
+            console.log("polyline toGeoJSON", polyline.toGeoJSON());
+            console.log("polyline 路径中点的数组", polyline.getLatLngs());
+
+
+            // 绑定 polyline 的鼠标事件
+            polyline.on("click", event => {
+                console.log(event);
+            });
+
+            // 多线段
+            const multiPolylineLatlngs = [
+                [
+                    [43.51, -112.68],
+                    [36.77, -112.43],
+                    [35.04, -108.2]
+                ],
+                [
+                    [40.78, -73.91],
+                    [41.83, -87.62],
+                    [32.76, -96.72]
+                ]
+            ];
+            const multiPolyline = L.polyline(multiPolylineLatlngs, {
+                color: "#0066ff", // 描边颜色
+                opacity: 0.8 // 描边不透明度
+            }).addTo(map);
+            // map.fitBounds(multiPolyline.getBounds());
+        }
+
+        // funPolygon();
+
+        /**
+         * 多边形
+         *      在创建多边形时传递的点不应具有与第一个相同的附加最后一个点 - 最好过滤掉这些点。（官网）
+         * */
+        function funPolygon() {
+
+            drawPolygon(); // 绘制面
+            drawMultiPolygon(); // 绘制多面
+            drawHolePolygon(); // 绘制导洞面
+            drawMultiHolePolygon(); // 
+
+            /**
+             * 绘制面
+             * */
+            function drawPolygon() {
+                const latlngs = [
+                    [27, -119.05],
+                    [21, -119.03],
+                    [21, -112.05],
+                    [27, -112.04]
+                ];
+                const polygon = L.polygon(latlngs, {
+                    color: "#0ff"
+                }).addTo(map);
+                // map.fitBounds(polygon.getBounds());
+            }
+
+            /**
+             * 绘制多面
+             * */
+            function drawMultiPolygon() {
+                // 多面
+                const multiPolygonLatlngs = [
+                    // 第一个面
+                    [
+                        [37, -89.05],
+                        [41, -89.03],
+                        [41, -82.05],
+                        [37, -82.04]
+                    ],
+                    // 第二面
+                    [
+                        [42, -91.03],
+                        [45, -91.04],
+                        [45, -84.05],
+                        [42, -84.05]
+                    ]
+                ];
+
+                const multiPolygon = L.polygon(multiPolygonLatlngs, {
+                    color: "yellow"
+                }).addTo(map);
+            }
+
+            /**
+             * 绘制导洞面
+             */
+            function drawHolePolygon(params) {
+
+                // 岛洞
+                const holePolygonLatlngs = [
+                    // 外层环
+                    [
+                        [57, -119.05],
+                        [61, -119.03],
+                        [61, -112.05],
+                        [57, -112.04]
+                    ],
+                    // 内层洞，两层数组
+                    [
+                        [57.29, -118.58],
+                        [60.71, -118.58],
+                        [60.71, -112.50],
+                        [57.29, -112.50]
+                    ]
+                ];
+
+                const holePolygon = L.polygon(holePolygonLatlngs, {
+                    color: "red"
+                }).addTo(map);
+                // map.fitBounds(holePolygon.getBounds());
+            }
+
+
+            /**
+             * 绘制多导洞面
+             */
+            function drawMultiHolePolygon() {
+                // 多面+岛洞
+                const multiHolePolygonLatlngs = [
+                    // 第一个面
+                    [
+                        // 外层环
+                        [
+                            [37, -109.05],
+                            [41, -109.03],
+                            [41, -102.05],
+                            [37, -102.04]
+                        ],
+                        // 内层洞
+                        [
+                            [37.29, -108.58],
+                            [40.71, -108.58],
+                            [40.71, -102.50],
+                            [37.29, -102.50]
+                        ] // hole
+                    ],
+                    // 第二面
+                    [
+                        [
+                            [42, -111.03],
+                            [45, -111.04],
+                            [45, -104.05],
+                            [42, -104.05]
+                        ]
+                    ]
+                ];
+
+                const multiHolePolygon = L.polygon(multiHolePolygonLatlngs, {
+                    color: "yellow"
+                }).addTo(map);
+                // map.fitBounds(multiHolePolygon.getBounds());
+            }
+
+        }
+
+
+        // funRectangle();
+
+        /**
+         * 长方形
+         * */
+        function funRectangle() {
+
+            // 创建一个矩形
+            let bounds = [
+                [30.594331217463765, -114.28321838378906],
+                [40.594331217463765, -104.28321838378906]
+            ];
+            let rectangle = L.rectangle(bounds, {
+                color: "#ff2200",
+                weight: 1
+            }).addTo(map);
+            // map.fitBounds(rectangle.getBounds());
+        }
+
+        // funCircle();
+        /**
+         * 圆
+         * */
+        function funCircle() {
+            const circle = L.circle([30.594331217463765, -114.28321838378906], {
+                radius: 200000
+            }).addTo(map);
+            // console.log("circle", circle, circle.getBounds());
+            // map.fitBounds(circle.getBounds());
+
+            // 圆形标记，半径以像素为单位。会随着地图的放大而放大。
+            L.circleMarker([40.595, -114.28], {
+                radius: 15,
+                color: "#ff88ff", // 描边颜色
+                fill: false, // 禁止颜色填充
+            }).addTo(map);
+        }
+
+        // funSVG();
+        /**
+         * SVG
+         */
+        function funSVG() {
+            // 使用给定选项创建 SVG 渲染器。
+            var myRenderer = L.svg({
+                padding: 0.5 // 在地图视图周围扩展剪辑区域多少（相对于其大小），例如 0.1 将是每个方向上地图视图的 10%
+            });
+            let coordinates = [
+                [45.51333, -122.68],
+                [37.77, -122.43],
+                [34.04, -118.2]
+            ];
+            var line = L.polyline(coordinates, {
+                renderer: myRenderer
+            }).addTo(map);
+            var circle = L.circle([25, -110], {
+                renderer: myRenderer
+            }).addTo(map);
+        }
+
+        // funCanvas();
+        /**
+         * 使用Canvas绘制
+         * */
+        function funCanvas() {
+            var myRenderer = L.canvas({
+                padding: 0.5
+            });
+            let coordinates = [
+                [45.51333, -122.68],
+                [37.77, -122.43],
+                [34.04, -118.2]
+            ];
+            var line = L.polyline(coordinates, {
+                renderer: myRenderer
+            }).addTo(map);
+            var circle = L.circle([35, -110], {
+                renderer: myRenderer
+            }).addTo(map);
+        }
+
+        // funMarker();
+        /**
+         * Marker标记
+         * */
+        function funMarker() {
+            const marker = L.marker([50.5, -110.5], {
+                icon: new L.Icon.Default(), // 图标
+                clickable: false,
+                draggable: true, // 标记可拖动
+                opacity: 0.8, // 透明度
+                riseOnHover: true, // 如果此值为true，则当把鼠标放置于注记之上时，注记会显示与其他注记之上
+            }).addTo(map);
+
+            marker.bindPopup("这个是Marker的弹窗"); // 绑定Marker的弹窗
+            // marker.unbindPopup(); // 将先前用bindPopup方法绑定的注记取消。
+            marker.openPopup(); // 打开先前用bindPopup方法绑定的弹出框。
+        }
+
+        funPopup();
+        /**
+         * Popup：弹出框对象
+         * */
+        function funPopup() {
+            L.popup({
+                    maxWidth: 200
+                })
+                .setLatLng([30.5, -110.5]) // 位置
+                .setContent("<h3>这是一个弹框</h3>") // 弹框的内容
+                .addTo(map);
+        }
+    </script>
+</body>
+
+</html>

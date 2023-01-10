@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>多列布局-瀑布流布局</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .box {
+            /* 设置显示的列数 */
+            column-count: 4;
+            /* 设置列间距 */
+            /* column-gap: 100px; */
+            /* 设置列宽，与列数有一定的冲突 */
+            /* column-width: 50px; */
+            /* 设置列边框 */
+            column-rule: 2px solid skyblue;
+            /* 列的高度模式。auto：把父盒子占满。 */
+            column-fill: auto;
+            /* height: 800px; */
+        }
+        
+        .box div {
+            /* 禁止盒子内部折行 */
+            break-inside: avoid;
+            width: 200px;
+            height: 150px;
+            border: 2px solid red;
+            /* div居中 */
+            margin: 0 auto 10px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</body>
+
+</html>

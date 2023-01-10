@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>文字阴影效果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        div {
+            margin: 20px auto;
+        }
+        
+        .text-shadow {
+            font-size: 80px;
+            font-weight: bold;
+            /* 设置文字阴影效果 */
+            /* 单个阴影效果 */
+            /* text-shadow: 5px 5px 5px red; */
+            /* 多个阴影效果叠加 */
+            text-shadow: 5px 5px 5px red, 10px 10px 10px orange, 15px 15px 15px green;
+        }
+        
+        .boxer-shadow {
+            width: 200px;
+            height: 200px;
+            border: 2px solid red;
+            /* 盒子阴影，可以直接使用浏览器调试工具调整后，直接复制值过来。 */
+            /* box-shadow: 10px 10px 10px #000; */
+            /* 阴影扩大 */
+            box-shadow: 10px 10px 10px 10px #000;
+            /* 内部阴影 */
+            /* box-shadow: 10px 10px 10px #000 inset; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="text-shadow">文字阴影</div>
+    <div class="boxer-shadow"></div>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>垂直对齐方式</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .red img {
+            width: 300px;
+            height: 300px;
+            border-bottom: 1px solid red;
+            /* 垂直对齐方式 */
+            /* bottom：底部对齐，top：顶部对齐，middle：居中对齐，baseline：基线对齐 */
+            vertical-align: bottom;
+            /* vertical-align: top; */
+            /* vertical-align: middle; */
+            /* vertical-align: baseline; */
+        }
+        
+        .red span {
+            border-bottom: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="red">
+        <img src="./images/sed.jpg" alt="">
+        <span>我是文本images我是文本sed.jpg我是文本</span>
+    </div>
+    <div class="blue"></div>
+</body>
+
+</html>

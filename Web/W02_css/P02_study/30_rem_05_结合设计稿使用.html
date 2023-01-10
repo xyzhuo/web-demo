@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>结合设计稿使用</title>
+    <style>
+        /* 移动端适配 */
+        /* （1）使用媒体查询，设置不同的<html>标签font-size字号大小 */
+        @media (width:320px) {
+            html {
+                /*划分为10等份*/
+                font-size: 32px;
+            }
+        }
+
+        /* 使用媒体查询，当宽度为375px时，设置html标签的字体大小为37.5 */
+        @media(width:375px) {
+            html {
+                font-size: 37.5px;
+            }
+        }
+
+        @media (width:414px) {
+            html {
+                font-size: 41.4px;
+            }
+        }
+
+        .box {
+            /* （2.1）设计稿中，对应的屏幕为375 x 667屏幕，容器宽：68px，高：29px */
+            /* ====================px单位写法==================== */
+            /* width: 68px;
+            height: 29px; */
+            /* ====================2、rem单位写法==================== */
+            /* 将 px测量单位 转换为 rem 单位
+               宽：rem = 68 / 37.5；
+               高：rem = 29 / 37.5 */
+            width: 1.813rem;
+            height: 0.773rem;
+            background-color: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+</body>
+
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Leaflet地图鼠标事件</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css"> -->
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script> -->
+
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <div style="position: absolute;z-index: 9999;left: 50px;top: 10px;">
+        <button id="mapClickEventEle" onclick="mapClickEvent()">添加点击监听</button>
+        <button onclick="mapOnceEvent()">一次事件</button>
+        <button onclick="mapFireEvent()">激发点击</button>
+        <button id="mapMousemoveEventEle" onclick="mapMousemoveEvent()">监听鼠标坐标</button>
+        <button onclick="mapHasListenersEvent()">查看map是否有click事件</button>
+    </div>
+    <div id="latlngInfoEle" style="position: absolute;z-index: 9999;left: 10px;bottom: 0px;padding: 5px;border-radius: 2px;background: aliceblue; display: none;"></div>
+    <script type="text/javascript">
+        /**
+         * 添加事件
+         *      map.on()和map.addEventListener的效果相同
+         * 
+         *      map.once()：一次性绑定事件，只会执行一次
+         * 
+         * 删除事件
+         *      map.off("click");
+         *      map.off() // 无参数则删除所有事件
+         * 
+         * 查看是否存在事件
+         *      map.listens("click")
+         * 
+         * on和off都有两种方式，多个事件用空格隔开。注意，多次添加事件，响应函数也将多次执行，可一次性移除
+         *      map.on({click: handle_func(e), contextmenu: handle_func(e)});
+         *      map.off({click: handle_func(e), contextmenu: handle_func(e)});
+         * 
+         * 激发事件
+         *      map.fire()通过代码的方式去触发某个事件并执行事件的内容。
+         *      const latlngPoint = new L.LatLng(40, 116);
+         *      map.fire("click", {latlng:latlngPoint, layerPoint: map.latLngToLayerPoint(latlngPoint), containerPoint: map.latLngToContainerPoint(latlngPoint)});
+         * 
+         * 1. 图层事件：
+         * baselayerchange，overlayadd，overlayremove，layeradd，layerremove
+         * 
+         * 2.地图状态改变事件
+         * load,upload,move,zoom,zoomed,moveed,resize等
+         * 
+         * 3.弹出框事件
+         * popupopen,popupclose，autopanstart
+         * 
+         * 4.交互事件
+         * click,dbclick,mousedown,mouseup,mouseover,mouseout,mousemove,keypress等
+         */
+
+        const map = L.map("map", {
+            center: [23.458207269894125, 113.48739624023439], // 地图初始化后的中心点
+            zoom: 5, // 地图初始化后显示的层级
+            maxZoom: 18, // 地图显示最大层级
+            crs: L.CRS.EPSG4326
+        });
+
+        // 添加地图
+        L.tileLayer("http://t{s}.tianditu.com/img_c/wmts?layer=img&style=default&tilematrixset=c&Service=WMTS&Request=GetTile&Version=1.0.0&Format=tiles&TileMatrix={z}&TileCol={x}&TileRow={y}&tk=93724b915d1898d946ca7dc7b765dda5", {
+            subdomains: [0, 1, 2, 3, 4, 5, 6, 7],
+            maxZoom: 18,
+            tileSize: 256,
+            zoomOffset: 1,
+            minZoom: 1
+        }).addTo(map);
+
+        // 双击添加注记
+        // map.on("dblclick", function(e) {
+        //     L.marker(e.latlng).addTo(map)
+        // })
+
+        // // 鼠标点击监听事件
+        // mapClickEvent();
+        // // 鼠标移动事件
+        // mapMousemoveEvent();
+
+
+        /**
+         * 添加、移除鼠标点击事件
+         */
+        function mapClickEvent() {
+
+            const mapClickEventEle = document.getElementById("mapClickEventEle");
+
+            // 判断地图是否绑定 “click” 事件
+            if (map.listens("click")) {
+                mapClickEventEle.innerHTML = "添加点击监听";
+                map.off("click");
+                return;
+            }
+
+            mapClickEventEle.innerHTML = "移除点击监听";
+
+            // 鼠标点击事件
+            map.on("click", (event) => {
+                console.log("鼠标点击事件：", event);
+
+                // 在地图上添加一个标记
+                L.marker([event.latlng.lat, event.latlng.lng]).addTo(map);
+            });
+        }
+
+        /**
+         * 一次性事件：事件只会执行一次
+         */
+        function mapOnceEvent() {
+            map.once("click", function(event) {
+                L.marker([event.latlng.lat, event.latlng.lng]).addTo(map);
+            });
+        }
+
+
+        /**
+         * 激发点击事件
+         *      通过代码的方式去触发某个事件并执行事件的内容。
+         */
+        function mapFireEvent() {
+            // 激发事件
+            const latlngPoint = new L.LatLng(21, 110);
+            //注意第二个参数object: data，包含latlng，处理函数用e.latlng获取
+            map.fire("click", {
+                latlng: latlngPoint,
+                layerPoint: map.latLngToLayerPoint(latlngPoint),
+                containerPoint: map.latLngToContainerPoint(latlngPoint)
+            });
+        }
+
+        /**
+         * 地图鼠标移动事件
+         * 
+         * 实时拾取坐标位置
+         */
+        function mapMousemoveEvent() {
+
+            const mapClickEventEle = document.getElementById("mapMousemoveEventEle");
+            const latlngInfoEle = document.getElementById("latlngInfoEle");
+
+            // 判断是否存在“mousemove”鼠标移动事件
+            if (map.listens("mousemove")) {
+                latlngInfoEle.style.display = "none";
+                mapClickEventEle.innerHTML = "监听鼠标坐标";
+                map.off("mousemove");
+                return;
+            }
+
+            mapClickEventEle.innerHTML = "移除鼠标坐标监听";
+            latlngInfoEle.style.display = "unset";
+
+            // 鼠标移动监听：leaflet坐标拾取
+            map.on("mousemove", function(event) {
+                console.log("鼠标点击事件：", event);
+
+                // 获取屏幕坐标
+                console.log("event.containerPoint", event.containerPoint);
+                // 获取经纬度坐标
+                console.log("event.latlng", event.latlng);
+
+                // innerHTML 属性设置或返回表格行的开始和结束标签之间的 HTML
+                latlngInfoEle.innerHTML = `
+                    <h3>
+                        屏幕坐标：x:${event.containerPoint.x}, y: ${event.containerPoint.y}。经纬度坐标：${event.latlng.lat}，${event.latlng.lng}。<br/>
+                    </h3>`;
+            });
+        }
+
+        /**
+         * 查看鼠标是否绑定点击事件
+         * */
+        function mapHasListenersEvent() {
+            alert((map.listens("click") ? "绑定了" : "未绑定") + "《click》事件");
+        }
+    </script>
+</body>
+
+</html>

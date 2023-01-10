@@ -1,0 +1,2 @@
+leaflet.ChineseTmsProviders.js
+	对Leaflet数据加载的轻量级封装。

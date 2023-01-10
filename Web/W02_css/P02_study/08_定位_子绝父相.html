@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>子绝父相</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .father {
+            background-color: red;
+            width: 500px;
+            height: 500px;
+            /* 父元素：相对定位 */
+            position: relative;
+        }
+        
+        .son {
+            background-color: skyblue;
+            width: 300px;
+            height: 300px;
+            /* 子元素：绝对定位 */
+            position: absolute;
+            /* 设置偏移值：参考父元素偏移 */
+            top: 150px;
+            left: 150px;
+        }
+        
+        .father-center {
+            background-color: yellow;
+            width: 500px;
+            height: 500px;
+            /* 父元素：相对定位 */
+            position: relative;
+        }
+        
+        .son-center {
+            background-color: skyblue;
+            width: 300px;
+            height: 300px;
+            /* 子元素：绝对定位 */
+            position: absolute;
+            /* 设置偏移值：参考父元素偏移 */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="father">
+        <div class="son"></div>
+    </div>
+
+
+    <div class="father-center">
+        <div class="son-center"></div>
+    </div>
+</body>
+
+</html>

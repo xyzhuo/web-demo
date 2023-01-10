@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>媒体查询：max_min_width</title>
+    <style>
+        /* 
+        视口宽度：
+            width>= 768，网页背景 red
+            width>= 992，网页背景 green
+            width>= 1200，网页背景 skyblue
+        */
+
+        /* CSS都具有层叠型，后面的会覆盖前面的效果。 */
+        /* 如果这里将 “min-width:1200px”，放到最前面，当视口大于1200时（如1300），大于1200px、992同时生效，而992px的在后面CSS样式会覆盖前面1200px的判断（媒体查询不会进行精细判断）。 */
+        @media (min-width:1200px) {
+            body {
+                background-color: skyblue;
+            }
+        }
+
+        @media (min-width:768px) {
+            body {
+                background-color: red;
+            }
+        }
+
+        @media (min-width:992px) {
+            body {
+                background-color: green;
+            }
+        }
+
+        /* @media (min-width:1200px) {
+            body {
+                background-color: skyblue;
+            }
+        } */
+    </style>
+</head>
+
+<body>
+
+</body>
+
+</html>

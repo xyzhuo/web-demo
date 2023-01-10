@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
+</head>
+
+<body></body>
+
+<script>
+    // // 1、请求拦截器
+    // axios.interceptors.request.use(function(config) {
+    //     console.log(config.url);
+    //     config.headers = {
+    //         "Referer": "http://typhoon.zjwater.gov.cn/default.aspx"
+    //     }
+    //     return config;
+    // }, function(err) {
+    //     // 处理响应的错误信息
+    //     console.log(err);
+    // });
+
+    // 2、响应拦截器
+    axios.interceptors.response.use(
+        function(result) {
+            // 对返回的数据进行处理
+            console.log("请求响应结果：", result);
+            let data = result.data; // 加工：只返回结果集中的data属性的数据
+            return data;
+        },
+        function(err) {
+            // 处理响应的错误信息
+            console.log(err);
+        }
+    );
+
+/*
+	// console.log("axios", axios);
+	// 2、响应拦截器
+	axios.interceptors.response.use(
+		function(result) {
+			// 对返回的数据进行处理
+			console.log("请求响应结果：", result);
+			const data = result.data; // 加工：只返回结果集中的data属性的数据
+			return data;
+		},
+		function(err) {
+			// 处理响应的错误信息
+			console.log(err);
+		}
+	);
+
+	// const getTyhoonActivity = "http://data.cma.cn/dataGis/dsc/getYJHList";
+	const getTyhoonActivity = "http://typhoon.slt.zj.gov.cn/Api/TyhoonActivity";
+	// const getTyhoonActivity = "https://tf.tianqi.com/getlist?year=2022";
+	axios.get(getTyhoonActivity).then((result) => {
+		console.log("result", result);
+	});
+
+    const getTyhoonActivity = "http://data.cma.cn/dataGis/dsc/getYJHList";
+    // const getTyhoonActivity = "http://typhoon.slt.zj.gov.cn/Api/TyhoonActivity?callback=jQuery183008079181133067781_1656714216079&_=1656714216354";
+    // const getTyhoonActivity = "https://tf.tianqi.com/getlist?year=2022";
+    axios.get(getTyhoonActivity).then((result) => {
+        console.log("result", result);
+    });
+*/
+
+    // const url = "http://typhoon.zjwater.gov.cn/Api/TyphoonInfo/201911?callback=jQuery1830020370286197575638_1566524188610&_=1566524188868";
+    // $.ajax({
+    //     url: url,
+    //     success: function(result) {
+    //         // $("#div1").html(result);
+    //     }
+    // });
+</script>
+
+</html>

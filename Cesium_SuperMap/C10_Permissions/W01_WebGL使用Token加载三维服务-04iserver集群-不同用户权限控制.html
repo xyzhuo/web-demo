@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>使用Token加载三维服务</title>
+    <!-- 引入本地的cesium支持js和css文件，更快并节约流量 -->
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium/Cesium.js"></script>
+
+    <script src="../lib/jQuery/jquery-3.2.1.min.js"></script>
+    <style>
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+    <script>
+        // 参考：https://blog.csdn.net/supermapsupport/article/details/121210572
+        // 参考：http://ask.supermap.com/95139?show=95139#q95139
+        // 1、在iserver服务管理中管理 --> 服务详细信息 --> 安全 --> 授权服务（锁图标）中，开启“指定用户访问”并对要访问服务的角色授权。
+        // 2、申请token：
+        // 服务地址 http://localhost:8090/iserver/services/security/tokens
+
+
+        /***
+         * SuperMap
+         * user02
+         * Super@Map123
+         */
+
+        // 申请token的参数
+        const args = {
+            "userName": "user01", // 用户名 user01 倾斜，user02 shiju
+            "password": "Super@Map123", // 密码
+            // "clientType": "NONE",
+            "clientType": "RequestIP",
+            "ip": "192.168.1.3",
+            "expiration": 3600
+        };
+
+        // 根据用户名、密码申请token
+        const getToken = $.post(`http://localhost:8390/iserver/services/security/tokens`, JSON.stringify(args));
+        getToken.then(token => {
+            console.log("token", token);
+
+            // 3、设置加载服务的token
+            // 所有服务服务的都是一个iserver
+            // Cesium.Credential.CREDENTIAL = new Cesium.Credential(token);
+
+            /**
+             * 需要在构造图层provider前声明
+             * 如果使用的是多子域，需要这需要对服务模板字符串、子域替换后的Url地址都要添加到Credential中
+             *      如服务：http://localhost:{s}/iserver配置了8090、8091端口为子域
+             *      需要添加token的服务：
+             *          http://localhost:{s}/iserver
+             *          http://localhost:8090/iserver
+             *          http://localhost:8091/iserver
+             *      主要原因：使用open()打开的场景：
+             *          （1）加载场景的配置scene.json时，用的是模板字符串被替换后的地址。如 http://localhost:8090/iserver
+             *          （2）加载三维瓦片时xxx.s3mb，匹配的是模板字符串。如 http://localhost:{s}/iserver
+             * */
+            Cesium.Credential.CREDENTIAL = new Cesium.Credential([
+                // 三维场景服务：带多子域
+                {
+                    rooturl: `http://localhost:8390/iserver/services/3D-shiju/rest/realspace`,
+                    type: "token",
+                    // value: "3DqrtebBVM3v4shhrfsltM1yc6GKz9nJ_Q0AB1m80DpP4JH8MyFy6EXTTbQrvWV3WjDdXK3y1o687jxh_ITXuw..",
+                    // value: "3DqrtebBVM3v4shhrfsltAvb-WXyEjPgMRyyN85i9HgTCkMMuNRypsArN3fJc5ZSsl0ycSHI_MLBb0XXObutyQ..",
+                    value: token
+                }, {
+                    rooturl: `http://localhost:8390/iserver/services/3D-qingxie/rest/realspace`,
+                    type: "token",
+                    // value: "3DqrtebBVM3v4shhrfsltM1yc6GKz9nJ_Q0AB1m80DpP4JH8MyFy6EXTTbQrvWV3WjDdXK3y1o687jxh_ITXuw..",
+                    // value: "3DqrtebBVM3v4shhrfsltAvb-WXyEjPgMRyyN85i9HgTCkMMuNRypsArN3fJc5ZSsl0ycSHI_MLBb0XXObutyQ..",
+                    value: token
+                }
+            ]);
+            console.log("Cesium.Credential.CREDENTIAL", Cesium.Credential.CREDENTIAL);
+
+            // 动态添加token设置
+            Cesium.Credential.CREDENTIAL._keymap["http://localhost:{s}/iserver/services/3D-qingxie/rest/realspace"] = {
+                type: "token",
+                value: token,
+            }
+            Cesium.Credential.CREDENTIAL._keymap["http://localhost:8991/iserver/services/3D-qingxie/rest/realspace"] = {
+                type: "token",
+                value: token,
+            }
+
+            // 4、创建webgl三维球
+            let viewer = new Cesium.Viewer("cesiumContainer", {
+                infoBox: false,
+                // // 5.1、加载地形
+                // terrainProvider: new Cesium.CesiumTerrainProvider({
+                //     url: "http://localhost/iserver/services/3D-hndem/rest/realspace/datas/hndem",
+                //     isSct: true //地形服务源自SuperMap iServer发布时需设置isSct为true
+                // })
+            });
+
+            // 5.2、加载场景服务
+
+            // viewer.scene.open(`http://localhost:8390/iserver/services/3D-qingxie/rest/realspace`, undefined, {
+            //     subdomains: [8991, 8992], // 多子域
+            //     // autoSetView: true // 不自动定位
+            // });
+
+            viewer.scene.open(`http://localhost:8390/iserver/services/3D-shiju/rest/realspace`, undefined, {
+                subdomains: [8991, 8992], // 多子域
+                // autoSetView: true // 不自动定位
+            });
+
+            // 添加SuperMap iServer发布的影像服务
+            var layer = viewer.imageryLayers.addImageryProvider(new Cesium.SuperMapImageryProvider({
+                url: "https://106.15.40.105:8090/iserver/services/map-tianditu/rest/maps/影像底图_墨卡托"
+            }));
+        });
+    </script>
+</body>
+
+</html>

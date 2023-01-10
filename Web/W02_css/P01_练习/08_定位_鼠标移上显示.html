@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>子绝父相</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .box {
+            width: 711px;
+            height: 400px;
+            margin: 100px auto;
+            background-color: skyblue;
+            background-image: url(./images/sed.jpg);
+            background-repeat: no-repeat;
+            position: relative;
+            border: 1px solid orange;
+        }
+        
+        .mask {
+            display: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            /* 设置背景颜色和图片，让背景图片居中显示 */
+            background: rgba(0, 0, 0, 0.5) url(./images/arr.png) no-repeat center center;
+        }
+        
+        .box:hover .mask {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="mask"></div>
+    </div>
+</body>
+
+</html>

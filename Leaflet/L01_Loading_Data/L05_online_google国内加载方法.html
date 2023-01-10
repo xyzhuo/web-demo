@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>加载Google地图</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css"> -->
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <!-- <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script> -->
+
+    <!-- Leaflet卷帘扩展插件 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet.sidebyside/leaflet-side-by-side.js"></script>
+
+    <link rel="stylesheet" href="../lib/leaflet/@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.min.js">
+    <script type="text/javascript" src="../lib/leaflet/@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.min.js"></script>
+
+    <!-- Leaflet鹰眼图插件 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet.miniMap/3.6.1/dist/Control.MiniMap.min.css">
+    <script type="text/javascript" src="../lib/leaflet/leaflet.miniMap/3.6.1/dist/Control.MiniMap.js"></script>
+
+    <!-- jQuery -->
+    <script src="../../lib/jQuery/jquery-3.2.1.min.js"></script>
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <div id="latlngInfo" style="position: absolute;z-index: 9999;left: 10px;bottom: 0px;"></div>
+    <script type="text/javascript">
+        /**
+         * 
+         * Leaflet.ChineseTmsProviders 插件
+         * 
+         */
+
+        // 创建地图
+        let map = L.map("map", {
+            // crs: L.CRS.EPSG3857, // 指定地图坐标系，默认crs的坐标值为：L.CRS.EPSG3857
+            zoom: 8, // 指定地图初始化后加载的级别
+            center: [23.458207269894125, 113.48739624023439], // 指定地图初始化后定位的位置
+        });
+
+        // 加载google影像
+        L.tileLayer("https://gac-geo.googlecnapps.cn/maps/vt?lyrs=s&x={x}&y={y}&z={z}").addTo(map);
+        // 加载google影像注记
+        L.tileLayer("https://gac-geo.googlecnapps.cn/maps/vt?lyrs=s,m&gl=CN&x={x}&y={y}&z={z}").addTo(map);
+
+        // L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+        //     subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+        // }).addTo(map);
+    </script>
+
+</body>
+
+</html>

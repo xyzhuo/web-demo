@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>绘制三角形</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        div {
+            float: left;
+        }
+        
+        div:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            border-top: 50px red solid;
+            border-right: 50px green solid;
+            border-bottom: 50px blue solid;
+            border-left: 50px yellow solid;
+        }
+        
+        div:nth-child(2) {
+            /* 宽高均缩小 */
+            width: 50px;
+            height: 50px;
+            border-top: 75px red solid;
+            border-right: 75px green solid;
+            border-bottom: 75px blue solid;
+            border-left: 75px yellow solid;
+        }
+        
+        div:nth-child(3) {
+            /* 宽高均为0，剩下的为边框 */
+            width: 0;
+            height: 0;
+            border-top: 100px red solid;
+            border-right: 100px green solid;
+            border-bottom: 100px blue solid;
+            border-left: 100px yellow solid;
+        }
+        
+        div:nth-child(4) {
+            /* 隐藏边框：当隐藏边框颜色透明时，隐藏边框。 */
+            width: 0;
+            height: 0;
+            /* 可以使用rgba()隐藏，也可以直接设置颜色为透明色：transparent */
+            border-top: 100px transparent solid;
+            border-right: 100px transparent solid;
+            border-bottom: 100px blue solid;
+            border-left: 100px transparent solid;
+        }
+        
+        div:nth-child(5) {
+            /* 非等边三角形 ==> 等腰三角形：左右两边边框宽度相等。 */
+            width: 0;
+            height: 0;
+            border-top: 100px rgba(0, 0, 0, 0) solid;
+            border-right: 200px rgba(0, 0, 0, 0) solid;
+            border-bottom: 100px blue solid;
+            border-left: 200px rgba(0, 0, 0, 0) solid;
+        }
+        
+        div:nth-child(6) {
+            width: 0;
+            height: 0;
+            border-top: 100px rgba(0, 0, 0, 0) solid;
+            border-right: 100px rgba(0, 0, 0, 0) solid;
+            border-bottom: 200px blue solid;
+            border-left: 100px rgba(0, 0, 0, 0) solid;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</body>
+
+</html>

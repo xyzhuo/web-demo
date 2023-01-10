@@ -1,0 +1,142 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>广东农垦</title>
+
+    <script type="text/javascript" src="./lib/jquery/jquery-1.10.2.min.js">
+    </script>
+    <link href="./lib/mapbox-gl-js/mapbox-gl.css" rel="stylesheet">
+    <script type="text/javascript" src="./lib/mapbox-gl-js/mapbox-gl.js"></script>
+    <link href="./lib/mapbox-gl-js/plugins/mapbox-gl-draw.css" rel="stylesheet">
+    <script type="text/javascript" src="./lib/mapbox-gl-js/plugins/mapbox-gl-draw.js"></script>
+    <script type="text/javascript" src="./lib/mapbox-gl-js/iclient9-mapboxgl.js"></script>
+    <script type="text/javascript" src="./lib/proj4/proj4.js"></script>
+
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        .mb-popup {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+        #info {
+            display: block;
+            position: relative;
+            margin: 0px auto;
+            width: 50%;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            font-size: 12px;
+            text-align: center;
+            color: #222;
+            background: rgba(255, 255, 255, 0.6);
+        }
+        
+        #layerList {
+            position: absolute;
+            right: 10px;
+            top: 70px;
+            display: none;
+            height: 50%;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            background: rgba(255, 255, 255, 1);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <div id='info' style="position: absolute; left: 10px;bottom: 10px; width: 20%;text-align: left;"></div>
+
+    <div style="position: absolute; top: 20px; right: 20px;"><button onclick="isShowLayerListController()">图层控制</button></div>
+    <div id="layerList">
+        <!-- <label>
+            <input type="checkbox" checked="checked" onchange="changeEle(this)" />checked
+        </label><br /> -->
+    </div>
+    <script type="text/javascript">
+        // 参考：https://blog.csdn.net/sun_falls/article/details/105223095
+        // let huaduMapUrl = "http://localhost:8090/iserver/services/map-mvt-Huadu/restjsr/v1/vectortile/maps/Huadu/style.json";
+
+        let huaduMapUrl = "http://localhost:8090/iserver/services/map-jsnc/restjsr/v1/vectortile/maps/建设农场地块合并0629_3857/style.json";
+        let sourceLayerArr = [];
+        let sourceLayerObj = {};
+
+        let map;
+        $.get(huaduMapUrl).then((huaduGonganMapStyle) => {
+            console.log("mapStyle", huaduGonganMapStyle);
+
+            let mapStyle = JSON.parse(JSON.stringify(huaduGonganMapStyle));
+            mapStyle.layers = [];
+
+            map = new mapboxgl.Map({
+                container: "map",
+                style: mapStyle, //mapStyle, // huaduMapUrl,
+                center: [110, 21],
+                zoom: 10,
+                // crs: "EPSG:4326"
+            });
+            console.log("map", map);
+
+            map.setMaxZoom(19);
+
+            // 地图加载完成事件
+            map.on("load", function() {
+
+                addImageryLayer(map);
+
+                // 加载矢量图层
+                addMvtLayers(map, huaduGonganMapStyle);
+            });
+        });
+
+        function addMvtLayers(map, mapStyle) {
+            let layers = mapStyle.layers;
+            for (let layer of layers) {
+
+                if (layer.id === "background") {
+                    continue;
+                }
+                // 添加矢量瓦片图层
+                map.addLayer(layer);
+            }
+        }
+
+        function addImageryLayer(map) {
+            map.addSource("raster-tiles", {
+                "type": "raster", // 渲染类型
+                "tileSize": 256,
+                "rasterSource": "iserver", // rasterSource为"iserver"，必填
+                //地图服务地址（到地图名)必填
+                "tiles": ["https://106.15.40.105:8090/iserver/services/map-tianditu/rest/maps/影像底图_墨卡托"],
+            });
+            // 在地图加载图层
+            map.addLayer({
+                "id": "simple-tiles", // 图层id
+                "type": "raster", // 渲染类型
+                "source": "raster-tiles", // 图层对应的Source
+                "minzoom": 0, // 最小层级
+                "maxzoom": 18 // 最大层级
+            });
+        }
+    </script>
+</body>
+
+</html>

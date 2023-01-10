@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>加载GeoJSON</title>
+    <!-- 本地引入依赖 -->
+    <link href="../../lib/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <script src="../../lib/Cesium/Cesium.js"></script>
+
+    <!-- 使用远程依赖 -->
+    <!-- <link href="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Cesium.js"></script> -->
+
+    <!-- Earth -->
+    <!--<link href="http://www.supermapol.com/earth/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script type="text/javascript" src="http://www.supermapol.com/earth/Build/Cesium/Cesium.js"></script>-->
+
+    <!--<script src="http://support.supermap.com.cn:8090/webgl/examples/webgl/js/supermap/SuperMap-7.1-11828.js"></script>-->
+
+    <!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>-->
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+
+    <div style="
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 20px;
+        background-color: yellow;
+      ">
+        <button onclick="addPointJson()">加载点JSON</button>
+        <button onclick="addPolylineJson()">加载线JSON</button>
+        <button onclick="addPolygonJson()">加载面JSON</button>
+    </div>
+
+    <script type="text/javascript">
+        /**
+         * GeoJson数据下载：
+         * http://datav.aliyun.com/portal/school/atlas/area_selector#&lat=30.332329214580188&lng=106.72278672066881&zoom=3.5
+         * */
+
+        // 创建一个三维场景
+        let viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false,
+        });
+
+        // 加载 墨卡托投影的影像底图
+        let imgUrl = "http://106.15.40.105:8091/iserver/services/map-tianditu/rest/maps/影像底图_墨卡托";
+        viewer.imageryLayers.addImageryProvider(new Cesium.SuperMapImageryProvider({
+            url: imgUrl
+        }));
+
+        //
+        /**
+         * 加载点JSON
+         * */
+        function addPointJson() {
+            // 清空DataSource，项目中使用可以按需清除dataSources.remove();
+            viewer.dataSources.removeAll();
+
+            const geojosnData = viewer.dataSources.add(
+                // Cesium.GeoJsonDataSource.load("./data/MeteorologicalStations.geojson", {
+                //     stroke: Cesium.Color.WHITE,
+                //     markerSymbol: svg,
+                //     markerColor: Cesium.Color.YELLOW.withAlpha(0.3), //注意：颜色必须大写，即不能为blue
+                //     strokeWidth: 5,
+                // })
+                Cesium.GeoJsonDataSource.load(
+                    "./data/MeteorologicalStations.geojson", {
+                        clampToGround: true,
+                    }
+                )
+            );
+            console.log("geojosnData", geojosnData);
+            geojosnData.then((layerJson) => {
+                console.log("layerJson", layerJson);
+
+                window._layerJson = layerJson;
+
+                // 获取DataSource的Entity之后，设置Entity的样式
+                const entities = layerJson.entities.values;
+                for (let i = 0; i < entities.length; i++) {
+                    const entity = entities[i];
+                    entity.billboard = undefined;
+                    entity.point = new Cesium.PointGraphics({
+                        color: Cesium.Color.RED,
+                        pixelSize: 10,
+                    });
+                }
+                viewer.flyTo(layerJson);
+            });
+        }
+
+        addPolylineJson();
+
+        /**
+         * 添加线GeoJson
+         * */
+        function addPolylineJson() {
+            // 清空 DataSource，项目中使用可以按需清除dataSources.remove();
+            viewer.dataSources.removeAll();
+
+            const geoJsonData = viewer.dataSources.add(
+                Cesium.GeoJsonDataSource.load("./data/lineback.json", {
+                    stroke: Cesium.Color.YELLOW, // 轮廓的默认颜色
+                    strokeWidth: 5, // 轮廓的默认宽度
+                    clampToGround: true // 将几何特征（多边形或线串）固定在地面上
+                })
+            );
+
+            geoJsonData.then(geoJsonLayer => {
+                let entities = geoJsonLayer.entities.values;
+                console.log("entities", entities);
+
+                // 飞行定位
+                viewer.flyTo(geoJsonLayer);
+            });
+        }
+
+        /**
+         * 加载面JSON
+         * */
+        function addPolygonJson() {
+            // 清空DataSource，项目中使用可以按需清除dataSources.remove();
+            viewer.dataSources.removeAll();
+
+            const geojosnData = viewer.dataSources.add(
+                Cesium.GeoJsonDataSource.load("./data/guangdong.json", {
+                    // Cesium.GeoJsonDataSource.load("./data/zhanjiang.json", {
+                    stroke: Cesium.Color.WHITE, // 轮廓的默认颜色
+                    strokeWidth: 5, // 轮廓的默认宽度
+                    fill: Cesium.Color.BLUE.withAlpha(0.3), // 内部填充的默认颜色。注意：颜色必须大写，即不能为blue
+                    clampToGround: true // 将几何特征（多边形或线串）固定在地面上
+                })
+            );
+            console.log("geojosnData", geojosnData);
+            geojosnData.then((layerJson) => {
+                console.log("layerJson", layerJson);
+
+                // 获取DataSource中构建的Entity，修改Entity的样式
+                let entities = layerJson.entities.values;
+
+                let colorHash = {};
+                for (let i = 0; i < entities.length; i++) {
+                    let entity = entities[i];
+                    // console.log("entity", i, entity);
+
+                    let color = colorHash[entity.name]; // 同一名称的Entity，颜色相同。
+                    if (!color) {
+                        color = Cesium.Color.fromRandom({
+                            alpha: 0.8,
+                        });
+                        colorHash[name] = color;
+                    }
+                    entity.polygon.material = color; // 设置多边形填充的材料。这里设置为一个颜色
+                    entity.polygon.outline = false; // 是否显示轮廓
+
+                    // 凸出面与椭球面之间的距离（以米为单位），拉伸高度
+                    entity.polygon.extrudedHeight = entity.properties.childrenNum * 5000 || 5000; // 高度扩大5000倍，便于观察
+                }
+
+                viewer.flyTo(layerJson);
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Leaflet图层组</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css">
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script>
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <div id="latlngInfo" style="position: absolute;z-index: 9999;left: 10px;bottom: 0px;"></div>
+    <script type="text/javascript">
+        /**
+         * 通过 L.control 进行图层控制
+         * */
+        let map = L.map("map", {
+            center: [23.458207269894125, 113.48739624023439], // 地图初始化后的中心点
+            zoom: 3, // 地图初始化后显示的层级
+            maxZoom: 18, // 地图显示最大层级
+            zoomControl: false, // 缩放控件，默认true，显示控件
+            crs: L.CRS.TianDiTu_Mercator, // 设置坐标系 L.CRS.TianDiTu_WGS84
+            // layers: [tiandituImg, tiandituVec] // 图层列表
+        });
+
+
+        // 1、添加图层：加载天地图影像
+        const tiandituImg = L.supermap
+            .tiandituTileLayer({
+                layerType: 'img',
+                key: "1d109683f4d84198e37a38c442d68311"
+            });
+
+        // 1、添加图层：加载天地图影像标注
+        const tiandituImgLabel = L.supermap
+            .tiandituTileLayer({
+                layerType: 'img',
+                isLabel: true,
+                key: "1d109683f4d84198e37a38c442d68311"
+            });
+
+        // 1、添加图层：加载天地图矢量
+        const tiandituVec = L.supermap
+            .tiandituTileLayer({
+                key: "1d109683f4d84198e37a38c442d68311"
+            });
+
+        // 1、添加图层：加载天地图矢量标注
+        const tiandituVecLabel = L.supermap
+            .tiandituTileLayer({
+                isLabel: true,
+                key: "1d109683f4d84198e37a38c442d68311"
+            });
+
+        // 2、创建图层组
+        const tiandituImgGroup = L.layerGroup([tiandituImg, tiandituImgLabel]);
+        const tiandituVecGroup = L.layerGroup([tiandituVec, tiandituVecLabel]);
+        // 将要显示的图层组添加到地图中
+        tiandituVecGroup.addTo(map);
+
+        // 3、将图层组 添加到 图层控制列表 中
+        const layersControl = L.control.layers({
+            "影像": tiandituImgGroup,
+            "矢量": tiandituVecGroup
+        }).addTo(map);
+    </script>
+
+</body>
+
+</html>

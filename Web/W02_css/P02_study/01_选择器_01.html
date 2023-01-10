@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS选择器</title>
+    <style>
+        div .title h1 {
+            /* 后代选择器：空格 */
+            color: red;
+        }
+        
+        div>.title2>h2 {
+            /* 子代选择器 */
+            color: chocolate;
+        }
+        
+        div,
+        p {
+            /* 并集选择器：同时选中 div、p 两种标签 */
+            border: 1px red solid;
+            width: 500px;
+        }
+        
+        #cesiumContenter:hover {
+            /* 放大1.3倍 */
+            transform: scale(1.3);
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="title">
+            <!-- 红色 -->
+            <h1>我是大标题</h1>
+            <div>
+                <!-- 红色 -->
+                <h1>我也是大标题</h1>
+            </div>
+        </div>
+        <div class="title2">
+            <!-- color: chocolate; -->
+            <h2>我是二级标题</h2>
+            <div>
+                <!-- 正常颜色 -->
+                <h2>我也是二级标题</h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- 对div、p 设置 border、width -->
+    <div>并集选择器中的每组选择器之间通过 , 分隔</div>
+    <p>选择器1，选择器2 { css }</p>
+
+    <div id="cesiumContenter">Cesium Contenter</div>
+</body>
+
+</html>

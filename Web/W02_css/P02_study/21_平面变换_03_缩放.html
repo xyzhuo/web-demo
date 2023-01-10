@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>平面变换-旋转</title>
+    <style>
+        .box {
+            width: 300px;
+            height: 300px;
+            margin: 50px auto;
+            border: 2px solid red;
+        }
+        
+        img {
+            width: 100%;
+            height: 100%;
+            transition: all 2s;
+        }
+        
+        img:hover {
+            /* 缩放：放大1.5倍，x、y等比例缩放 */
+            transform: scale(1.5);
+            /* 只缩放x */
+            /* transform: scaleX(1.3); */
+            /* 只缩放Y */
+            /* transform: scaleY(1.3); */
+            /* x, y 缩放不同比例 */
+            /* transform: scale(1.3, 1.5); */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <img src="./images/rotate.png" alt="">
+    </div>
+</body>
+
+</html>

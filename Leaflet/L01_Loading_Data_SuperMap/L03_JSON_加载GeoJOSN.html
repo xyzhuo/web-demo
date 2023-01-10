@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>加载GeoJOSN</title>
+    <!-- 1 引入Leaflet依赖 -->
+    <!-- 1.1 Leaflet CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet@1.7.1/dist/leaflet.css">
+    <!-- 1.2 Leaflet JS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- 2 引入SuperMap提供的Leaflet插件依赖 -->
+    <!-- 2.1 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <link rel="stylesheet" href="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.css">
+    <!-- 2.2 引入SuperMap提供的Leaflet插件CSS依赖 -->
+    <script type="text/javascript" src="../lib/leaflet/leaflet.supermap.iclient/10.1.2/iclient-leaflet.js"></script>
+
+    <script src="../lib/jQuery/jquery-3.2.1.min.js"></script>
+
+</head>
+
+<body style=" margin: 0;overflow: hidden;background: #fff;width: 100%;height:100%;position: absolute;top: 0;">
+    <div id="map" style="margin:0 auto;width: 100%;height: 100%"></div>
+    <!-- 坐标信息 -->
+    <div id="latlngInfo" style="position: absolute;z-index: 9999;left: 10px;bottom: 0px;">latlng</div>
+    <script type="text/javascript">
+        const map = L.map("map", {
+            center: [23.458207269894125, 113.48739624023439], // 地图初始化后的中心点
+            zoom: 5, // 地图初始化后显示的层级
+            maxZoom: 18, // 地图显示最大层级
+            crs: L.CRS.EPSG4326
+        });
+
+        // 添加地图
+        L.tileLayer("http://t{s}.tianditu.com/img_c/wmts?layer=img&style=default&tilematrixset=c&Service=WMTS&Request=GetTile&Version=1.0.0&Format=tiles&TileMatrix={z}&TileCol={x}&TileRow={y}&tk=93724b915d1898d946ca7dc7b765dda5", {
+            subdomains: [0, 1, 2, 3, 4, 5, 6, 7],
+            maxZoom: 18,
+            tileSize: 256,
+            zoomOffset: 1,
+            minZoom: 1
+        }).addTo(map);
+
+
+        const geojsonFeature = {
+            "type": "Feature",
+            "properties": {
+                "name": "Coors Field",
+                "amenity": "鼠标移上显示的信息",
+                "show_on_map": true,
+                "popupContent": "这个点的属性信息，点击图标的时候会显示！"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [113.48739624023439, 23.458207269894125]
+            }
+        };
+
+        // 加载GeoJOSN数据
+        L.geoJSON(geojsonFeature, {
+            filter: function(feature, layer) {
+                return feature.properties.show_on_map; //true or false 是否显示
+            },
+            // 绑定属性
+            onEachFeature: (feature, layer) => { // 针对每个要素采取的操作
+                if (feature.properties && feature.properties.popupContent) {
+                    layer.bindPopup(feature.properties.popupContent);
+                }
+            }
+        }).bindTooltip(function(layer) { // 只要使用这个bindTooltip方法，就会使得鼠标摆上要素的时候显示一个提示框，里面的内容可以自定义。不用去监听鼠标hover事件哦！
+            return layer.feature.properties.amenity;
+        }).addTo(map);
+
+        // $.getJSON("./data/guangdong.json").then(result => {
+        //     console.log("result", result);
+        //     L.geoJSON(result).bindTooltip(function(layer) { // 只要使用这个bindTooltip方法，就会使得鼠标摆上要素的时候显示一个提示框，里面的内容可以自定义。不用去监听鼠标hover事件哦！
+
+        //         console.log(layer, layer);
+        //         return layer.feature.properties.amenity;
+        //     }).addTo(map);
+        // })
+
+        // $.getJSON("./data/geojson.json").then(result => {
+        //     const resultObj = JSON.parse(result);
+        //     console.log("result", result);
+        //     console.log("resultObj", resultObj);
+        //     L.geoJSON(resultObj).bindTooltip(function(layer) { // 只要使用这个bindTooltip方法，就会使得鼠标摆上要素的时候显示一个提示框，里面的内容可以自定义。不用去监听鼠标hover事件哦！
+
+        //         console.log(layer, layer);
+        //         // return layer.feature.properties.amenity;
+        //         return "abc";
+        //     }).addTo(map);
+        // })
+
+        $.getJSON("./data/Polyline.json").then(result => {
+            // const resultObj = JSON.parse(result);
+            console.log("result", result);
+            L.geoJSON(result).addTo(map);
+        })
+
+        $.getJSON("./data/Polygon.json").then(result => {
+            // const resultObj = JSON.parse(result);
+            console.log("result", result);
+            L.geoJSON(result).addTo(map);
+        })
+    </script>
+</body>
+
+</html>

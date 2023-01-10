@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>通过鼠标绘制随机颜色的点</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #canvas {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script id="vertexShader" type="x-shader/x-vertex">
+        // 定义一个attribute变量，接收顶点的位置
+        attribute vec4 a_Position;
+        // 定义一个attribute变量，接收顶点的大小。float：类型为浮点类型
+        attribute float a_PointSize;
+        void main() {
+            gl_Position = a_Position; // 顶点使用 接收到的外部顶点的位置
+            gl_PointSize = a_PointSize; // 顶点大小
+        }
+    </script>
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        precision mediump float;
+        uniform vec4 u_FragColor;
+        void main() {
+            gl_FragColor = u_FragColor; // 顶点颜色
+        }
+    </script>
+    <script type="module">
+        import { initShaders } from "./lib/WebglUtil.js";
+
+
+        /** @type {HTMLCanvasElement} */
+        const canvas = document.getElementById("canvas");
+        const gl = canvas.getContext("webgl");
+
+        // 清空绘制面板
+        gl.clearColor(0.2, 0.2, 0.5, 1.0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+        // 获取到顶点着色器、片元着色器的代码文本。
+        const vsSource = document.getElementById("vertexShader").innerText;
+        const fsSource = document.getElementById("fragmentShader").innerText;
+
+        // 将代码加载到程序中
+        const program = initShaders(gl, vsSource, fsSource);
+
+        // 获取attribute变量
+        const a_Position = gl.getAttribLocation(program, "a_Position"); // 顶点位置
+        const a_PointSize = gl.getAttribLocation(program, "a_PointSize"); // 顶点大小
+        // 获取设置颜色的uniform对象
+        const u_FragColor = gl.getUniformLocation(program, "u_FragColor");
+
+        // 顶点位置存储数组
+        const drawPoints = [];
+
+        // 监听鼠标事件
+        canvas.addEventListener("click", event => {
+            console.log("event", event);
+            // 1、获取当前鼠标点击的屏幕坐标
+            const { clientX, clientY } = event;
+            console.log("clientX, clientY", clientX, clientY);
+
+            // 2、获取Canvas在网页中的位置
+            const { left, top } = canvas.getBoundingClientRect();
+            console.log("left, top", left, top);
+
+            // 3、相对于canvas左上角的坐标
+            const [canvas2dX, canvas2dY] = [clientX - left, clientY - top];
+            console.log("canvas2dX, canvas2dY", canvas2dX, canvas2dY);
+
+            // 4、转换为webgl缩放坐标系坐标
+            // 4.1 获取canvas的宽高
+            const { width, height } = canvas.getBoundingClientRect();
+            console.log("width, height", width, height);
+
+            // 4.2 获取WebgL坐标系下单位宽度下对应的px坐标长度
+            // 单位宽高 对应的px 宽度为canvas的宽、高
+            const [halfWidth, halfHeight] = [width / 2, height / 2];
+
+            // 4.3 坐标系原点偏移：从画布左上角移动到画布中心
+            const [xBaseCenter, yBaseCenterTop] = [canvas2dX - halfWidth, canvas2dY - halfHeight];
+
+            // 4.4 坐标系y轴方向变化
+            const yBaseCenter = -yBaseCenterTop;
+
+            // 4.5 平面坐标系 转 webgl缩放坐标系
+            const [x, y] = [xBaseCenter / halfWidth, yBaseCenter / halfHeight];
+            console.log("WebGL缩放坐标。x, y", x, y);
+
+            // 在顶点位置存储数组添加点
+            const pointSize = Math.random() * 20;
+            drawPoints.push({
+                x, y, pointSize, color: {
+                    r: Math.random(),
+                    g: Math.random(),
+                    b: Math.random(),
+                    a: Math.random()
+                }
+            });
+
+            // 绘制顶点
+            render();
+        });
+
+        /**
+         * 渲染绘制
+         * */
+        function render() {
+            gl.clear(gl.COLOR_BUFFER_BIT);
+            // 同步绘制遍历顶点位置存储数组，绘制每一个顶点
+            drawPoints.forEach(({ x, y, pointSize, color: { r, g, b, a } }) => {
+                // 通过顶点位置变量对象，设置位置
+                gl.vertexAttrib2f(a_Position, x, y);
+
+                // 通过顶点大小变量对象，设置大小
+                gl.vertexAttrib1f(a_PointSize, pointSize);
+                // gl.uniform4f(u_FragColor, r, g,b, a)
+                // 通过类型数组的方式传递
+                const color = new Float32Array([r, g, b, a]);
+                gl.uniform4fv(u_FragColor, color)
+                gl.drawArrays(gl.POINTS, 0, 1);
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,252 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>加载矢量瓦片</title>
+
+    <script type="text/javascript" src="./lib/jquery/jquery-1.10.2.min.js">
+    </script>
+    <link href="./lib/mapbox-gl-js/mapbox-gl.css" rel="stylesheet">
+    <script type="text/javascript" src="./lib/mapbox-gl-js/mapbox-gl.js"></script>
+    <link href="./lib/mapbox-gl-js/plugins/mapbox-gl-draw.css" rel="stylesheet">
+    <script type="text/javascript" src="./lib/mapbox-gl-js/plugins/mapbox-gl-draw.js"></script>
+    <script type="text/javascript" src="./lib/mapbox-gl-js/iclient9-mapboxgl.js"></script>
+    <script type="text/javascript" src="./lib/proj4/proj4.js"></script>
+
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        .mb-popup {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+        #info {
+            display: block;
+            position: relative;
+            margin: 0px auto;
+            width: 50%;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            font-size: 12px;
+            text-align: center;
+            color: #222;
+            background: rgba(255, 255, 255, 0.6);
+        }
+        
+        #layerList {
+            position: absolute;
+            right: 10px;
+            top: 70px;
+            display: none;
+            height: 50%;
+            overflow-x: hidden;
+            overflow-y: scroll;
+            background: rgba(255, 255, 255, 1);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <div id='info' style="position: absolute; left: 10px;bottom: 10px; width: 20%;text-align: left;"></div>
+
+    <div style="position: absolute; top: 20px; right: 20px;"><button onclick="isShowLayerListController()">图层控制</button></div>
+    <div id="layerList">
+        <!-- <label>
+            <input type="checkbox" checked="checked" onchange="changeEle(this)" />checked
+        </label><br /> -->
+    </div>
+    <script type="text/javascript">
+        // 参考：https://blog.csdn.net/sun_falls/article/details/105223095
+        let huaduMapUrl = "http://localhost:8090/iserver/services/map-mvt-Huadu/restjsr/v1/vectortile/maps/Huadu/style.json";
+
+        let sourceLayerArr = [];
+        let sourceLayerObj = {};
+
+        let map;
+        $.get(huaduMapUrl).then((huaduGonganMapStyle) => {
+            console.log("mapStyle", huaduGonganMapStyle);
+
+            // let mapStyle = JSON.parse(JSON.stringify(huaduGonganMapStyle));
+            // mapStyle.layers = [];
+
+            map = new mapboxgl.Map({
+                container: "map",
+                style: huaduGonganMapStyle, //mapStyle, // huaduMapUrl,
+                center: [113.21179685670018, 23.425180273500047],
+                zoom: 10,
+                crs: "EPSG:4326"
+            });
+            console.log("map", map);
+
+            // addMapEvent(() => {
+            //     map.setMaxZoom(22);
+
+            //     // 加载影像图层
+            //     addImageryLayer();
+
+            //     // 加载mvt图层
+            //     addMvtLayer(huaduGonganMapStyle.layers);
+            // });
+
+        });
+
+        /**
+         * 添加mvt图层
+         * */
+        function addMvtLayer(layers) {
+            let layerCaption; // 工作空间中的图层名
+            let layerName; // 同一份数据的名称，同一份数据当作一层
+
+            for (let layer of layers) {
+
+                if (layer.id === "background") {
+                    continue;
+                }
+
+                // 添加矢量瓦片图层
+                map.addLayer(layer);
+
+                if (layer["metadata"]) {
+                    layerCaption = layer["metadata"]["layer:caption"];
+                } else {
+                    layerCaption = layer["source-layer"];
+                }
+                // console.log("layerCaption", layerCaption);
+
+                let layerName = layerCaption.substr(0, layerCaption.indexOf("@"));
+                // 处理 花都区界、花都区界buffer
+                if (layerName.includes("花都区界")) {
+                    layerName = "花都区界";
+                }
+
+                if (!sourceLayerArr.includes(layerName)) {
+                    sourceLayerArr.push(layerName);
+                    $("#layerList").prepend(`<label>
+                            <input type="checkbox" onclick="showLayer(this)" value="${layerName}" checked="checked" />${layerName}
+                        </label><br/>`);
+                }
+
+                if (!sourceLayerObj[layerName]) {
+                    sourceLayerObj[layerName] = [];
+                }
+                // map.setLayoutProperty(layer.id, "visibility", "none");
+
+                sourceLayerObj[layerName].push(layer.id);
+                console.log("layer.id", layer.id);
+
+                // 修改为链接选择样式
+                map.on("mouseenter", layer.id, () => {
+                    // console.log("mouseenter")
+                    map.getCanvas().style.cursor = "pointer";
+                });
+                // 修改为默认样式
+                map.on("mouseleave", layer.id, () => {
+                    // console.log("mouseenter")
+                    map.getCanvas().style.cursor = "default";
+                });
+
+            }
+        }
+
+
+
+        /**
+         * 绑定地图事件
+         */
+        function addMapEvent(mapLoadCallback) {
+            map.on("mousemove", function({
+                lngLat
+            }) {
+                // document.getElementById("info").innerHTML = JSON.stringify(e.point) + "<br />" + JSON.stringify(e.lngLat);
+                document.getElementById("info").innerHTML = `经度: ${lngLat.lng + "<br />纬度: " + lngLat.lat}`;
+            });
+
+            map.on("load", function() {
+                console.log(`map load`);
+
+                mapLoadCallback && mapLoadCallback();
+            });
+
+
+        }
+
+        /**
+         * 添加影像图层
+         */
+        function addImageryLayer() {
+            console.log("addImageryLayer", map);
+            map.addSource("raster-tiles", {
+                "type": "raster",
+                "tiles": ["http://192.168.252.116:8091/iserver/services/map-ugcv5-Huadugongan/rest/maps/Huadu_gongan"],
+                "tileSize": 256,
+                "rasterSource": 'iserver'
+            });
+            map.addLayer({
+                "id": "simple-tiles",
+                "type": "raster",
+                "source": "raster-tiles",
+                "minzoom": 0,
+                "maxzoom": 22
+            });
+
+            sourceLayerObj["花都影像"] = ["simple-tiles"];
+            $("#layerList").prepend(`<label>
+                    <input type="checkbox" onclick="showLayer(this)" value="花都影像" checked="checked" />花都影像
+                </label><br/>`);
+        }
+
+
+        /**
+         * 图层控制
+         * */
+        function showLayer(event) {
+            console.log("event", event);
+            console.log("this", this);
+
+            let layerName = event.getAttribute("value");
+            let layerIds = sourceLayerObj[layerName];
+            let isShow = $(event).prop("checked");
+            console.log("isShow", isShow);
+            for (let layerid of layerIds) {
+                console.log("layerid", layerid);
+                if (isShow) {
+                    map.setLayoutProperty(layerid, "visibility", "visible");
+                } else {
+                    map.setLayoutProperty(layerid, "visibility", "none");
+                }
+            }
+        }
+
+
+        let isShowLayerList = false;
+
+        function isShowLayerListController() {
+
+            if (isShowLayerList) {
+                $("#layerList").css("display", "none");
+                isShowLayerList = false;
+            } else {
+                $("#layerList").css("display", "unset");
+                isShowLayerList = true;
+            }
+        }
+    </script>
+</body>
+
+</html>

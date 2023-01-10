@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>WebGL同步绘图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #canvas {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script id="vertexShader" type="x-shader/x-vertex">
+        // 定义一个attribute变量，接收顶点的位置
+        attribute vec4 a_Position;
+        void main() {
+            gl_Position = a_Position; // 顶点使用 接收到的外部顶点的位置
+            gl_PointSize = 20.0; // 顶点大小
+        }
+    </script>
+    <script id="fragmentShader" type="x-shader/x-fragment">
+        void main() {
+            gl_FragColor = vec4(0.9, 1.0, 0.2, 1.0); // 顶点颜色
+        }
+    </script>
+    <script type="module">
+        import { initShaders } from "./lib/WebglUtil.js";
+
+
+        /** @type {HTMLCanvasElement} */
+        const canvas = document.getElementById("canvas");
+        const gl = canvas.getContext("webgl");
+
+        // 清空绘制面板
+        gl.clearColor(0.2, 0.2, 0.5, 1.0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+        // 获取到顶点着色器、片元着色器的代码文本。
+        const vsSource = document.getElementById("vertexShader").innerText;
+        const fsSource = document.getElementById("fragmentShader").innerText;
+
+        // 将代码加载到程序中
+        const program = initShaders(gl, vsSource, fsSource);
+
+        // 获取attribute变量
+        const a_Position = gl.getAttribLocation(program, "a_Position");
+        console.log("a_Position", a_Position);
+
+        // 顶点位置存储数组
+        const drawPoints = [{ x: 0.0, y: 0.0 }, { x: 0.2, y: 0.2 }];
+
+        // 绘制顶点
+        render();
+
+        /**
+         * 渲染绘制
+         * */
+        function render() {
+            gl.clear(gl.COLOR_BUFFER_BIT);
+            // 同步绘制遍历顶点位置存储数组，绘制每一个顶点
+            drawPoints.forEach(item => {
+                gl.vertexAttrib2f(a_Position, item.x, item.y);
+                gl.drawArrays(gl.POINTS, 0, 1);
+            });
+        }
+
+        setTimeout(() => {
+            // 在顶点存储数组中加入数据
+            drawPoints.push({ x: -0.7, y: 0.3 });
+            // 批量渲染绘制
+            render();
+        }, 2000);
+
+
+        // // 绘制第1个点
+        // gl.vertexAttrib2f(a_Position, 0.5, 0.3);
+        // gl.drawArrays(gl.POINTS, 0, 1);
+
+        // // 绘制第2个点
+        // gl.vertexAttrib2f(a_Position, drawPoints[0].x, drawPoints[0].y);
+        // gl.drawArrays(gl.POINTS, 0, 1);
+
+        // // 绘制第3个点
+        // gl.vertexAttrib2f(a_Position, drawPoints[1].x, drawPoints[1].y);
+        // gl.drawArrays(gl.POINTS, 0, 1);
+    </script>
+</body>
+
+</html>

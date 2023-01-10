@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加载数据测试</title>
+    <!-- 本地引入依赖 -->
+    <link href="./lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="./lib/Cesium/Cesium.js"></script>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="cesiumContainer"></div>
+
+    <script type="text/javascript">
+        let viewer = new Cesium.Viewer("cesiumContainer");
+        let scene = viewer.scene;
+        scene.open("http://localhost/iserver/services/3D-CBD/rest/realspace");
+
+        // upstream my_server {
+        //     server 10.0 .0 .2: 8080;
+        //     keepalive 2000;
+        // }
+        // server {
+        //     listen 80;
+        //     server_name 10.0 .0 .1;
+        //     client_max_body_size 1024 M;
+
+        //     location / my / {
+        //         proxy_pass http: //my_server/;
+        //             proxy_set_header Host $host: $server_port;
+        //     }
+        // }
+
+        // upstream my_server {
+        //     server 10.0 .0 .2: 8080;
+        //     keepalive 2000;
+        // }
+        // server {
+        //     listen 80;
+        //     server_name 10.0 .0 .1;
+        //     client_max_body_size 1024 M;
+        //     location / my / {
+        //         proxy_pass http: //my_server;
+        //             proxy_set_header Host $host: $server_port;
+        //     }
+        // }
+    </script>
+
+
+
+</body>
+
+</html>

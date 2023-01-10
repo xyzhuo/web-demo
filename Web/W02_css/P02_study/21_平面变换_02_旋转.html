@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>平面变换-旋转</title>
+    <style>
+        .father {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            border: 2px solid red;
+        }
+        
+        img {
+            width: 100%;
+            height: 100%;
+            /* 没有过渡属性，看不出效果 */
+            transition: all 2s;
+        }
+        
+        img:hover {
+            transform: rotate(360deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="father">
+        <img src="./images/rotate.png" alt="">
+    </div>
+</body>
+
+</html>

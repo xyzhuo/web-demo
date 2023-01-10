@@ -1,0 +1,155 @@
+// 文件后缀名可以省略.less
+@import url(./normalize.less);
+@import url(./base.less);
+
+// 变量
+@rootSize: 37.5rem;
+
+body {
+    background-color: #F0F0F0;
+}
+
+// 主体内容 start
+.main {
+    // margin-bottom: (50/37.5rem);
+    margin-bottom: (50/@rootSize);
+
+    // banner图
+    .banner {
+        height: (160/@rootSize);
+    }
+
+    // 活动标题
+    .title {
+        height: (40/@rootSize);
+        padding-left: (15/@rootSize);
+        line-height: (40/@rootSize);
+        background-color: #FFFFFF;
+
+        h4 {
+            font-size: (14/@rootSize);
+            color: #3C3C3C;
+        }
+    }
+
+    // 活动项
+    .item {
+        background-color: #FFFFFF;
+        margin-bottom: (10/@rootSize);
+
+        // 活动图片
+        .pic {
+            position: relative;
+            height: (160/@rootSize);
+
+            // 收藏图标
+            i {
+                position: absolute;
+                top: (15/@rootSize);
+                right: (18/@rootSize);
+                font-size: (24/@rootSize);
+                color: #FFFFFF;
+            }
+
+            // 活动状态
+            .active {
+                position: absolute;
+                top: (-4/@rootSize);
+                left: (15/@rootSize);
+                width: (68/@rootSize);
+                height: (29/@rootSize);
+                background-image: url(../images/status_active.png);
+                background-size: cover;
+                font-size: (12/@rootSize);
+                color: #FFFFFF;
+                text-align: center;
+                line-height: (25/@rootSize);
+
+                // &：在less中代表当前选择器，&.stop ==> .active.stop，为交集选择器。div.stop效果。
+                // <div class="active stop">已截止</div>
+                &.stop {
+                    background-image: url(../images/status_default.png);
+                }
+            }
+
+            // // 也可以通过这种方式来实现
+            // .stop {
+            //     // 活动截止背景图片
+            //     background-image: url(../images/status_default.png);
+            // }
+        }
+
+        // 标题
+        .txt {
+            padding: (10/@rootSize) (15/@rootSize);
+
+            // 标题
+            .txt_title {
+                display: flex;
+                justify-content: space-between;
+
+                h5 {
+                    width: (295/@rootSize);
+                    font-size: (15/@rootSize);
+                    color: #3C3C3C;
+                    font-weight: 400;
+                }
+
+                p {
+                    font-size: (15/@rootSize);
+                    color: #FE6249;
+                }
+            }
+
+            // 活动描述
+            .txt_describe {
+                display: flex;
+                margin-top: (10/@rootSize);
+
+                p {
+                    font-size: (11/@rootSize);
+                    color: #B4B4B4;
+                    margin-right: (12/@rootSize);
+
+                    i {
+                        font-size: (11/@rootSize);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// 主体内容 end
+
+// 底部内容 start
+footer {
+    position: fixed;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    // height: (50/37.5rem);
+    height: (50/@rootSize);
+    background-color: #FECA49;
+
+    a {
+        text-align: center;
+        font-size: (11/@rootSize);
+        color: #D78B09;
+
+        &.active {
+            color: #FEFEFE;
+        }
+
+        i.iconfont {
+            font-size: (24/@rootSize);
+        }
+    }
+
+
+}
+
+// 底部内容 end

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>刮刮乐效果：清除画布方式</title>
+    <style>
+        #ggl {
+            border: 2px red solid;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="ggl"></canvas>
+    <script>
+        /** @type {HTMLCanvasElement} */
+        const cvs = document.getElementById("ggl");
+
+        const ctx = cvs.getContext("2d");
+        console.log("canvas context = ", ctx);
+
+        // 1、随机生成中奖信息
+        let arrGifs = []; //["特等奖", "一等奖", "二等奖", "三等奖", "很遗憾"];
+        arrGifs = arrGifs.concat(Array(2).fill("特等奖"));
+        arrGifs = arrGifs.concat(Array(3).fill("一等奖"));
+        arrGifs = arrGifs.concat(Array(5).fill("二等奖"));
+        arrGifs = arrGifs.concat(Array(10).fill("三等奖"));
+        arrGifs = arrGifs.concat(Array(180).fill("很遗憾"));
+        const rdmGif = arrGifs[Math.floor(Math.random() * arrGifs.length)]; // Math.floor()返回小于参数x的最大整数
+
+        // 2、绘制文本。在绘制前设置绘制的文本的样式
+        ctx.fillStyle = "red"; // 设置填充样式
+        ctx.font = "bold 32px 微软雅黑"; // 设置字体样式。粗细、大小、字体
+        ctx.textAlign = "center"; // 水平居中
+        ctx.textBaseline = "middle"; // 垂直居中
+        ctx.fillText(rdmGif, cvs.width / 2, cvs.height / 2); // 内容绘制在画布的中间
+
+        // 3、将中奖信息另存为图片，将图片设置为canvas的背景
+        // 3.1 将中奖信息另存为图片
+        const gifImgSrc = cvs.toDataURL("image/png", 1);
+        // 3.2 将图片设置为画布canvas的背景图标
+        cvs.style.backgroundImage = `url(${gifImgSrc})`;
+
+        // 4、绘制灰色遮盖填充层
+        ctx.clearRect(0, 0, cvs.width, cvs.height); // 清除绘制的内容：避免不必要的线条
+        ctx.fillStyle = "#ccc";
+        ctx.fillRect(0, 0, cvs.width, cvs.height);
+
+        // 5、监听鼠标事件：刮遮罩层。使用ctx.clearRect()清除绘制的内容
+        let ggFlag = false;
+        // 鼠标按下事件：开始刮
+        cvs.onmousedown = event => {
+            // 鼠标按下开始刮
+            ggFlag = true;
+        }
+
+        // 鼠标释放事件：停止刮
+        cvs.onmouseup = event => {
+            // 鼠标释放停止刮
+            ggFlag = false;
+        }
+
+        // 鼠标移动事件：刮
+        // 每次绘制的缓冲范围
+        const buf = 10;
+        const buf2x = buf * 2;
+        cvs.onmousemove = event => {
+            // console.log("onmouseup event", event);
+            // 鼠标按下时才需要刮
+            if (ggFlag) {
+                const { x, y } = event;
+                ctx.clearRect(x - buf, y - buf, buf2x, buf2x);
+            }
+
+        }
+    </script>
+</body>
+
+</html>

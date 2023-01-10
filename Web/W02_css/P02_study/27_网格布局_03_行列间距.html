@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<head>
+    <title>网格布局-行列间距</title>
+    <style>
+        .box {
+            /* 开启网格布局 */
+            display: grid;
+            /* 设置行列宽高 */
+            grid-template-rows: repeat(3, 200px);
+            grid-template-columns: repeat(3, 200px);
+            /* 设置行列间距 */
+            gap: 10px;
+            /* row-gap: 10px;
+            column-gap: 10px; */
+            /* ======================================== */
+            /* gap: 10px 5px; */
+            /* grid-row-gap: 10px;
+            grid-column-gap: 10px; */
+            /* grid-gap: 10px; */
+            width: 620px;
+            height: 620px;
+            background-color: skyblue;
+        }
+        
+        .box div {
+            border: 1px solid red
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+        <div>7</div>
+        <div>8</div>
+        <div>9</div>
+    </div>
+</body>
+
+</html>

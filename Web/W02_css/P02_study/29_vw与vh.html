@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vw与vh</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 1vw = 1/100视口宽度 */
+        /* 真实值为：当前视口宽度 / 100 * 指定值 */
+        .box-vw {
+            width: 25vw;
+            height: 25vw;
+            background-color: skyblue;
+        }
+
+        /* 1vh = 1/100视口高度 */
+        /* 真实高度为：当前视口高度 / 100 * 指定高度 */
+        .box-vh {
+            width: 25vh;
+            height: 25vh;
+            background-color: yellowgreen;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box-vw"></div>
+
+    <div class="box-vh"></div>
+</body>
+
+</html>

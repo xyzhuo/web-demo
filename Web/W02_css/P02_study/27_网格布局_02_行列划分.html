@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>网格布局</title>
+    <style>
+        .box {
+            /* 使用网格布局：块级网格 */
+            display: grid;
+            /* （1）根据 px 设置每个格子大小 */
+            grid-template-rows: 100px 200px 300px;
+            grid-template-columns: 200px 200px 200px;
+            /* （2）根据 百分比 设置每个格子大小 */
+            /* 每一行的高度占比为 33.33% */
+            grid-template-rows: 33.33% 33.33% 33.33%;
+            /* 每一列的宽度占比为 33.33% */
+            grid-template-columns: 33.33% 33.33% 33.33%;
+            /* （3）盒子自动重复 */
+            /* 行重复6次，行高为100px */
+            grid-template-rows: repeat(6, 100px);
+            /* 列重复3次，列宽占比为33.33% */
+            grid-template-columns: repeat(3, 33.33%);
+            /* （4）字段填充：auto-fill */
+            /* auto-fill：字段计算到行、列数 */
+            grid-template-rows: repeat(auto-fill, 100px);
+            grid-template-columns: repeat(auto-fill, 33.33%);
+            /* （5）fr：自动计算剩余占比 */
+            grid-template-rows: 2fr 300px 1fr;
+            grid-template-columns: 100px 1fr 200px;
+            /* 等高划分行 */
+            /* grid-template-rows: 1fr 1px 1fr; */
+            /* （6）minmax()：在范围内自动占比 */
+            grid-template-rows: 200px minmax(100px, 200px) 200px;
+            /* columns超出父容器宽度，200px + 100px + 400px > 600px */
+            grid-template-columns: minmax(100px, 200px) 200px 400px;
+            /* 自动填充：auto */
+            grid-template-rows: 100px auto 300px;
+            grid-template-columns: 100px auto auto;
+            width: 600px;
+            height: 600px;
+            background-color: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"> </div>
+</body>
+
+</html>

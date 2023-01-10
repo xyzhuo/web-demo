@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>原始显示隐藏</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        div:first-child {
+            width: 250px;
+            height: 150px;
+            border: 2px solid red;
+            margin: 5px;
+            /* 隐藏元素 */
+            display: none;
+            /* 显示元素 */
+            /* display: block; */
+        }
+        
+        p {
+            /* 隐藏元素 */
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>隐藏元素</h3>
+    <div>地理信息系统（Geographic Information System 或 Geo Information system，GIS）</div>
+    <div>上面用display: none隐藏</div>
+    <p>它是一种特定的十分重要的空间信息系统。它是在计算机硬、软件系统支持下，对整个或部分地球表层（包括大气层）空间中的有关地理分布数据进行采集、储存、管理、运算、分析、显示和描述的技术系统。</p>
+    <div>上面用visibility: hidden隐藏占用空间</div>
+</body>
+
+</html>

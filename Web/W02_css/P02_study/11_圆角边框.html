@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>圆角边框</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        div {
+            width: 150px;
+            height: 150px;
+            border: 1px solid red;
+            margin: 20px;
+        }
+        
+        div:nth-child(1) {
+            /* 同时设置 四个角的 的圆润程度 */
+            border-radius: 10px;
+        }
+        
+        div:nth-child(2) {
+            /* 分别对 左上角右下角、右上角左下角 设置内边距 */
+            border-radius: 10px 20px;
+        }
+        
+        div:nth-child(3) {
+            /* 分别对 左上角、右上角左下角、右下角 设置内边距。左下角没有设置，取右上角值。 */
+            border-radius: 10px 20px 40px;
+        }
+        
+        div:nth-child(4) {
+            /* 分别对  左上角、右上角、右下角、左下角 设置内边距（顺时针方向） */
+            border-radius: 10px 20px 40px 80px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>设置一个</div>
+    <div>设置两个</div>
+    <div>设置三个</div>
+    <div>设置四个</div>
+</body>
+
+</html>

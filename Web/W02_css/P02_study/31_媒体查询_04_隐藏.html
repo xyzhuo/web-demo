@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>媒体查询：隐藏元素</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            display: flex;
+        }
+
+        .left {
+            width: 300px;
+            background-color: yellow;
+        }
+
+        .main {
+            /* 自动占满剩余内容 */
+            flex: 1;
+            background-color: skyblue;
+        }
+
+        /* 当设备宽度小于768px时，隐藏左边导航栏 */
+        @media (max-width:768px) {
+            .left {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="left">左护法：导航栏</div>
+        <div class="main">响应式网页设计，全称是Responsive Web Design，最早是由伊桑·马卡特（Ethan
+            Marcotte）在2010年提出的一个概念，最主要的动机是“如何使得页面布局适应任何的浏览窗口”。响应式页面的设计理念是，页面的设计与开发应当能够根据用户的行为以及设备环境（包括系统平台、屏幕尺寸、屏幕定向等）进行相应的响应和调整，也就是页面应该有能力去自动响应用户的设备环境。简而言之，这个概念指的就是网站的页面能够兼容多种不同的终端，根据不同的环境做出自动的响应及调整。
+        </div>
+    </div>
+</body>
+
+</html>

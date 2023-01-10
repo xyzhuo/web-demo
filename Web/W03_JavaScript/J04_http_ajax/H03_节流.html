@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>节流</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        #angel {
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="./images/angel.gif" alt="" id="angel"   />
+
+    <script src="../../../lib/jQuery/jquery-3.2.1.min.js"></script>
+    <script>
+        /***********************************************
+         * 
+         * 节流设计
+         * 
+         * */
+        $(function () {
+            var angel = $("#angel")
+            var timer = null // 1、预定义一个 timer 节流阀
+            $(document).on("mousemove", function (e) {
+                // 3、判断节流阀是否为空，如果不为空，则证明距离上次执行间隔不足16毫秒
+                if (timer) {
+                    return
+                }
+
+                timer = setTimeout(function () {
+                    $(angel).css("left", e.pageX + "px").css("top", e.pageY + "px")
+                    // 当设置了鼠标跟随效果后，清空 timer 节流阀，方便下次开启延时器
+                    timer = null;
+                }, 50);
+            })
+        });
+
+
+        // /***********************************************
+        //  *
+        //  * 不使用节流时实现鼠标跟随效果
+        //  *
+        //  * */
+        // $(function () {
+        //     // 获取图片元素
+        //     var angel = $("#angel")
+        //     // 监听文档的 mousemove 事件
+        //     $(document).on("mousemove", function (e) {
+        //         // 设置图片的位置
+        //         $(angel).css("left", e.pageX + "px").css("top", e.pageY + "px")
+        //     })
+        // })
+    </script>
+</body>
+
+</html>
