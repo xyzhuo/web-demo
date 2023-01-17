@@ -4,27 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <title>加载Cesium在线地形服务</title>
+
     <!-- 本地引入依赖 -->
     <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
     <script src="../lib/Cesium/Cesium.js"></script>
 
-    <!-- 使用远程依赖 -->
-    <!-- <link href="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-    <script src="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Cesium.js"></script> -->
-
-    <!-- Earth -->
-    <!--<link href="http://www.supermapol.com/earth/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-    <script type="text/javascript" src="http://www.supermapol.com/earth/Build/Cesium/Cesium.js"></script>-->
-
-    <!--<script src="http://support.supermap.com.cn:8090/webgl/examples/webgl/js/supermap/SuperMap-7.1-11828.js"></script>-->
-
-    <!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>-->
     <style type="text/css">
         * {
             margin: 0;
             padding: 0;
         }
-        
+
         html,
         body,
         #cesiumContainer {
@@ -38,10 +28,10 @@
     <div id="cesiumContainer"></div>
 
     <script type="text/javascript">
-        var viewer;
-
-        viewer = new Cesium.Viewer("cesiumContainer");
-        let scene = viewer.scene;
+        const viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false
+        });
+        const scene = viewer.scene;
         scene.debugShowFramesPerSecond = true; //显示帧率，默认不显示
 
         // 去除版权信息
@@ -59,12 +49,6 @@
             requestWaterMask: true, //开启法向量，请求水体效果所需要的海岸线数据
             requestVertexNormals: true, //开启水面特效，请求地形照明数据
         });
-
-        // 加载iServer转发的天地图服务
-        let imgUrl = "https://106.15.40.105:8090/iserver/services/map-tianditu/rest/maps/影像底图_墨卡托";
-        viewer.imageryLayers.addImageryProvider(new Cesium.SuperMapImageryProvider({
-            url: imgUrl
-        }));
     </script>
 </body>
 
