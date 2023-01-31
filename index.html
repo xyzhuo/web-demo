@@ -11,52 +11,52 @@
             margin: 0;
             padding: 0;
         }
-        
+
         a:link {
             /* 未访问的链接 */
             color: rgba(14, 129, 236, 0.767);
             text-decoration: none;
         }
-        
+
         a:visited {
             /* 已访问的链接 */
             color: rgba(14, 129, 236, 0.767);
             text-decoration: line-through;
         }
-        
+
         a:hover {
             /* 鼠标移动到链接上 */
             color: #F00;
             /* text-decoration: underline; */
         }
-        
+
         a:active {
             /* 选定的链接 */
             color: #999;
         }
-        
+
         ul {
             padding-left: 25px;
         }
-        
+
         .content-main>div>ul {
             padding-left: 35px;
         }
-        
+
         li {
             padding-top: 5px;
             font-size: 18px;
         }
-        
+
         .text-center {
             text-align: center;
         }
-        
+
         .scroll-bar {
             /* 滚动条样式 */
             overflow: scroll;
         }
-        
+
         .content-main>div>h3 {
             padding-top: 30px;
         }
@@ -77,7 +77,7 @@
                 <h2 class="text-center">示例导航</h2>
                 <ul>
                     <li>
-                        <a href="#supermap-webgl">SuperMap WebGL</a>
+                        <a href="#supermap-webgl">SuperMap Cesium</a>
                         <ul>
                             <li>
                                 <a href="#supermap-webgl-loading">数据加载</a>
@@ -123,23 +123,26 @@
             <!-- 右侧主内容 -->
             <div class="content-main" style="width: 70%; float: right;">
 
-                <!-- SuperMap WebGL -->
+                <!-- SuperMap Cesium -->
                 <div id="supermap-webgl">
-                    <h3>SuperMap WebGL</h3>
+                    <h3>SuperMap Cesium</h3>
                     <ul>
                         <li id="supermap-query">
                             <h5>数据加载</h5>
                             <ul>
                                 <li>
-                                    <a href="./WebGL/W01_Loading_Data/LoadingDataConfig.js" target="_blank">数据加载优化设置</a>
+                                    <a href="./Cesium/W01_Loading_Data/LoadingDataConfig.js"
+                                        target="_blank">数据加载优化设置</a>
                                 </li>
                                 <li>
-                                    <a href="./WebGL/W01_Loading_Data/loading_S3M.html" target="_blank">加载三维缓存(S3M)：scene.open(), scene.addS3MTilesLayerScp()</a>
+                                    <a href="./Cesium/W01_Loading_Data/loading_S3M.html"
+                                        target="_blank">加载三维缓存(S3M)：scene.open(), scene.addS3MTilesLayerScp()</a>
                                 </li>
                                 <li>
                                     <div>
                                         <p>加载影像</p>
-                                        <a href="https://www.cnblogs.com/xiaoguniang0204/p/11675253.html" target="_blank">博客</a>
+                                        <a href="https://www.cnblogs.com/xiaoguniang0204/p/11675253.html"
+                                            target="_blank">博客</a>
                                         <p>（1）UrlTemplateImageryLayer：url模版的影像加载，加载如google这类商业底图。
                                             <br /> （2）SingleTileImageryProvider：单一瓦片影像加载，如单张图片。
                                             <br /> （3）TileCoordinatesImageryProvider：瓦片坐标影像加载，加载经纬度网格图。
@@ -148,49 +151,59 @@
                                     </div>
                                     <ul>
                                         <li>
-                                            <a href="./WebGL/W01_Loading_Data/loading_Imagery_SuperMap.html" target="_blank">加载SuperMap二三维影像缓存：SuperMapImageryProvider</a>
+                                            <a href="./Cesium/W01_Loading_Data/loading_Imagery_SuperMap.html"
+                                                target="_blank">加载SuperMap二三维影像缓存：SuperMapImageryProvider</a>
                                         </li>
                                         <li>
-                                            <a href="./WebGL/W01_Loading_Data/loading_Imagery_tianditu.html" target="_blank">加载天地图：SuperMapImageryProvider()、TiandituImageryProvider()</a>
+                                            <a href="./Cesium/W01_Loading_Data/loading_Imagery_tianditu.html"
+                                                target="_blank">加载天地图：SuperMapImageryProvider()、TiandituImageryProvider()</a>
                                             <p>方式一：通过iServer进行服务转发，再使用SuperMapImageryProvider()的方式加载。</p>
                                             <p>方式二：直接使用SuperMap对Cesium扩展的TiandituImageryProvider()天地图影像提供者加载。</p>
                                             <p>方式三：使用WebMapTileServiceImageryProvider()加载天地图提供的WMTS服务。</p>
                                         </li>
                                         <li>
-                                            <a href="./WebGL/W01_Loading_Data/loading_Imagery_gaode.html" target="_blank">高德地图：SuperMapImageryProvider()</a>
+                                            <a href="./Cesium/W01_Loading_Data/loading_Imagery_gaode.html"
+                                                target="_blank">高德地图：SuperMapImageryProvider()</a>
                                             <p>使用Cesium.UrlTemplateImageryProvider()加载</p>
                                         </li>
                                         <li>
-                                            <a href="./WebGL/W01_Loading_Data/loading_Imagery_baidu.html" target="_blank">百度地图：SuperMapImageryProvider()</a>
+                                            <a href="./Cesium/W01_Loading_Data/loading_Imagery_baidu.html"
+                                                target="_blank">百度地图：SuperMapImageryProvider()</a>
                                             <p>方式一：自定义一个BaiduImageryProvider()百度地图影像提供者</p>
                                             <p>方式二：通过iServer进行服务转发后，再使用SuperMapImageryProvider()接口加载地图服务(代理后加载显示分辨率有问题)
                                             </p>
                                         </li>
                                         <li>
-                                            <a href="./WebGL/W01_Loading_Data/loading_Imagery_google.html" target="_blank">谷歌地图(谷歌中国)</a>
-                                            <p>未找到国内可以加载的地址，需要科学上网。</p>
+                                            <a href="./Cesium/W01_Loading_Data/loading_Imagery_google.html"
+                                                target="_blank">谷歌地图(谷歌中国)</a>
                                         </li>
                                         <li>
-                                            <a href="./WebGL/W01_Loading_Data/loading_Imagery_bingMap.html" target="_blank">必应地图：BingMapsImageryProvider()</a>
+                                            <a href="./Cesium/W01_Loading_Data/loading_Imagery_bingMap.html"
+                                                target="_blank">必应地图：BingMapsImageryProvider()</a>
                                         </li>
                                         <li>
-                                            <a href="./WebGL/W01_Loading_Data/loading_Imagery_arcgis.html" target="_blank">Arcgis-Rest服务：ArcGisMapServerImageryProvider()</a>
+                                            <a href="./Cesium/W01_Loading_Data/loading_Imagery_arcgis.html"
+                                                target="_blank">Arcgis-Rest服务：ArcGisMapServerImageryProvider()</a>
                                             <p>针对于Arcgis的查询服务，可以通过在iServer中转发对接，进而使用iServer的API进行开发。</p>
                                         </li>
                                         <li>
-                                            <a href="./WebGL/W01_Loading_Data/loading_Imagery_OpenStreetMaps.html" target="_blank">加载OpenStreetMaps：Cesium.createOpenStreetMapImageryProvider()</a>
+                                            <a href="./Cesium/W01_Loading_Data/loading_Imagery_OpenStreetMaps.html"
+                                                target="_blank">加载OpenStreetMaps：Cesium.createOpenStreetMapImageryProvider()</a>
                                         </li>
                                         <li>
-                                            <a href="./WebGL/W01_Loading_Data/loading_Imagery_single.html" target="_blank">加载单张图片：SingleTileImageryProvider()</a>
+                                            <a href="./Cesium/W01_Loading_Data/loading_Imagery_single.html"
+                                                target="_blank">加载单张图片：SingleTileImageryProvider()</a>
                                         </li>
                                         <li>
-                                            <a href="./WebGL/W01_Loading_Data/loading_imagery_TileCoordinates.html" target="_blank">加载坐标网格：TileCoordinatesImageryProvider()</a>
+                                            <a href="./Cesium/W01_Loading_Data/loading_imagery_TileCoordinates.html"
+                                                target="_blank">加载坐标网格：TileCoordinatesImageryProvider()</a>
                                             <p>可以看到加载的影像级别</p>
                                         </li>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="./WebGL/W01_Loading_Data/loading_VectorTilesMap.html" target="_blank">加载矢量MVT：scene.addVectorTilesMap()</a>
+                                    <a href="./Cesium/W01_Loading_Data/loading_VectorTilesMap.html"
+                                        target="_blank">加载矢量MVT：scene.addVectorTilesMap()</a>
                                 </li>
                                 <li>
                                     <div>
@@ -199,19 +212,24 @@
                                     </div>
                                     <ul>
                                         <li>
-                                            <a href="./WebGL/W01_Loading_Data/loading_terrain_sueprmap.html" target="_blank">加载SuperMap地形(isSct: true)</a>
+                                            <a href="./Cesium/W01_Loading_Data/loading_terrain_sueprmap.html"
+                                                target="_blank">加载SuperMap地形(isSct: true)</a>
                                         </li>
                                         <li>
-                                            <a href="./WebGL/W01_Loading_Data/loading_terrain_cesium_sueprmap.html" target="_blank">加载SuperMap代理的Cesium在线地形(isSct: true)</a>
+                                            <a href="./Cesium/W01_Loading_Data/loading_terrain_cesium_sueprmap.html"
+                                                target="_blank">加载SuperMap代理的Cesium在线地形(isSct: true)</a>
                                         </li>
                                         <li>
-                                            <a href="./WebGL/W01_Loading_Data/loading_terrain_cesium.html" target="_blank">加载Cesium在线地形</a>
+                                            <a href="./Cesium/W01_Loading_Data/loading_terrain_cesium.html"
+                                                target="_blank">加载Cesium在线地形</a>
                                         </li>
                                         <li>
-                                            <a href="./WebGL/W01_Loading_Data/loading_terrain_arcgis.html" target="_blank">加载ArcGIS地形：ArcGISTiledElevationTerrainProvider()</a>
+                                            <a href="./Cesium/W01_Loading_Data/loading_terrain_arcgis.html"
+                                                target="_blank">加载ArcGIS地形：ArcGISTiledElevationTerrainProvider()</a>
                                         </li>
                                         <li>
-                                            <a href="./WebGL/W01_Loading_Data/loading_terrain_default.html" target="_blank">Cesium默认加载的地形：Cesium.EllipsoidTerrainProvider()</a>
+                                            <a href="./Cesium/W01_Loading_Data/loading_terrain_default.html"
+                                                target="_blank">Cesium默认加载的地形：Cesium.EllipsoidTerrainProvider()</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -221,19 +239,20 @@
                             <h5>原生Cesium支持的数据加载</h5>
                             <ul>
                                 <li>
-                                    <a href="./WebGL/W02_Add_Data_Cesium/add_Entity.html" target="_blank">Entity</a>
+                                    <a href="./Cesium/W02_Add_Data_Cesium/add_Entity.html" target="_blank">Entity</a>
                                 </li>
                                 <li>
-                                    <a href="./WebGL/W02_Add_Data_Cesium/add_Primitive.html" target="_blank">Primitive</a>
+                                    <a href="./Cesium/W02_Add_Data_Cesium/add_Primitive.html"
+                                        target="_blank">Primitive</a>
                                 </li>
                                 <li>
-                                    <a href="./WebGL/W02_Add_Data_Cesium/add_3DTiles.html" target="_blank">3DTiles</a>
+                                    <a href="./Cesium/W02_Add_Data_Cesium/add_3DTiles.html" target="_blank">3DTiles</a>
                                 </li>
                                 <li>
-                                    <a href="./WebGL/W02_Add_Data_Cesium/add_CZML.html" target="_blank">CZML</a>
+                                    <a href="./Cesium/W02_Add_Data_Cesium/add_CZML.html" target="_blank">CZML</a>
                                 </li>
                                 <li>
-                                    <a href="./WebGL/W02_Add_Data_Cesium/add_GeoJSON.html" target="_blank">GeoJSON</a>
+                                    <a href="./Cesium/W02_Add_Data_Cesium/add_GeoJSON.html" target="_blank">GeoJSON</a>
                                 </li>
                             </ul>
                         </li>
@@ -241,7 +260,8 @@
                             <h5>查询</h5>
                             <ul>
                                 <li>
-                                    <a href="./WebGL/W02_Query_01_FCFH_DTH/FCFH_DTH_Query.html" target="_blank">分层分户查询</a>
+                                    <a href="./Cesium/W02_Query_01_FCFH_DTH/FCFH_DTH_Query.html"
+                                        target="_blank">分层分户查询</a>
                                 </li>
                             </ul>
                         </li>
@@ -249,7 +269,8 @@
                             <h5>BIM相关的效果</h5>
                             <ul>
                                 <li>
-                                    <a href="./W03_BIM_01_LightSource/movingLightSourceBIM.html" target="_blank">BIM光源调整(参考Revit光源-平行光)</a>
+                                    <a href="./W03_BIM_01_LightSource/movingLightSourceBIM.html"
+                                        target="_blank">BIM光源调整(参考Revit光源-平行光)</a>
                                 </li>
                             </ul>
                         </li>
@@ -257,10 +278,12 @@
                             <h5>可视化展示(特效)</h5>
                             <ul>
                                 <li>
-                                    <a href="./WebGL/W02_Query_01_FCFH_DTH/FCFH_DTH_Query.html" target="_blank">分层分户查询</a>
+                                    <a href="./Cesium/W02_Query_01_FCFH_DTH/FCFH_DTH_Query.html"
+                                        target="_blank">分层分户查询</a>
                                 </li>
                                 <li>
-                                    <a href="./WebGL/W02_Query_01_FCFH_DTH/FCFH_DTH_Query.html" target="_blank">小车模型按指定路径移动</a>
+                                    <a href="./Cesium/W02_Query_01_FCFH_DTH/FCFH_DTH_Query.html"
+                                        target="_blank">小车模型按指定路径移动</a>
                                 </li>
                             </ul>
                         </li>
@@ -268,13 +291,13 @@
                             <h5>Viewer设置</h5>
                             <ul>
                                 <li>
-                                    <a href="./WebGL/W08_Viewer/viewer_setting.html" target="_blank">Viewer属性设置</a>
+                                    <a href="./Cesium/W08_Viewer/viewer_setting.html" target="_blank">Viewer属性设置</a>
                                 </li>
                                 <li>
-                                    <a href="./WebGL/W08_Viewer/scene_setting.html" target="_blank">scene属性设置</a>
+                                    <a href="./Cesium/W08_Viewer/scene_setting.html" target="_blank">scene属性设置</a>
                                 </li>
                                 <li>
-                                    <a href="./WebGL/W08_Viewer/globe_setting.html" target="_blank">globe属性设置</a>
+                                    <a href="./Cesium/W08_Viewer/globe_setting.html" target="_blank">globe属性设置</a>
                                 </li>
                             </ul>
                         </li>
@@ -294,7 +317,8 @@
                     <h3>SuperMap Leaflet</h3>
                     <ul>
                         <li>
-                            <a href="./Leaflet01_transportationAnalyst/transportationAnalyst.html" target="_blank">最短路径分析</a>
+                            <a href="./Leaflet01_transportationAnalyst/transportationAnalyst.html"
+                                target="_blank">最短路径分析</a>
                         </li>
                     </ul>
                 </div>
