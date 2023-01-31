@@ -24,13 +24,14 @@
             margin: 0;
             padding: 0;
         }
-        
+
         html,
         body,
         #cesiumContainer {
             width: 100%;
             height: 100%;
         }
+
         /* 控件隐藏：不占据空间，无法点击 */
         /*右上角按钮组：cesium-viewer-toolbar*/
         /*左下角动画控件：cesium-viewer-animationContainer*/
@@ -59,7 +60,7 @@
         // https://blog.csdn.net/u012515877/article/details/90210862
         // https://www.pianshen.com/tag/cesium入门
 
-        let viewer = new Cesium.Viewer("cesiumContainer", {
+        const viewer = new Cesium.Viewer("cesiumContainer", {
             // 地图导航罗盘（指南针），默认为true
             navigation: false,
             // 放大镜图标，查找位置工具，查找到之后会将镜头对准找到的地址，默认使用bing地图
@@ -91,7 +92,7 @@
             // 时间轴控件，底部时间轴
             timeline: true, // 最下面时间轴
 
-            scene3DOnly: false, // 仅仅显示3d，可隐藏右上角2d和3d按钮
+            scene3DOnly: false, // 仅仅显示3D，可隐藏右上角2d和3d按钮。显示3D可提高绘制效率
             selectionoIndicatr: false,
             navigationInstructionsInitiallyVisibl: false,
             useDefaultRenderLoop: true,
@@ -99,10 +100,17 @@
             projectionPicker: true, // 投影选择器，默认为false
         });
 
+        // 隐藏logo
+        viewer._cesiumWidget._creditContainer.style.display = "none";
+        // 隐藏全屏按钮
+        viewer._fullscreenButton.container.style.display = "none";
+
+        // viewer.scene.globe.show = false; // 隐藏地球，默认为true，显示地球
+
         // // 修改地球上默认显示的地图，原生Cesium可以设置
         // viewer.baseLayerPicker.viewModel.selectedImager = viewer.baseLayerPicker.viewModel.imageryProviderViewModels[9];
 
-        viewer.scene.debugShowFramesPerSecond = true; //显示帧率，默认不显示
+        viewer.scene.debugShowFramesPerSecond = true; // 显示帧率，默认不显示
 
         // // 将场景修改为纯色背景
         // // 另一中方法：使用Cesium.SingleTileImageryProvider()加载一张黑色背景的图片。
@@ -111,8 +119,6 @@
 
         // 关闭大气层
         viewer.scene.skyAtmosphere.show = false;
-
-        // viewer.scene.globe.show = false; // 隐藏地球，默认为true，显示地球
     </script>
 </body>
 
