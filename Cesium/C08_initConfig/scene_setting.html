@@ -5,26 +5,14 @@
     <meta charset="UTF-8">
     <title>Scene属性设置</title>
     <!-- 本地引入依赖 -->
-    <link href="../../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
-    <script src="../../lib/Cesium/Cesium.js"></script>
-
-    <!-- 使用远程依赖 -->
-    <!-- <link href="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-    <script src="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Cesium.js"></script> -->
-
-    <!-- Earth -->
-    <!--<link href="http://www.supermapol.com/earth/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-    <script type="text/javascript" src="http://www.supermapol.com/earth/Build/Cesium/Cesium.js"></script>-->
-
-    <!--<script src="http://support.supermap.com.cn:8090/webgl/examples/webgl/js/supermap/SuperMap-7.1-11828.js"></script>-->
-
-    <!--<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>-->
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium/Cesium.js"></script>
     <style type="text/css">
         * {
             margin: 0;
             padding: 0;
         }
-        
+
         html,
         body,
         #cesiumContainer {
@@ -38,7 +26,9 @@
     <div id="cesiumContainer"></div>
 
     <script type="text/javascript">
-        let viewer = new Cesium.Viewer("cesiumContainer");
+        let viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: true
+        });
         let scene = viewer.scene;
 
         // 关闭大气层

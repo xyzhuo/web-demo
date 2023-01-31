@@ -5,8 +5,8 @@
     <meta charset="UTF-8" />
     <title>GeoJSON分屏</title>
     <!-- 本地引入依赖 -->
-    <link href="../../lib/Cesium/Widgets/widgets.css" rel="stylesheet" />
-    <script src="../../lib/Cesium/Cesium.js"></script>
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet" />
+    <script src="../lib/Cesium/Cesium.js"></script>
 
     <!-- 使用远程依赖 -->
     <!-- <link href="http://47.107.49.127:8090/iserver/services/3D-xihaian/rest/static/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
@@ -24,7 +24,7 @@
             margin: 0;
             padding: 0;
         }
-        
+
         html,
         body,
         #cesiumContainer {
@@ -44,12 +44,13 @@
          * */
 
         // 创建一个三维场景
-        let viewer = new Cesium.Viewer("cesiumContainer", {
+        const viewer = new Cesium.Viewer("cesiumContainer", {
             infoBox: false,
         });
-        let scene = viewer.scene;
+        const scene = viewer.scene;
 
         let geojsonDatasource;
+
         // 加载GeoJONS文件
         const datasource = viewer.dataSources.add(Cesium.GeoJsonDataSource.load("./data/guangdong.json", {
             fill: Cesium.Color.PINK, // 多边形内部的默认颜色
@@ -59,7 +60,7 @@
             clampToGround: true
         })).then((_geojsonDatasource) => {
             geojsonDatasource = _geojsonDatasource;
-
+            viewer.flyTo(geojsonDatasource);
             console.log("geojsonDatasource", geojsonDatasource);
 
             // // 设置分屏模式
@@ -67,7 +68,6 @@
 
             // // 设置图层对应视口的可见性
             // geojsonDatasource.setVisibleInViewport(0, false);
-            viewer.flyTo(geojsonDatasource);
         });
     </script>
 </body>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Entity-线</title>
+
+    <!-- 本地引入依赖 -->
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium/Cesium.js"></script>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+
+    <script type="text/javascript">
+        /**
+         * 参考博客：https://zhuanlan.zhihu.com/p/348807058
+         * */
+        /**
+         * （1）创建Entity：使用主要使用Cesium.Entity();
+         * （2）添加Entity：Viewer.entities.add();
+         * （3）删除Entity：Viewer.entities.remove(entity)，removeAll()，removeById(id)
+         * （4）获取Entity：Viewer.entities.getById(id)
+         *
+         *      Entity的属性：
+         *          show（是否显示）、position（位置）、orientation（方向）、viewFrom（实体对象的建议初始偏移量）
+         *      Entity的类型：可以同时有多个
+         *          point（点）、polyline（折线）、polygon（多边形）、rectangle（矩形）、
+         *          billboard（广告牌）、box（盒子[立方体]）、label（标签）、model（模型）、
+         *          ellipsoid（椭球体）、path（路径）、cylinder（圆柱体）、ellipse（椭圆形）、
+         *          polylineVolume（多段线柱体）、wall（围墙）、corridor（走廊对象）
+         *      Entity的位置：
+         *          classificationType: Cesium.ClassificationType.S3M_TILE // 贴在S3M模型表面
+         *          clampToS3M()：Entity贴到S3M(模型)上
+         *          heightReference：默认值 HeightReference.NONE，Entity贴地。在Entity的实际类型中设置。
+         */
+        const viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false
+        });
+
+        // 加载地形
+        viewer.terrainProvider = Cesium.createWorldTerrain({
+            url: Cesium.IonResource.fromAssetId(3956),
+            // url: "https://www.supermapol.com/iserver/services/3D-stk_terrain/rest/realspace/datas/info/data/path/",
+            requestWaterMask: true, //开启法向量，请求水体效果所需要的海岸线数据
+            requestVertexNormals: true, //开启水面特效，请求地形照明数据
+        });
+
+        const positions = [];
+        positions.push(110.0, 21.0, 10);
+        positions.push(111.0, 21.5, 5);
+
+        // 添加线Entity
+        const polylineEntity = viewer.entities.add({
+            id: "id-123", // Entity的id，如果不设置自动生成。Cesium.createGuid()生成器
+            name: "entityName", // Entity的名称，可不设置
+            show: true, // Entity是否显示，默认true
+            polyline: {
+                positions: Cesium.Cartesian3.fromDegreesArrayHeights(positions), // 立方体的长宽高
+                width: 5, // 线宽
+                material: Cesium.Color.RED, // 指定线的材质，这里设置为纯颜色
+                clampToGround: true, // 是否贴地。如果为true，可以随着地形起伏
+                distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, Number.MAX_VALUE), // 在指定相机高度范围中显示点，这里是高度在50-10000之间显示线
+                classificationType: Cesium.ClassificationType.BOTH, // 指定该折线在地面上时是否对地形：将同时对Terrain和3D Tile进行分类。
+                zIndex: 2 // 设置线的层级，zIndex大的在上层
+            }
+        });
+
+        const positions_02 = [];
+        positions_02.push(110.0, 21.0, 10);
+        positions_02.push(111.0, 21.5, 5);
+        positions_02.push(112.0, 22, 5);
+
+        // 添加线Entity
+        const polylineEntity_02 = viewer.entities.add({
+            show: true, // Entity是否显示，默认true
+            polyline: {
+                positions: Cesium.Cartesian3.fromDegreesArrayHeights(positions_02), // 立方体的长宽高
+                width: 10, // 线宽
+                material: Cesium.Color.YELLOW, // 指定线的材质，这里设置为纯颜色
+                clampToGround: true, // 是否贴地。如果为true，可以随着地形起伏
+                distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, Number.MAX_VALUE), // 在指定相机高度范围中显示点，这里是高度在50-10000之间显示线
+                classificationType: Cesium.ClassificationType.BOTH, // 指定该折线在地面上时是否对地形：将同时对Terrain和3D Tile进行分类。
+                zIndex: 1 // 上面为2的红色线会压盖黄色线
+            }
+        });
+
+        viewer.flyTo(polylineEntity);
+    </script>
+</body>
+
+</html>

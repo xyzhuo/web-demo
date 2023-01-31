@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Entity-面、拉伸体</title>
+
+    <!-- 本地引入依赖 -->
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium/Cesium.js"></script>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+
+    <script type="text/javascript">
+        /**
+         * 参考博客：https://zhuanlan.zhihu.com/p/348807058
+         * polygon面属性：https://blog.csdn.net/u014523388/article/details/127060164
+         * */
+        /**
+         * （1）创建Entity：使用主要使用Cesium.Entity();
+         * （2）添加Entity：Viewer.entities.add();
+         * （3）删除Entity：Viewer.entities.remove(entity)，removeAll()，removeById(id)
+         * （4）获取Entity：Viewer.entities.getById(id)
+         *
+         *      Entity的属性：
+         *          show（是否显示）、position（位置）、orientation（方向）、viewFrom（实体对象的建议初始偏移量）
+         *      Entity的类型：可以同时有多个
+         *          point（点）、polyline（折线）、polygon（多边形）、rectangle（矩形）、
+         *          billboard（广告牌）、box（盒子[立方体]）、label（标签）、model（模型）、
+         *          ellipsoid（椭球体）、path（路径）、cylinder（圆柱体）、ellipse（椭圆形）、
+         *          polylineVolume（多段线柱体）、wall（围墙）、corridor（走廊对象）
+         *      Entity的位置：
+         *          classificationType: Cesium.ClassificationType.S3M_TILE // 贴在S3M模型表面
+         *          clampToS3M()：Entity贴到S3M(模型)上
+         *          heightReference：默认值 HeightReference.NONE，Entity贴地。在Entity的实际类型中设置。
+         */
+        const viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false,
+            terrainProvider: Cesium.createWorldTerrain({
+                url: Cesium.IonResource.fromAssetId(3956),
+                // url: "https://www.supermapol.com/iserver/services/3D-stk_terrain/rest/realspace/datas/info/data/path/",
+                requestWaterMask: true, //开启法向量，请求水体效果所需要的海岸线数据
+                requestVertexNormals: true, //开启水面特效，请求地形照明数据
+            })
+        });
+
+        const positions = [];
+        positions.push(113.306424915791, 23.1846915185452);
+        positions.push(113.307991325855, 23.1846915185452);
+        positions.push(113.308345377445, 23.1839834153652);
+        positions.push(113.307830393314, 23.1834469735622);
+        positions.push(113.306800425053, 23.1834469735622);
+        // polygon的基本使用
+        // 不显示底面、顶面
+        const polygonEntity = viewer.entities.add({
+            id: "id-123", // Entity的id，如果不设置自动生成。Cesium.createGuid()生成器
+            name: "entityName", // Entity的名称，可不设置
+            show: true, // Entity是否显示，默认true
+            polygon: {
+                show: true, // 是否显示polygon
+                hierarchy: Cesium.Cartesian3.fromDegreesArray(positions), // 层次结构，面的位置
+                // 底部高程相对的位置，CLAMP_TO_GROUND：位置固定在地形上(相对于地形)
+                heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+                // 多边形相对于椭球面的高度（面的底部高程），可绘制多边形棱柱，距离地面高度5米
+                height: 31,
+                // 面的拉伸高度参考的对象 // RELATIVE_TO_GROUND：位置高度是指地形上方的高度。
+                extrudedHeightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
+                // 多边形的拉伸高度（此高度参考extrudedHeightReference设置的值），真正的拉伸高度为：extrudedHeight - height的高度
+                extrudedHeight: 60, // 如果拉伸高度低于height的高度，面则是向下拉伸（比如这里设置为10）。
+                closeTop: false, // 是否显示顶面。如果为false，顶部留空
+                closeBottom: false, // 是否显示底面。如果为false，底部留空
+                fill: true, // 是否用指定材质填充
+                material: Cesium.Color.RED, // 设置多边形的材质，设置设置为一个颜色
+                classificationType: Cesium.ClassificationType.BOTH, // 此多边形在地面上时是对地形，3D瓷砖还是对两者进行分类。
+                zIndex: 10000, // 多个多边形时，指定多边形层级
+                distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0, 5000.0) // 设置多边形的可见距离范围，范围之外不可见。默认为空，即一直可见。
+            },
+        });
+
+        const position3Ds = [];
+        position3Ds.push(113.309160768986, 23.187545388937, 5);
+        position3Ds.push(113.311456739902, 23.187545388937, 10);
+        position3Ds.push(113.311456739902, 23.1857858598232, 10);
+        position3Ds.push(113.308602869511, 23.1857858598232, 5);
+        // 创建一个三维面
+        const polygon3DEntity = viewer.entities.add({
+            name: "entityName", // Entity的名称，可不设置
+            show: true, // Entity是否显示，默认true
+            polygon: {
+                show: true, // 是否显示polygon
+                hierarchy: Cesium.Cartesian3.fromDegreesArrayHeights(position3Ds), // 层次结构，面的位置
+                material: Cesium.Color.CORAL, // 轮廓颜色
+                outline: true, // 是否显示多边形轮廓
+                clampToGround: true // 贴地
+            }
+        });
+
+        const position3Ds2 = [];
+        position3Ds2.push(113.30707937479, 23.1926093995571, 300);
+        position3Ds2.push(113.312186300754, 23.1926093995571, 100);
+        position3Ds2.push(113.311606943607, 23.1897555291653, 100);
+        position3Ds2.push(113.308323919773, 23.1894122064114, 100);
+        position3Ds2.push(113.307143747806, 23.191150277853, 200);
+        // 使用三维点的高度、不规则拉伸
+        const abc = viewer.entities.add({
+            name: "entityName", // Entity的名称，可不设置
+            show: true, // Entity是否显示，默认true
+            polygon: {
+                show: true, // 是否显示polygon
+                // Cesium.Cartesian3.fromDegreesArrayHeights，如果想要高程值起作用，需设置perPositionHeight: true
+                hierarchy: Cesium.Cartesian3.fromDegreesArrayHeights(position3Ds2), // 层次结构，面的位置
+                extrudedHeightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+                extrudedHeight: 10, // 多边形的拉伸拉伸高度，可绘制多边形棱柱，这里是向下拉伸
+                material: Cesium.Color.CYAN.withAlpha(0.5), // 轮廓颜色
+                outline: true, // 是否显示多边形轮廓
+                outlineWidth: 3, // 轮廓的宽度
+                outlineColor: Cesium.Color.YELLOW, // 轮廓颜色
+                perPositionHeight: true, // 是否使用hierarchy中每个点的高程，可以构建不规则高度的面。true为使用，false为不使用，默认为不使用
+            },
+        });
+
+        const position3Ds3 = [];
+        position3Ds3.push(113.311875164509, 23.1951735913754, 300);
+        position3Ds3.push(113.314965069294, 23.1961736913754, 100);
+        position3Ds3.push(113.315490782261, 23.1944011151791, 150);
+        position3Ds3.push(113.314965069294, 23.1928132474422, 100);
+        position3Ds3.push(113.312475979328, 23.1939290463924, 100);
+        // 使用三维点的高度
+        viewer.entities.add({
+            name: "entityName", // Entity的名称，可不设置
+            show: true, // Entity是否显示，默认true
+            polygon: {
+                show: true, // 是否显示polygon
+                hierarchy: Cesium.Cartesian3.fromDegreesArrayHeights(position3Ds3), // 层次结构，面的位置
+                material: Cesium.Color.DODGERBLUE.withAlpha(0.6), // 轮廓颜色
+                outline: true, // 是否显示多边形轮廓
+                outlineWidth: 3, // 轮廓的宽度
+                outlineColor: Cesium.Color.YELLOW, // 轮廓颜色
+                perPositionHeight: true, // 是否使用hierarchy中每个点的高程，可以构建不规则高度的面。true为使用，false为不使用，默认为不使用
+            },
+        });
+
+        // 岛洞：holes
+        const holesEntity = viewer.entities.add({
+            description: "导洞多边形",
+            name: "导洞多边形",
+            polygon: {
+                hierarchy: {
+                    positions: Cesium.Cartesian3.fromDegreesArray([
+                        113.4525002702803, 23.31763593039303,
+                        113.4524277756575, 23.31749472800861,
+                        113.4526350747873, 23.31730490220515,
+                        113.4528973931777, 23.31749703349371,
+                        113.4525002702803, 23.31763593039303]),
+                    holes: [{
+                        positions: Cesium.Cartesian3.fromDegreesArray([
+                            113.4525625904002, 23.31752870087121,
+                            113.4524818665896, 23.31748674886103,
+                            113.4526511495461, 23.31742162253564,
+                            113.4526801595935, 23.31746953411165,
+                            113.4525625904002, 23.31752870087121]),
+                    }],
+                },
+                material: Cesium.Color.BLUE.withAlpha(0.5)
+            }
+        });
+
+        // 多重岛洞：holes
+        viewer.entities.add({
+            name: "多重岛洞",
+            polygon: {
+                hierarchy: {
+                    positions: Cesium.Cartesian3.fromDegreesArray([-99.0, 30.0, -85.0, 30.0, -85.0, 40.0, -99.0, 40.0]),
+                    holes: [{
+                        positions: Cesium.Cartesian3.fromDegreesArray([-97.0, 31.0, -97.0, 39.0, -87.0, 39.0, -87.0, 31.0]),
+                        holes: [{
+                            positions: Cesium.Cartesian3.fromDegreesArray([-95.0, 33.0, -89.0, 33.0, -89.0, 37.0, -95.0, 37.0]),
+                            holes: [{
+                                positions: Cesium.Cartesian3.fromDegreesArray([-93.0, 34.0, -91.0, 34.0, -91.0, 36.0, -93.0, 36.0])
+                            }]
+                        }]
+                    }]
+                },
+                material: Cesium.Color.YELLOW.withAlpha(1),
+                height: 0,
+                outline: true
+            }
+        });
+
+        viewer.flyTo(polygon3DEntity);
+        // viewer.flyTo(viewer.entities);
+    </script>
+</body>
+
+</html>
