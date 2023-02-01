@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>加载S3M缓存-水面特效</title>
+
+    <!-- 本地引入依赖 -->
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium/Cesium.js"></script>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+
+    <script type="text/javascript">
+        let viewer;
+
+        /**
+         * 数据处理：
+         *      (1)几何压缩方式：KTX（研发推荐的格式）、WebP
+         *
+         * 数据加载：
+         *      (1)如果是webp格式，需要对图层设置：layer.RGBTOBGR = true;参数否则倾斜数据色彩丢失
+         * */
+
+        viewer = new Cesium.Viewer('cesiumContainer');
+        let scene = viewer.scene;
+        scene.debugShowFramesPerSecond = true; //显示帧率，默认不显示
+
+
+
+        let sceneUrl = "http://www.supermapol.com/realspace/services/3D-srsb/rest/realspace";
+        let promise = scene.open(sceneUrl);
+        Cesium.when(promise, function () {
+
+            // 查找水面图层
+            let waterLayer = scene.layers.find("水面@vector");
+            // 设置水面图层的底部高程，确保水面与模型贴合。水面高程比较低，调整水面高度以覆盖河面。
+            waterLayer.style3D.bottomAltitude = 5;
+            // 设置风格后需刷新
+            waterLayer.refresh();
+
+            // 定位到水面
+            scene.camera.setView({
+                destination: Cesium.Cartesian3.fromDegrees(13.0353, 47.8084, 100.0),
+                orientation: {
+                    heading: 0.7272,
+                    pitch: -0.2672,
+                    roll: 0
+                }
+            });
+
+        }, function (e) {
+            widget.showErrorPanel("加载SCP失败，请检查网络连接状态或者url地址是否正确？", undefined, e);
+        });
+    </script>
+</body>
+
+</html>

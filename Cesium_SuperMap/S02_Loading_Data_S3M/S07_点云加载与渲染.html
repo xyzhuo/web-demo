@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>点云加载与分层设色</title>
+
+    <!-- 本地引入依赖 -->
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium/Cesium.js"></script>
+
+    <script src="../lib/jQuery/jquery-3.2.1.min.js"></script>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            -webkit-user-select: none;
+        }
+
+        div>label {
+            background-color: #adf;
+            padding: 5px;
+            margin: 5px;
+        }
+
+        div>button {
+            background-color: #adf;
+            padding: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+
+    <div style="position: absolute; top: 20px; left: 20px;border: 1px solid rgb(6, 168, 231); padding: 10px;">
+        <div class="param-item">
+            <label for="edlShow">开启EDL</label>
+            <input type="checkbox" id="edlShow" checked="checked">
+        </div>
+        <div class="param-item">
+            <label>lodScale</label>
+            <input type="number" id="lodScale" min="0" max="10" value="1" step="0.1" style="width: 140px">
+        </div>
+        <div class="param-item">
+            <label>点云大小</label>
+            <input type="number" id="pointSize" min="1" max="100" value="4" step="1" style="width: 140px">
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        let viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false
+        });
+        let scene = viewer.scene;
+        const camera = viewer.camera;
+
+        // 监听BIM查询结果
+        viewer.pickEvent.addEventListener(function (feature) {
+            console.log("BIM查询结果", feature);
+        });
+
+        let promise = scene.open("http://www.supermapol.com/realspace/services/3D-cloud/rest/realspace");
+        let layer;
+        promise.then(([_layer]) => {
+            layer = _layer;
+            console.log("layer", layer);
+
+            setHypsometric(layer);
+
+        });
+
+        //EDL开关
+        $("#edlShow").on("input change", function () {
+            layer.pointCloudShading.eyeDomeLighting = this.checked;
+        });
+
+
+        $("#lodScale").on("input change", function () {
+            var lod = $("#lodScale").val();
+            layer.lodRangeScale = parseInt(lod);
+        });
+
+        $("#pointSize").on("input change", function () {
+            var size = $("#pointSize").val();
+            var style3d = new Cesium.Style3D();
+            style3d.pointSize = parseInt(size);
+            layer.style3D = style3d;
+        });
+
+        // 设置分层设色：按高度设置
+        function setHypsometric(layer) {
+            var hyp = new Cesium.HypsometricSetting();
+            var minValue = layer.dataMinValue; // 数据的最小高度值或最小强度值
+            var maxValue = layer.dataMaxValue; // 数据的最大高度值或最大强度值
+
+            hyp.DisplayMode = Cesium.HypsometricSettingEnum.DisplayMode.FACE; // 设置显示模式
+            hyp.LineColor = new Cesium.Color(1.0, 0.0, 0.0, 1.0); // 设置等值线的颜色
+            hyp.LineInterval = 100.0; // 设置等值线的间隔
+            hyp.MaxVisibleValue = layer.dataMaxValue; // 设置最大可见值
+            hyp.MinVisibleValue = layer.dataMinValue; // 设置最小可见值
+            hyp.ColorTableMinKey = minValue; // 颜色表的最小key值
+            hyp.ColorTableMaxKey = maxValue; // 颜色表的最大key值
+
+            // 创建一个用于分层设色的颜色表
+            var colorTable = new Cesium.ColorTable();
+            // 在不同高度插入颜色值，参数：高度值、颜色
+            colorTable.insert(minValue + 0 * (maxValue - minValue) / 8, new Cesium.Color(201 / 255, 23 / 255, 30 / 255));
+            colorTable.insert(minValue + 1 * (maxValue - minValue) / 8, new Cesium.Color(231 / 255, 50 / 255, 15 / 255));
+            colorTable.insert(minValue + 2 * (maxValue - minValue) / 8, new Cesium.Color(238 / 255, 118 / 255, 0 / 255));
+            colorTable.insert(minValue + 3 * (maxValue - minValue) / 8, new Cesium.Color(255 / 255, 214 / 255, 0 / 255));
+            colorTable.insert(minValue + 4 * (maxValue - minValue) / 8, new Cesium.Color(246 / 255, 236 / 255, 0 / 255));
+            colorTable.insert(minValue + 5 * (maxValue - minValue) / 8, new Cesium.Color(157 / 255, 200 / 255, 22 / 255));
+            colorTable.insert(minValue + 6 * (maxValue - minValue) / 8, new Cesium.Color(104 / 255, 185 / 255, 61 / 255));
+            colorTable.insert(minValue + 7 * (maxValue - minValue) / 8, new Cesium.Color(18 / 255, 110 / 255, 183 / 255));
+            colorTable.insert(minValue + 8 * (maxValue - minValue) / 8, new Cesium.Color(0 / 255, 64 / 255, 152 / 255));
+
+            // 设置分层设色的颜色表
+            hyp.ColorTable = colorTable;
+
+            // 对图层设置分层设色
+            layer.hypsometricSetting = {
+                hypsometricSetting: hyp,
+                analysisMode: Cesium.HypsometricSettingEnum.AnalysisRegionMode.ARM_ALL
+            }
+        };
+    </script>
+</body>
+
+</html>

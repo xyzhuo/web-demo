@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>流动管线</title>
+
+    <!-- 本地引入依赖 -->
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium/Cesium.js"></script>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            -webkit-user-select: none;
+        }
+
+        .tools {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            border: 1px solid rgb(6, 168, 231);
+            padding: 10px;
+        }
+
+        .tools>div {
+            height: 35px;
+        }
+
+        .tools>p {
+            background-color: #adf;
+        }
+
+        div>label {
+            background-color: #adf;
+            padding: 5px;
+            margin: 5px;
+        }
+
+        div>button {
+            background-color: #adf;
+            padding: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+
+    <div class="tools">
+    </div>
+
+    <script type="text/javascript">
+        let viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false
+        });
+        let scene = viewer.scene;
+        const camera = viewer.camera;
+
+        scene.imageryLayers._layers[0].show = false; // 不显示底图
+        scene.globe.baseColor = Cesium.Color.ANTIQUEWHITE; //设置地球颜色
+
+        let promise = scene.open("http://www.supermapol.com/realspace/services/3D-ChunShuiLvSeGuanDaounknowns3munknown/rest/realspace");
+        let vectorLayer;
+        let layers;
+        promise.then(_layers => {
+            layers = _layers;
+            console.log("layers", layers);
+
+            // 设置模型纹理在UV坐标上的运动速度
+            for (let layer of _layers) {
+                if (layer.name === "纯水绿色管道优化@管线") {
+                    layer.textureUVSpeed = new Cesium.Cartesian2(0, -2); // 模型纹理在UV坐标上的运动速度
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

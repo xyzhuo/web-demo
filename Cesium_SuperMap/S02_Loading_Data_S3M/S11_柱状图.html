@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>柱状图</title>
+
+    <!-- 本地引入依赖 -->
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium/Cesium.js"></script>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            -webkit-user-select: none;
+        }
+
+        div>label {
+            background-color: #adf;
+            padding: 5px;
+            margin: 5px;
+        }
+
+        div>button {
+            background-color: #adf;
+            padding: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+
+    <div style="position: absolute; top: 20px; left: 20px;border: 1px solid rgb(6, 168, 231); padding: 10px;">
+    </div>
+
+    <script type="text/javascript">
+        let viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false
+        });
+        let scene = viewer.scene;
+        const camera = viewer.camera;
+
+        let promise = scene.open("http://www.supermapol.com/realspace/services/3D-Histogram/rest/realspace");
+        let layer;
+        let layers;
+        promise.then(_layers => {
+            layer = _layers[0];
+            layers = _layers;
+            console.log("layers", layers);
+
+            viewer.camera.flyTo({
+                destination: new Cesium.Cartesian3(-4123770.817811951, 2895409.474655138, -3911924.44837993),
+                orientation: {
+                    heading: 1.3007332824970756,
+                    pitch: -0.3157345136087877,
+                    roll: 4.618527782440651e-14
+                }
+            });
+
+        });
+    </script>
+</body>
+
+</html>
