@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>3ds Max 精模显示效果问题</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../../web/img/favicon.ico"/>
+    <script type="text/javascript" include="jquery,bootstrap,template,admin-lte,jquery.scrollto,lazyload"
+            src="../js/include-web.js" from="doc"></script>
+    <link rel="stylesheet" href="../css/common.css"/>
+    <link rel="stylesheet" href="../css/examples.css"/>
+    <link rel="stylesheet" href="../css/header.css"/>
+    <link rel='stylesheet' href='../css/sm-extend.css'/>
+    <link rel='stylesheet' href='../css/sm-doc.css'/></head>
+<body class="hold-transition skin-blue sidebar-mini" data-spy="scroll" data-target="#scrollSpy">
+<!-- ./wrapper -->
+
+<header class="header-wrapper main-header icl-header"></header>
+<script>
+    var navigation = {
+        nav: {
+            title: 'SuperMap iClient3D for WebGL',
+            path: '../../web/',
+            isLocal: window.isLocal
+        }
+    };
+    identification = {};
+    utils.loadTemplate('.icl-header', '../template/header.html', navigation);
+</script>
+<div class="wrapper"></div>
+<div id='container' class='container' style="width: 90%; padding-top: 75px;">
+    <div class='page-header'>
+        <h1><span class="topicTitle">3ds Max 精模显示效果问题</span></h1>
+        <hr/>
+        <h2 class="title">一、反走样摩尔纹<a name="Summary"></a></h2>
+        <h3>问题描述</h3>
+        <p>反走样摩尔纹也叫抗锯齿，既是骨架边缘形成的锯齿现象。尤其很密集的线条状结构更为明显，视角到达一定距离就形成了摩尔纹闪烁现象。线条状对象的颜色与背景色差越大锯齿就越明显。</p>
+        <p>如下图:</p>
+		<div class="pageImage"><img src="../images/TopicDOC/Max01.png">
+		<h5>图1：反走样摩尔纹效果</h5>
+        </div>
+	    <h3>解决方法</h3>
+        <p>方法一：WebGL新版本已经对反走样做了优化处理，基本消除了明显的锯齿和短线现象，还存在相对微弱的锯齿状态。</p>
+		<p>方法二：设置框架线条图层可见距离，远处隐藏。由于框架线条对象比较细小，远处看起来不明显，隐藏后对显示效果影响不大，既解决了反走样摩尔纹又提升了性能。</p>	
+		<h2 class="title">二、纹理摩尔纹<a name="Summary"></a></h2>
+		<h3>问题描述 </h3>
+		<p>纹理摩尔纹是由贴图形成的摩尔纹闪烁，跟模型骨架没有关系。纹理摩尔纹对显示效果的影响比较大，如下图:</p>
+		<div class="pageImage"><img src="../images/TopicDOC/Max02.png">
+		<h5>图2：纹理摩尔纹效果</h5>
+		</div>
+		<h3>解决方法</h3>
+		<p>WebGL 新版本已经解决了纹理摩尔纹现象。</p>
+		<h2 class="title">三、生成缓存后出现摩尔纹</h2>
+		<h3>问题描述 </h3>
+		<p>有部分建筑在生成缓存后出现摩尔纹，尤其是有明显条纹且色彩反差较大的建筑表现更明显。如下图:</p>
+		<div class="pageImage"><img src="../images/TopicDOC/Max03.png">
+		<h5>图3：生成缓存后出现摩尔纹效果</h5>
+		</div>
+		<h3>解决方法</h3>
+		<p>在使用桌面端生成缓存时取消勾选“重复贴图打组”复选框。</p>
+		<h2 class="title">四、近距离重叠面闪烁<a name="Summary"></a></h2>
+		<h3>问题描述 </h3>
+		<p>闪烁是由于两层面片距离很近，属于数据非常不规范所导致，下图建筑和地面有很多地方闪烁，如下图:</p>
+		<div class="pageImage"><img src="../images/TopicDOC/Max04.png">
+		<h5>图4：近距离重叠面闪烁效果</h5>
+	  </div>
+		<h3>解决方法</h3>
+		<p>桌面端场景属性面板中开启“深度优化”后，有非常明显的改善。目前 WebGL 默认已开启“深度优化”。</p>
+		<h2 class="title">五、透明空洞<a name="Summary"></a></h2>
+		<h3>问题描述 </h3>
+		<p>部分透明面片背后无内容，直接看到背后的物体或地球表面。是 OIT（顺序无关的半透明）导致的。如下图黄框中的玻璃幕墙和天桥上的玻璃:</p>
+		<div class="pageImage"><img src="../images/TopicDOC/Max05.png">
+		<h5>图5：透明空洞效果</h5>
+		</div>
+		<h3>解决方法</h3>
+		<p>在桌面端勾选场景属性中的“透明优化”，缓存生成 s3mb 格式，能解决大多数的透明排序问题。</p>
+		<h2 class="title">六、建筑内侧无内容<a name="Summary"></a></h2>
+        <h3>问题描述 </h3>
+        <p>多数情况是内外分成了两个图层，外侧图层排在了内侧图层的下方所导致。图中的左边建筑我们可透过窗户看到里面没有内容，直接看到了大楼背后的错误景象。右边建筑为解决后的正常状态。</p>
+        <p>如下图:</p>
+		<div class="pageImage"><img src="../images/TopicDOC/Max06.png">
+		<h5>图6：建筑内侧无内容效果</h5>
+        </div>
+	    <h3>解决方法</h3>
+        <p>调整图层顺序，在桌面的图层管理器中，把外侧带有半透纹理的图层顺序调整到最顶层。</p>
+		
+		<h2 class="title">七、格状物体破碎<a name="Summary"></a></h2>
+        <h3>问题描述 </h3>
+        <p>这种现象一般是 LOD 层压缩导致的。格子状的玻璃棚破碎，视角只要离开稍远距离就出现破碎现象。如下图:</p>
+		<div class="pageImage"><img src="../images/TopicDOC/Max07.png">
+		<h5>图7：格状物体破碎效果</h5>
+        </div>
+	    <h3>解决方法</h3>
+        <p>把有问题的模型单独提取出来生成缓存，将其 LOD 的网格简化率调小。图中 LOD设置为：100、100、80。</p>
+		
+		<h2 class="title">八、建筑某处颜色黑块<a name="Summary"></a></h2>
+        <h3>问题描述 </h3>
+        <p>是因为光影贴图 UV 坐标错乱导致的。场景中有许多这样的建筑，中间类似有个镂空，实则为此处颜色较深表现的状态。如下图:</p>
+		<div class="pageImage"><img src="../images/TopicDOC/Max08.png">
+		<h5>图8：建筑某处颜色黑块效果</h5>
+        </div>
+	    <h3>解决方法</h3>
+        <p>通过 3dmax 添加展 UV 命令，并设置通道 3，对此处进行 UV 调整。</p>
+		
+		<h2 class="title">九、双面闪烁<a name="Summary"></a></h2>
+        <h3>问题描述</h3>
+        <p>建筑的外表面是背靠背的两个面重叠在一起的，但是法线方向相反，双面渲染就会导致叠加闪烁现象。具体表现为一部分建筑在操作时闪烁厉害，几乎整栋建筑所有部位都在闪烁。</p>
+		<p>如下图:</p>
+		<div class="pageImage"><img src="../images/TopicDOC/Max09.png">
+		<h5>图9：双面闪烁效果</h5>
+        </div>
+	    <h3>解决方法</h3>
+        <p>在桌面端的“图层管理器”选中对应的图层模型，“图层属性”面板中改成“逆时针（单面）”渲染即可。</p>	
+		
+		<h3>注意：三维精细模型建模的一般性要求</h3>
+		<h3>纹理要求</h3>
+        <ul class="disc">
+            <li>①贴图尺寸：材质规格为 2 的 n 次方，且最大不超过 1024*1024，以利于网络传输。纹理长宽比差异不宜过大，如 512ⅹ32。纹理贴图不易太碎，如一栋建筑四面墙，每面墙一张贴图。</li>
+            <li>②贴图填充率：贴图中的有效纹理像素面积，与总纹理的像素面积的比值不得低于 70%</li>
+            <li>③区域内不同建筑立面用到相同或类似纹理贴图时，须采用同一张纹理贴图。不可出现同图不同名或同名不同图的贴图。</li>
+            <li>④如果必须要高清的贴图，也不要使用超过 1024*1024 尺寸的图片，可以对一个面采用重复贴图的方式，比如 UV 方向各重复贴多次。</li>
+        </ul>
+        <h3>对象要求</h3>
+        <ul class="disc">
+            <li>①一个单独对象的面数不要超过 3 万个，若超过 3 万个三角面，则应该分成 2 个或多个对象。</li>
+            <li>②比较长的条带状物体（如高架路等）必须分段，每段长度不能超过 500 米。</li>
+            <li>③一个模型对象对应的贴图不要超过 100 个，若超过 100 个，则应该分成 2 个或多个。</li>
+        </ul>
+		 <h4>桌面端请使用10.2.0及以上版本处理数据。</h4>
+  </div>
+        <p>&nbsp;</p>
+</div>
+</div>
+<!--法律申明-->
+<div style="background-color: #1c1c1c;color: rgba(222,222,222,0.71)" class="icl-copyright" data-i18n="footer.copyright">
+    版权所有 © 2000-2022 北京超图软件股份有限公司 京ICP备11032883号-8
+    京公网安备11010502008721 甲测资字11002074
+</div>
+<!--footer end-->
+<script type="text/javascript" src="../js/utils.js"></script>
+</body>
+</html>

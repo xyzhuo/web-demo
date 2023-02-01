@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title id="APIChange">接口变更</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="./img/favicon.ico"/>
+    <link rel="stylesheet" href="./css/develop.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <script type="text/javascript" include='isIntroduction,lazyload' src="./js/include.js"></script>
+    <script src=""></script>
+
+    <!--[if lte IE 8]>
+    <style>
+        .container .hero-unit {
+            background-position: right bottom;
+            background-image: url('examples/images/home_banner2.png');
+            background-repeat: no-repeat;
+            padding-left: 60px;
+            padding-right: 400px;
+            padding-top: 60px;
+            padding-bottom: 60px
+        }
+    </style>
+    <![endif]-->
+    <style type="text/css">
+<!--
+.STYLE14 {font-family: "微软雅黑"}
+.STYLE28 {font-size: 12pt; }
+.STYLE35 {font-size: 14pt; }
+.STYLE42 {font-size: 11pt; }
+.STYLE43 {font-family: "微软雅黑"; font-size: 12pt; }
+.STYLE44 {font-family: "微软雅黑"; font-size: 14pt; }
+.STYLE45 {font-family: "微软雅黑"; font-size: 10pt; }
+.STYLE46 {
+	color: black;
+	font-weight: bold;
+}
+.STYLE48 {
+	font-family: "微软雅黑";
+	color: #000000;
+	font-weight: bold;
+}
+.STYLE59 {font-family: "微软雅黑"; font-size: 11pt; }
+.STYLE61 {font-family: "微软雅黑"; font-size: 11pt; color: black; }
+-->
+    </style>
+</head>
+<body class="hold-transition skin-blue">
+<!--顶部导航-->
+<header class="header-wrapper main-header icl-header"></header>
+<script>
+    var navigation = {
+        nav: {
+            title: 'SuperMap iClient3D for Cesium',
+            path: '../web/',
+            isLocal: window.isLocal
+        }
+    };
+    identification = {};
+    utils.loadTemplate('.icl-header', './template/header.html', navigation);
+</script>
+<!--顶部导航 end-->
+<div>
+    <div class="container " id="APIChange">
+        <div>
+            <h2 class="title STYLE14" id="details2">产品变更信息</h2>
+          <span class="STYLE14">当前版本：11i(2022)SP1</span><br/>
+          <span class="STYLE14">上次版本：11i(2022)</span><br/>
+            <p class="lead STYLE14 STYLE35"><strong>1. 接口变更： </strong></p>
+
+            <div align="center">
+                <table width="1349" border="0" align="left" cellpadding="0" cellspacing="0" style="border-collapse:
+ collapse;width:1108px">
+                    <colgroup>
+                        <col width="226" style="width: 170pt">
+                        <col width="269" style="width: 202pt">
+                        <col width="562" style="width: 422pt">
+                    </colgroup>
+                    <tr height="22" style="height:16.5pt">
+                        <td height="22"
+                            style="height: 16.5pt; width: 261px; font-weight: 700; color: black; font-size: 11.0pt; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px"
+                            align="left">
+                            <p align="left" class="STYLE35">
+                              <font color="#e16d6b">类名称</font></td>
+                        <td width="266"
+                            align="left" style="width: 263px; font-weight: 700; color: black; font-size: 11.0pt; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+                            <p align="left" class="STYLE35">
+                              <font color="#e16d6b">新增接口</font></td>
+                        <td width="631"
+                            align="left" style="width: 575px; font-weight: 700; color: black; font-size: 11.0pt; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: .5pt solid windowtext; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+                            <p align="left" class="STYLE35">
+
+                              <font color="#e16d6b">接口说明</font></td>
+                    </tr>
+
+                    <!--从此处开始正式填入接口内容。-->
+           
+                    <tr height="22" style="height:16.5pt">
+                      <td rowspan="2" align="left"
+                            style="height: 16.5pt; font-weight: 700; color: black; font-size: 11pt; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">Globe</td>
+                      <td height="11" align="left" class="STYLE14" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">getSlopeDirectionValue()</td>
+                      <td align="left" class="STYLE28" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">获取地形坡度方向，传入弧度坐标，返回的结果以正北为0度</td>
+                    </tr>
+                    <tr height="22" style="height:16.5pt">
+                      <td height="11" align="left" class="STYLE14" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">getSlopeValue<span class="STYLE61">()</span></td>
+                      <td align="left" class="STYLE28" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">获取地形坡度值</td>
+                    </tr>
+                    <tr height="22" style="height:16.5pt">
+                      <td rowspan="3" align="left"
+                            style="height: 16.5pt; font-weight: 700; color: black; font-size: 11pt; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">WindingOrder</td>
+                      <td height="6" align="left" class="STYLE14" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">NONE</td>
+                      <td align="left" class="STYLE28" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">双面渲染</td>
+                    </tr>
+                    <tr height="22" style="height:16.5pt">
+                      <td height="5" align="left" class="STYLE14" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">CLOCKWISE</td>
+                      <td align="left" class="STYLE28" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">单面逆时针渲染</td>
+                    </tr>
+                    <tr height="22" style="height:16.5pt">
+                      <td height="11" align="left" class="STYLE14" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">COUNTER_CLOCKWISE</td>
+                      <td align="left" class="STYLE28" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">单面顺时针渲染</td>
+                    </tr>
+                    <tr height="22" style="height:16.5pt">
+                      <td
+                            width="265" align="left"
+                            style="height: 16.5pt; font-weight: 700; color: black; font-size: 11pt; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">
+                          <p align="left">
+                      S3MTilesLayer</td>
+                      <td height="11" align="left" class="STYLE14" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">cullMode</td>
+                      <td align="left" class="STYLE28" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">单面渲染时，获取或者设置顺逆时针渲染。类型：WindingOrder</td>
+                    </tr>
+                    <tr height="22" style="height:16.5pt">
+                      <td align="left"
+                            style="height: 16.5pt; font-weight: 700; color: black; font-size: 11pt; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">VectorTilesMap</td>
+                      <td height="6" align="left" class="STYLE14" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">releaseSelection()</td>
+                      <td align="left" class="STYLE28" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">释放选中区域，类型：Object</td>
+                    </tr>
+                    <tr height="22" style="height:16.5pt">
+                      <td rowspan="2" align="left"
+                            style="height: 16.5pt; font-weight: 700; color: black; font-size: 11pt; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: .5pt solid windowtext; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">CesiumWidget</td>
+                      <td height="3" align="left" class="STYLE14" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">errorListenerEvent<span class="STYLE61">()</span></td>
+                      <td align="left" class="STYLE28" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">崩溃错误监听事件，类型：Object</td>
+                    </tr>
+                    <tr height="22" style="height:16.5pt">
+                      <td height="2" align="left" class="STYLE14" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">setErrorPanelIsShow</td>
+                      <td align="left" class="STYLE28" style="color: black; font-size: 11pt; font-weight: 400; font-style: normal; text-decoration: none; font-family: &quot;微软雅黑&quot;; text-align: general; vertical-align: middle; white-space: nowrap; border-left: medium none; border-right: .5pt solid windowtext; border-top: medium none; border-bottom: .5pt solid windowtext; padding-left: 1px; padding-right: 1px; padding-top: 1px">设置崩溃日志是否显示，类型：Boolean，默认值：true</td>
+                    </tr>
+                  <!--2-->
+              </table>
+          </div>
+            </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container STYLE42">
+        <br>
+        <!--<p style="margin-bottom: 24px">-->
+        <p class="lead STYLE14 STYLE35"><strong>2. 新增类接口说明： </strong></p>
+        <table width="1112" cellspacing="0" class="MsoTableGrid" style="mso-border-alt: solid windowtext .5pt; mso-yfti-tbllook: 1184; mso-padding-alt: 0cm 5.4pt 0cm 5.4pt; border-collapse: separate; left: 0px; top: 332px; margin-bottom: 0pt;">
+            <col width="157"/>
+            <col width="216"/>
+            <col width="178"/>
+            <col width="262"/>
+            <tr style="mso-yfti-irow: 0; mso-yfti-firstrow: yes;">
+                <td width="98" align="center" style="border: Solid 1px #000000; vertical-align: top;
+							 mso-border-alt: solid windowtext .5pt; padding: 0cm 5.4pt 0cm 5.4pt;
+							 padding-left: 0px; padding-top: 0px; padding-right: 0px;
+							 padding-bottom: 0px;">
+                    <p class="STYLE44" style="text-align: left;
+														 margin-left: 0px">
+			  <span
+                            style="mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin; color: #e16d6b; font-weight:700">类名称</span></p>                </td>
+                <td style="border-top: Solid 1px #000000; border-right: Solid 1px #000000;
+							 border-bottom: Solid 1px #000000; vertical-align: top;
+							 mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt;
+							 padding: 0cm 5.4pt 0cm 5.4pt; padding-left: 0px; padding-top: 0px;
+							 padding-right: 0px; padding-bottom: 0px;" align="center" width="160">
+                    <p class="STYLE44"
+                            style="text-align: left; margin-left: 0px">
+			  <span
+                            style="mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin; color: #e16d6b; font-weight:700">类中文说明</span></p>                </td>
+                <td style="border-top: Solid 1px #000000; border-right: Solid 1px #000000;
+							 border-bottom: Solid 1px #000000; vertical-align: top;
+							 mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt;
+							 padding: 0cm 5.4pt 0cm 5.4pt; padding-left: 0px; padding-top: 0px;
+							 padding-right: 0px; padding-bottom: 0px;" align="center" width="123">
+                    <p class="STYLE44"
+                            style="text-align: left; margin-left: 0px">
+			  <span
+                            style="mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin; color: #e16d6b; font-weight:700">接口名称</span></p>                </td>
+                <td style="border-top: Solid 1px #000000; border-right: Solid 1px #000000;
+							 border-bottom: Solid 1px #000000; vertical-align: top;
+							 mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt;
+							 padding: 0cm 5.4pt 0cm 5.4pt; padding-left: 0px; padding-top: 0px;
+							 padding-right: 0px; padding-bottom: 0px;" align="center" width="721">
+                    <p class="STYLE44"
+                            style="text-align: left; margin-left: 0px">
+			  <span
+                            style="mso-ascii-font-family: Calibri; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: 宋体; mso-fareast-theme-font: minor-fareast; mso-hansi-font-family: Calibri; mso-hansi-theme-font: minor-latin; color: #e16d6b; font-weight:700">接口中文说明</span></p>                </td>
+            </tr>
+            <tr style="mso-yfti-irow: 5;">
+              <td rowspan="4" align="left" style="border-left: Solid 1px #000000;
+					 border-right: Solid 1px #000000; border-bottom: Solid 1px #000000;
+					 mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt;
+					 padding: 0cm 5.4pt 0cm 5.4pt; padding-left: 0px; padding-top: 0px;
+					 padding-right: 0px; padding-bottom: 0px;">
+                <p class="STYLE48"><span lang="EN-US" xml:lang="EN-US">HemisphereLight</span></p></td>
+              <td width="160" rowspan="4" class="STYLE46" style="border-left: Solid 0px #000000;
+					 border-right: Solid 1px #000000; border-bottom: Solid 1px #000000;
+					 mso-border-top-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt;
+					 padding: 0cm 5.4pt 0cm 5.4pt; padding-left: 0px; padding-top: 0px;
+					 padding-right: 0px; padding-bottom: 0px;">半球光源类</td>
+              <td class="STYLE14" style="border-right: Solid 1px #000000; border-bottom: Solid 1px #000000;
+					 vertical-align: top; mso-border-top-alt: solid windowtext .5pt;
+					 mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt;
+					 padding: 0cm 5.4pt 0cm 5.4pt; padding-left: 0px; padding-top: 0px;
+					 padding-right: 0px; padding-bottom: 0px;">id</td>
+              <td class="STYLE59" style="border-right: Solid 1px #000000; border-bottom: Solid 1px #000000;
+					 vertical-align: top; mso-border-top-alt: solid windowtext .5pt;
+					 mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt;
+					 padding: 0cm 5.4pt 0cm 5.4pt; padding-left: 0px; padding-top: 0px;
+					 padding-right: 0px; padding-bottom: 0px;">获取光源id，类型 : String</td>
+            </tr>
+            <tr style="mso-yfti-irow: 5;">
+              <td class="STYLE14" style="border-right: Solid 1px #000000; border-bottom: Solid 1px #000000;
+					 vertical-align: top; mso-border-top-alt: solid windowtext .5pt;
+					 mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt;
+					 padding: 0cm 5.4pt 0cm 5.4pt; padding-left: 0px; padding-top: 0px;
+					 padding-right: 0px; padding-bottom: 0px;">lightType</td>
+              <td class="STYLE59" style="border-right: Solid 1px #000000; border-bottom: Solid 1px #000000;
+					 vertical-align: top; mso-border-top-alt: solid windowtext .5pt;
+					 mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt;
+					 padding: 0cm 5.4pt 0cm 5.4pt; padding-left: 0px; padding-top: 0px;
+					 padding-right: 0px; padding-bottom: 0px;">设置光源类型，类型：HemisphereLight</td>
+            </tr>
+            <tr style="mso-yfti-irow: 5;">
+              <td style="border-right: Solid 1px #000000; border-bottom: Solid 1px #000000;
+					 vertical-align: top; mso-border-top-alt: solid windowtext .5pt;
+					 mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt;
+					 padding: 0cm 5.4pt 0cm 5.4pt; padding-left: 0px; padding-top: 0px;
+					 padding-right: 0px; padding-bottom: 0px;"><span class="STYLE14">skyColor</span></td>
+              <td class="STYLE59" style="border-right: Solid 1px #000000; border-bottom: Solid 1px #000000;
+					 vertical-align: top; mso-border-top-alt: solid windowtext .5pt;
+					 mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt;
+					 padding: 0cm 5.4pt 0cm 5.4pt; padding-left: 0px; padding-top: 0px;
+					 padding-right: 0px; padding-bottom: 0px;">设置天空光源颜色，类型：Color，默认值：new Color(0.7,0.7,0.7)</td>
+            </tr>
+            
+            <tr style="mso-yfti-irow: 5;">
+              <td style="border-right: Solid 1px #000000; border-bottom: Solid 1px #000000;
+					 vertical-align: top; mso-border-top-alt: solid windowtext .5pt;
+					 mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt;
+					 padding: 0cm 5.4pt 0cm 5.4pt; padding-left: 0px; padding-top: 0px;
+					 padding-right: 0px; padding-bottom: 0px;"><span class="STYLE14">groundColor</span></td>
+              <td class="STYLE59" style="border-right: Solid 1px #000000; border-bottom: Solid 1px #000000;
+					 vertical-align: top; mso-border-top-alt: solid windowtext .5pt;
+					 mso-border-left-alt: solid windowtext .5pt; mso-border-alt: solid windowtext .5pt;
+					 padding: 0cm 5.4pt 0cm 5.4pt; padding-left: 0px; padding-top: 0px;
+					 padding-right: 0px; padding-bottom: 0px;">设置地面光源颜色，类型：Color，默认值：new Color(0.2,0.2,0.2)</td>
+            </tr>
+      </table>
+        <p class="MsoNormal" style="margin-right: 0in; margin-top: 0pt;
+			 margin-bottom: 0pt; margin-left: 40px;">&#160;</p>
+        <div>
+            <p class="lead STYLE14 "><strong>3. 新增范例： </strong></p>
+            <ul>
+                <li class="STYLE43">(1) 自定义气泡</li>
+            </ul>
+            <p class="lead STYLE14 "><strong>4. 优化及问题修复： </strong></p>
+            <ul>
+                <li class="STYLE43">(1) 优化地形分层设色，提升大范围坡度坡向分析的精度</li>
+                <li class="STYLE43">(2) 优化PBR自定义光源，增加半球光源</li>
+            </ul>
+        </div>
+        <hr>
+        <div>
+            <p class="STYLE45">本文档完成日期为2022年09月23日，如果此前的任何文档(包括电子文档和印刷文档)中的某些内容与本文档不相符合，请以本文档为准。若本文档更新，则以更新后的文档为准。</p>
+        </div>
+    </div>
+
+
+    <span class="STYLE42">
+    <!-- <div style="bottom: 1%; margin-right:0; width: 57px; height: 57px; overflow: hidden; cursor: pointer; left: 50%; -webkit-transition: opacity; position: fixed; opacity: 0.6; display: block; " id="qBack2topBtn">
+        <div class="back2top-icon-real"></div>
+    </div> -->
+    </span></div>
+<span class="STYLE42">
+<!--footer-->
+<footer class="main-footer icl-footer"></footer>
+<script>
+    utils.loadTemplate(".icl-footer", "./template/footer.html", navigation);
+
+</script>
+<!--footer end-->
+<script type="text/javascript" src="./js/common.js"></script>
+<script>
+    var myLazyLoad = new LazyLoad({
+        elements_selector: "iframe"
+    });
+</script>
+</span>
+</body>
+</html>

@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/ico" href="/favicon.ico" />
+    <link rel="icon" type="image/ico" href="../favicon.ico" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cesium-SuperMap示例集</title>
+    <title>示例集</title>
     <style>
         * {
             margin: 0;
@@ -53,13 +53,24 @@
             text-align: center;
         }
 
-        .scroll-bar {
-            /* 滚动条样式 */
-            overflow: scroll;
+        .main {
+            width: 100%;
+            display: flex;
+            justify-content: center;
         }
 
-        .content-main>div>h3 {
-            padding-top: 30px;
+        .main>.main-menu {
+            width: 30%;
+        }
+
+        .main>.main-content {
+            width: 60%;
+        }
+
+        /* 分割线 */
+        .split-line {
+            border-bottom: 2px solid red;
+            margin: 5px 0;
         }
     </style>
 </head>
@@ -72,67 +83,44 @@
         </div>
 
         <!-- 中间内容 -->
-        <div style="margin:0 5px;">
+        <div class="main">
+            <!-- 左侧导航 -->
+            <nav class="main-menu">
+                <ol>
+                    <li>
+                        <a href="#S99_SuperMapDemo">SuperMap在线示例</a>
+                    </li>
+                    <li>
+                        <a href="#S01_Loading_Data">加载影像、地形数据</a>
+                    </li>
+                    <li>
+                        <a href="#C01_Loading_Data_01_S3M">加载S3M</a>
+                    </li>
+                    <li>
+                        <a href="#C01_Loading_Data_02_Entity">加载Entity</a>
+                    </li>
+                    <li>
+                        <a href="#C08_initConfig">初始化配置</a>
+                    </li>
+                    <li>
+                        <a href="#C07_KeShiHua">可视化效果</a>
+                    </li>
+                </ol>
+            </nav>
             <!-- 右侧主内容 -->
-            <div class="content-main" style="width: 70%; float: right;">
+            <div class="main-content">
 
-                <!-- Cesium -->
-                <div id="Cesium">
-                    <ul>
+                <!-- 加载影像、地形数据 -->
+                <div id="S99_SuperMapDemo">
+                    <ol>
                         <li>
-                            <a href="./Cesium">Cesium</a>
+                            <a href="./S99_SuperMapDemo/SuperMap iClient3D 11i (2022) SP1 for Cesium_34391/index.html"
+                                target="_blank">SuperMap iClient3D 11i (2022) SP1 for Cesium_34391</a>
                         </li>
-                        <li>
-                            <a href="./Cesium_SuperMap/" target="_blank">最短路径分析</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Leaflet -->
-                <div id="supermap-leaflet">
-                    <h3>SuperMap Leaflet</h3>
-                    <ul>
-
-                    </ul>
-                </div>
-
-                <!-- OpenLayers -->
-                <div id="supermap-openlayers">
-                    <h3>SuperMap OpenLayers</h3>
-                    <ul>
-                        <li>
-                            <a href="./D01_map_tianditu_API/tianditu.html">天地图</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- MaxboxGL -->
-                <div id="supermap-mapboxgl">
-                    <h3>SuperMap MapboxGL</h3>
-                    <ul>
-                        <li>
-                            <a href="./D01_map_tianditu_API/tianditu.html">天地图</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- 天地图 -->
-                <div id="tianditu">
-
-                </div>
-
-                <!-- Arcgis for JavaScript -->
-                <div id="arcgis-for-javascript">
-                    <h3>ArcGIS For JavaScript</h3>
-                    <ul>
-                        <li>
-                            <a href="./D01_map_tianditu_API/tianditu.html" target="_blank">使用天地图加载SuperMap发布的WMS服务</a>
-                        </li>
-                    </ul>
+                    </ol>
+                    <div class="split-line"></div>
                 </div>
             </div>
-
-            <div style="float: clean;"></div>
         </div>
 
         <!-- 脚部内容 -->
