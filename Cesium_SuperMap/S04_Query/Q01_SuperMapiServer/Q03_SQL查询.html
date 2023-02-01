@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>SQL查询</title>
+
+    <!-- 引入本地的cesium支持js和css文件，更快并节约流量 -->
+    <link href="../../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../../lib/Cesium/Cesium.js"></script>
+
+    <script src="../../lib/jQuery/jquery-3.2.1.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #attrInfo {
+            z-index: 999;
+            position: absolute;
+            top: 150px;
+            right: 50px;
+            background-color: skyblue;
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 10px;
+            display: none;
+        }
+
+        table {
+            /*把单元格间隙设置为0*/
+            border-spacing: 0;
+            /* 设置单元格的边框合并为1 */
+            border-collapse: collapse;
+        }
+
+        tr {
+            border: 1px solid slategray;
+        }
+
+        tr td {
+            padding: 5px;
+        }
+
+        tr td:nth-child(1) {
+            text-align: center;
+            border-right: 1px solid slategray;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+    <!-- 属性信息 -->
+    <div id="attrInfo">
+        <h3>属性</h3>
+        <table id="attrInfoTable">
+            <tr>
+                <td>abc</td>
+                <td>abc</td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        let viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false,
+            navigation: false
+        });
+
+        let scene = viewer.scene;
+        // 加载倾斜摄影图层
+        let url = "http://www.supermapol.com/realspace/services/3D-CBD/rest/realspace";
+        let promise = scene.open(url);
+        promise.then(layers => {
+            // doQuery();
+        });
+
+
+
+        /**
+         * 根据拾取的位置坐标{x:112, y:23}执行查询
+         * */
+        function doQuery() {
+            // 查询服务地址
+            const queryUrl = "http://106.55.197.23:8090/iserver/services/data-China/rest/data/featureResults.rjson?returnContent=true";
+            // 查询参数
+            const queryObj = {
+                "getFeatureMode": "SQL",
+                "datasetNames": ["China:CityA_P"],
+                "maxFeatures": 1000,
+                "queryParameter": {
+                    "sortClause": null,
+                    "ids": null,
+                    "name": null,
+                    "attributeFilter": "NAME='三亚市'", // 设置查询条件
+                    "groupClause": null,
+                    "linkItems": null,
+                    "joinItems": null,
+                    "fields": null
+                }
+            };
+
+            $.ajax({
+                type: "post",
+                url: queryUrl,
+                data: JSON.stringify(queryObj), // 转化为JSON字符串作为查询参数,
+                success: function (result) {
+                    const resultObj = JSON.parse(result);
+                    console.log("resultObj", resultObj);
+
+                    // 清除所有的Entity，如果有其他业务性的Entity，需要定向清除viewer.entities.remove();
+                    viewer.entities.removeAll();
+
+                    if (!(resultObj && resultObj.featureCount > 0)) {
+                        console.log("查询结果为空");
+                        return;
+                    }
+                    onCompleted(resultObj.features[0]);
+                },
+                error: errorInfo => {
+                    console.error("查询失败，错误信息", errorInfo);
+                }
+            })
+
+        }
+
+
+        /**
+         * 高亮查询结果、属性信息
+         * */
+        function onCompleted(selectedFeature) {
+            if (!selectedFeature) {
+                return;
+            }
+
+            // 构建高亮矢量面
+            let points3D = []; // [经度, 纬度, 经度, 纬度, ...]的形式，存放楼层面上的点坐标
+            for (let pt of selectedFeature.geometry.points) {
+                points3D.push(pt.x, pt.y);
+            }
+            let entity = viewer.entities.add({
+                polygon: {
+                    hierarchy: Cesium.Cartesian3.fromDegreesArray(points3D),
+                    material: new Cesium.Color(223 / 255, 199 / 255, 0 / 255, 0.4)
+                },
+                classificationType: Cesium.ClassificationType.S3M_TILE // 贴在S3M模型表面
+            });
+
+            viewer.flyTo(entity);
+
+            // 处理属性信息
+            // console.log("fieldNames：", selectedFeature.fieldNames);
+            // console.log("fieldValues：", selectedFeature.fieldValues);
+            const attrInfo = [];
+            $("#attrInfoTable").empty(); // 将原有属性表清空
+            $("#attrInfo").animate({
+                scrollTop: 0 // 滚动条复位
+            });
+            for (const index in selectedFeature.fieldNames) {
+                attrInfo.push({
+                    fieldName: selectedFeature.fieldNames[index],
+                    fieldValue: selectedFeature.fieldValues[index]
+                });
+                $("#attrInfoTable").prepend(`<tr><td>${selectedFeature.fieldNames[index]}</td><td>${selectedFeature.fieldValues[index]}</td></tr>`);
+            }
+            // 显示属性表
+            $("#attrInfo").show();
+            console.log("attrInfo", attrInfo);
+        }
+    </script>
+</body>
+
+</html>

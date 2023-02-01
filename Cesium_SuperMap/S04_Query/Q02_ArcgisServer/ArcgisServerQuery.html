@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>ArcGIS服务加载与数据查询</title>
+    <link href="../../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../../lib/Cesium/Cesium.js"></script>
+    <script src="../../lib/jQuery/jquery-3.2.1.min.js"></script>
+    <script src="./ArcgisServerRequest.js"></script>
+    <script src="./ServerRequest.js"></script>
+    <style>
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+    <script>
+        // console.log(ServerRequest);
+        // ServerRequest.queryBySQL("http://yzltmap.hniplan.com", "1=1");
+        console.log("ServerRequest", ServerRequest);
+        new ServerRequest().queryBySQL("http://yzltmap.hniplan.com", "1=1");
+
+        Cesium.Credential.CREDENTIAL = new Cesium.Credential("abc");
+        const viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false
+        });
+        const scene = viewer.scene;
+
+        // viewer.imageryLayers.addImageryProvider(new Cesium.CGCS2000MapServerImageryProvider({
+        //     url: 'http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetGray/MapServer',
+        //     // url: "http://yzltmap.hniplan.com/arcgis/rest/services/hainan/2016年海南省生态保护红线/MapServer",
+        //     // suggest: true,//4490坐标系，按照suggest切片方案切的瓦片,需要设置该参数
+        // }));
+
+        const layer = viewer.imageryLayers.addImageryProvider(new Cesium.CGCS2000MapServerImageryProvider({
+            // url: 'http://cache1.arcgisonline.cn/arcgis/rest/services/ChinaOnlineStreetPurplishBlue/MapServer',
+            url: "http://yzltmap.hniplan.com/arcgis/rest/services/hainan/2016年海南省生态保护红线/MapServer",
+            // suggest: true,//4490坐标系，按照suggest切片方案切的瓦片,需要设置该参数
+        }));
+        viewer.flyTo(layer);
+
+        queryByGeo();
+
+        function queryByGeo() {
+
+            // const url = "http://yzltmap.hniplan.com/arcgis/rest/services/hainan/2016年海南省生态保护红线/MapServer/identify?geometry={x:109.58108486724787,y:19.633786347963323}&geometryType=esriGeometryPoint&sr=4490&layers=all&layerDefs=&time=&layerTimeOptions=&tolerance=1&mapExtent=108.7406290847738%2C18.010553121028117%2C110.7593709152262%2C20.309446878971883&imageDisplay=400%2C400%2C96&returnGeometry=true&maxAllowableOffset=&geometryPrecision=&dynamicLayers=&returnZ=false&returnM=false&gdbVersion=&f=pjson";
+            // let enUrl = encodeURI(url);
+            // console.log("enUrl", enUrl);
+            var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+            handler.setInputAction(function(e) {
+                // 首先移除之前添加标识实体
+                viewer.entities.removeAll();
+                // 获取点击位置笛卡尔坐标
+                var position = scene.pickPosition(e.position);
+                // 从笛卡尔坐标获取经纬度
+                var cartographic = Cesium.Cartographic.fromCartesian(position);
+                var longitude = Cesium.Math.toDegrees(cartographic.longitude);
+                var latitude = Cesium.Math.toDegrees(cartographic.latitude);
+
+                var queryPoint = { // 查询点对象
+                    longitude,
+                    latitude
+                };
+
+                queryByPoint(queryPoint);
+
+            }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+            function queryByPoint(queryPoint) {
+                console.log("queryPoint", queryPoint);
+                const queryServerUrl = "http://yzltmap.hniplan.com/arcgis/rest/services/hainan/2016年海南省生态保护红线/MapServer/identify";
+                const queryArgs = {
+                    "f": "pjson",
+                    "returnFieldName": "false", //是否返回字段
+                    "returnGeometry": "true", //是否返回空间图形
+                    "returnUnformattedValues": "false",
+                    "returnZ": "false",
+                    "tolerance": 1,
+                    "imageDisplay": "400,400,96",
+                    // 空间查询Geometry
+                    "geometry": `{"x":${queryPoint.longitude},"y":${queryPoint.latitude}}`, // `{"x": 109.58108486724787,"y": 19.633786347963323}`,
+                    "geometryType": "esriGeometryPoint", //坐标类型，可以是点、线、面等
+                    "sr": 4490,
+                    "mapExtent": "108.7406290847738, 18.010553121028117, 110.7593709152262, 20.309446878971883",
+                    "layers": "all" //查询所有图层，或者图层序号 0,1
+                };
+                ArcgisServerRequest().queryByQuery(queryServerUrl, queryArgs, {
+                    onQueryComplete: result => {
+                        console.log("result", result);
+                        const features = result.results;
+                        for (const feature of features) {
+
+                            const positions = [];
+                            const geometries = feature.geometry.rings[0];
+                            for (const geometry of geometries) {
+                                positions.push(geometry[0], geometry[1]);
+                            }
+                            // console.log("positions", positions);
+                            var cuboid = viewer.entities.add({
+                                name: "identify-area",
+                                polygon: {
+                                    hierarchy: {
+                                        positions: Cesium.Cartesian3.fromDegreesArray(positions),
+                                        // //由于挖的这个洞,是x本身的一种数组集合,所以每一个对象里,又是一个x的形式
+                                        // holes: [{
+                                        //     positions: hole
+                                        // }]
+                                    },
+                                    outline: true,
+                                    arcType: Cesium.ArcType.RHUMB,
+                                    material: Cesium.Color.RED
+                                }
+                            });
+                        }
+
+
+                    }
+                });
+
+            }
+        }
+
+        // queryBySQL();
+        /**
+         * 属性查询
+         */
+        function queryBySQL() {
+            const arcgisServerUrl = "http://yzltmap.hniplan.com/arcgis/rest/services/hainan/2016年海南省生态保护红线/MapServer/1/query";
+            // let ids = "";
+            // for (let i = 100, length = 1000; i < length; i++) {
+            //     ids += `${i},`
+            // }
+            const queryArgs = {
+                // where: "objectIds<20", // 此处为属性查询条件
+                text: "",
+                // objectIds: ids, // 查询的id列表
+                objectIds: "1,2", // 查询的id列表
+                time: "",
+                geometry: "", // 空间范围
+                geometryType: "esriGeometryEnvelope", // 输入空间范围类型，可以是点、线、面
+                inSR: "",
+                spatialRel: "esriSpatialRelIntersects", // 查询方法，此处为相交
+                relationParam: "",
+                outFields: "", // 返回所有字段属性
+                returnGeometry: true, // 返回空间图形
+                returnTrueCurves: false,
+                maxAllowableOffset: "",
+                geometryPrecision: "",
+                outSR: "",
+                returnIdsOnly: false,
+                returnCountOnly: false,
+                orderByFields: "",
+                groupByFieldsForStatistics: "",
+                outStatistics: "",
+                returnZ: false,
+                returnM: false,
+                gdbVersion: "",
+                returnDistinctValues: false,
+                resultOffset: "",
+                resultRecordCount: "",
+                f: "geojson"
+                    // f: "pjson"
+            };
+            /***jQuery发送请求****************************************************************************************************/
+            ArcgisServerRequest().queryByQuery(arcgisServerUrl, queryArgs, {
+                onQueryComplete: result => {
+                    console.log("result", result);
+                    const layer = Cesium.GeoJsonDataSource.load(result, {
+                        stroke: Cesium.Color.RED, // 边框颜色
+                        fill: Cesium.Color.PINK, // 填充颜色
+                        strokeWidth: 3,
+                        height: 50000
+                    });
+                    const dataSources = viewer.dataSources.add(layer);
+                    console.log("dataSources", dataSources);
+                    dataSources.then(_layer => {
+                        // console.log("_layer", _layer);
+                        // console.log("_layer._entityCollection", _layer._entityCollection);
+                        // console.log("_layer._entityCollection", _layer._entityCollection.values);
+                        const entityCollection = _layer._entityCollection.values;
+                        for (const entity of entityCollection) {
+                            entity.polygon.height = 2;
+                            entity.polygon.heightReference = Cesium.HeightReference.RELATIVE_TO_GROUND;
+                            entity.polygon.classificationType = Cesium.ClassificationType.TERRAIN;
+                            // entity.distanceDisplayCondition = Number.POSITIVE_INFINITY;
+                        }
+                    });
+                    viewer.zoomTo(layer);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
