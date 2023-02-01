@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Viewer初始化属性设置</title>
+    <!-- 引入本地的cesium支持js和css文件，更快并节约流量 -->
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium/Cesium.js"></script>
+    <style>
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+    <script>
+        // 参考：http://ask.supermap.com/95139?show=95139#q95139
+        // 1、在iserver服务管理中管理 --> 服务详细信息 --> 安全 --> 授权服务（锁图标）中，开启“指定用户访问”并对要访问服务的角色授权。
+        // 2、申请token：
+        // 服务地址 http://localhost:8090/iserver/services/security/tokens
+
+        // 3、设置加载服务的token
+        Cesium.Credential.CREDENTIAL = new Cesium.Credential("r0B7ZY5y80dxw9tf3wLADXCIEoFo_V2J0OlNMHu50PrFsuvRirxZf3p57SUsmJ01LcOAMy_3slGQbhbIGxTCXw..");
+
+        // 4、创建webgl三维球
+        let viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false
+        });
+
+        // 5、加载场景服务
+        viewer.scene.open("http://localhost:8090/iserver/services/3D-local3DCache-MaSai/rest/realspace");
+    </script>
+</body>
+
+</html>
