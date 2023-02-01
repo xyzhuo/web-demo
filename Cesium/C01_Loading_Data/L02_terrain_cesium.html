@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>加载Cesium在线地形服务</title>
+
+    <!-- 本地引入依赖 -->
+    <link href="../lib/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <script src="../lib/Cesium/Cesium.js"></script>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #cesiumContainer {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cesiumContainer"></div>
+
+    <script type="text/javascript">
+        const viewer = new Cesium.Viewer("cesiumContainer", {
+            infoBox: false
+        });
+        const scene = viewer.scene;
+        scene.debugShowFramesPerSecond = true; //显示帧率，默认不显示
+
+        // 去除版权信息
+        // viewer._cesiumWidget._creditContainer.style.display = "none";
+
+        // 在Cesium中，默认的地形提供者是：new Cesium.EllipsoidTerrainProvider()，没有地形起伏的效果。
+        // EllipsoidTerrainProvider是Globe默认采用的地形Provider，该Provider不支持水面，没有法向量，所以即使开启光照，对Tile也是无效的。但是它提供了一个全球范围内高度为0的地形，不需要额外的地形文件，就可以实时的自己来构建这个高度为0的Mesh。对那些没有网络环境，或网络不理想，或不需要地形的应用，EllipsoidTerrainProvider提供了最简单的，无需额外负担的地形数据来构网。
+        // 另外，EllipsoidTerrainProvider具有其他terrainProvider不具备的属性tileScheme，该属性是Provider内部地球网格的剖分方式，通常是WGS84坐标，也可以选择墨卡托坐标系。Cesium中目前支持WGS1984和墨卡托投影两种。
+
+
+        // 使用Cesium的地形提供者，加载Cesium 在线地形图数据
+        viewer.terrainProvider = Cesium.createWorldTerrain({
+            url: Cesium.IonResource.fromAssetId(3956),
+            // url: "https://www.supermapol.com/iserver/services/3D-stk_terrain/rest/realspace/datas/info/data/path/",
+            requestWaterMask: true, //开启法向量，请求水体效果所需要的海岸线数据
+            requestVertexNormals: true, //开启水面特效，请求地形照明数据
+        });
+    </script>
+</body>
+
+</html>
